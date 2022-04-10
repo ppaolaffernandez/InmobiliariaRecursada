@@ -139,5 +139,39 @@ namespace Inmobiliaria_2022.Models
 			}
 			return i;
 		}
+		public Inquilino ObtenerInquilinoPorIdContrato(int id)
+		{
+			Inquilino i = null;
+			using (SqlConnection connection = new SqlConnection(connectionString))
+			{
+				string sql = $"SELECT c.InquilinoId, Dni, Nombre, Apellido, Email, Telefono " +
+					$" FROM Inquilinos i, Contratos c" +
+					$" WHERE i.Id=c.InquilinoId AND" +
+					$"       c.Id = @id";
+				using (SqlCommand command = new SqlCommand(sql, connection))
+				{
+					command.Parameters.Add("@id", SqlDbType.Int).Value = id;
+					command.CommandType = CommandType.Text;
+					connection.Open();
+					var reader = command.ExecuteReader();
+					if (reader.Read())
+					{
+						i = new Inquilino
+						{
+							Id = reader.GetInt32(0),
+							Dni = reader.GetString(1),
+							Nombre = reader.GetString(2),
+							Apellido = reader.GetString(3),
+							Email = reader.GetString(4),
+							Telefono = reader.GetString(5),
+
+						};
+					}
+					connection.Close();
+				}
+			}
+			return i;
+		}
 	}
+	
 }

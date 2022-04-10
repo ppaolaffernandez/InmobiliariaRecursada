@@ -1,0 +1,80 @@
+﻿@model Inmobiliaria_2022.Models.Contrato
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<div class="card bg-light border border-primary">
+        <div class="card-header border-bottom border-primary bg-light">
+            <h4 class="card-title text-primary mt-2">Editar Alquiler</h4>
+        </div>
+        <div class="card-body">
+
+
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+
+                    <input asp-for="Id" class="form-control" type="hidden" />
+
+                </div>
+                <div class="form-group">
+                    <label asp-for="Descripcion" class="control-label"></label>
+                    <input asp-for="Descripcion" class="form-control" />
+                    <span asp-validation-for="Descripcion" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="FechaAlta" class="control-label"></label>
+                    <input type="date" asp-for="FechaAlta" class="form-control" />
+                    <span asp-validation-for="FechaAlta" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="FechaBaja" class="control-label"></label>
+                    <input type="date" asp-for="FechaBaja" class="form-control" />
+                    <span asp-validation-for="FechaBaja" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Monto" class="control-label"></label>
+                    <input asp-for="Monto" class="form-control" />
+                    <span asp-validation-for="Monto" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Propiedad</label>
+                    <select class="form-control" name="InmuebleId">
+
+
+                        @foreach (var item in (IList<Inmueble>)ViewBag.Inmuebless)
+                        {
+                            @:<option @(item.Id == Model.InmuebleId ? "selected" : "") value="@item.Id">@(item.Direccion + " " + item.Costo)</option>
+                        }
+
+                    </select>
+                    <span asp-validation-for="InmuebleId" class="text-danger"> </span>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label">Inquilino</label>
+                    <select class="form-control" name="InquilinoId">
+
+
+                        @foreach (var item in (IList<Inquilino>)ViewBag.Inquilinoss)
+                        {
+                            @:<option @(item.Id == Model.InquilinoId ? "selected" : "") value="@item.Id">@(item.Nombre + " " + item.Apellido)</option>
+                        }
+                    </select>
+                    <span asp-validation-for="InquilinoId" class="text-danger"> </span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Editar" class="btn btn-primary" />
+                    <a class="btn btn-secondary" asp-action="Index">Volver al Listado</a>
+                </div>
+            </form>
+
+
+        </div>
+    </div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

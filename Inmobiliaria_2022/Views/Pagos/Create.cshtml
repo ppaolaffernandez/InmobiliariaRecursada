@@ -1,0 +1,72 @@
+﻿@model Inmobiliaria_2022.Models.Pago
+
+@{ ViewData["Title"] = "Create"; }
+
+<div class="card bg-light border border-primary">
+    <div class="card-header border-bottom border-primary bg-light">
+        <h4 class="card-title text-primary mt-2">Crear Pago</h4>
+    </div>
+    <div class="card-body">
+
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Numero" class="control-label"></label>
+
+                @if (ViewBag.pago == null)
+                {
+                    <input asp-for="Numero" class="form-control" value="1" readonly />
+                }
+                else
+                {
+                    int num = int.Parse(@ViewBag.Pago.Numero) + 1;
+                    <input asp-for="Numero" class="form-control" value="@num" readonly />
+
+                }
+
+                <span asp-validation-for="Numero" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Fecha" class="control-label"></label>
+                <input asp-for="Fecha" class="form-control" required />
+                <span asp-validation-for="Fecha" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Importe" class="control-label"></label>
+                <input asp-for="Importe" class="form-control" value="" required/>
+                <span asp-validation-for="Importe" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+
+                <label class="control-label">Propiedad</label>
+                <input class="form-control" value=".Contrato.inmueble.Direccion" readonly />
+                <input asp-for="Id" class="form-control" type="hidden" value="@ViewBag.Contrato.Id" />
+            </div>
+           @* <div class="form-group">
+                <label asp-for="ContratoId" class="control-label"></label>
+                <input asp-for="ContratoId" class="form-control" />
+                <span asp-validation-for="ContratoId" class="text-danger"></span>
+            </div>*@
+
+            <div class="form-group">
+
+                <label class="control-label">Inquilino</label>
+                
+                <input class="form-control" value="@ViewBag.Inquilino.Nombre" "+" readonly />
+            </div>
+
+
+            <div class="form-group">
+                <input type="submit" value="Crear" class="btn btn-primary" />
+                <a class="btn btn-secondary" asp-action="Index">Volver al Listado</a>
+            </div>
+        </form>
+
+
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+

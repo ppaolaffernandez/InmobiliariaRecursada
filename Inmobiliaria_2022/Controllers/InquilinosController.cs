@@ -14,7 +14,8 @@ namespace Inmobiliaria_2022.Controllers
             this.configuration = configuration;
             repositorioInquilino = new RepositorioInquilino(configuration);
         }
-        // GET: InquilinosController
+
+        // GET: InquilinosControllerb
         public ActionResult Index()
         {
             try

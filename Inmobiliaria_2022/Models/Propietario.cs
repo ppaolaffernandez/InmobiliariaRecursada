@@ -5,7 +5,7 @@ namespace Inmobiliaria_2022.Models
 	public class Propietario
 	{
 		[Key]
-		[Display(Name = "Código")]
+		//[Display(Name = "Código")]
 		public int Id { get; set; }
 		[Required]
 		public string Nombre { get; set; }

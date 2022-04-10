@@ -1,0 +1,86 @@
+﻿@model IEnumerable<Inmobiliaria_2022.Models.Contrato>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="card bg-light border border-primary">
+   <div class="card-header border-bottom border-primary bg-light text-center">
+        <h3>Contrato</h3>
+   </div>
+   <div class="card-header border-bottom border-primary bg-light">
+      <form asp-action="Index" method="post">
+          <div class="input-group">
+             <div class="input-group-prepend">
+                 <div class="input-group-prepend">
+                      <a class="btn btn-success" asp-action="Create">Crear</a>
+                 </div>
+              </div>
+           </div>
+      </form>
+   </div>
+
+   <div class="card bg-light">
+     <div class="card-body">
+       <h5 class="card-title text-primary">Lista</h5>
+
+       <div class="col-md-4 mb-2">
+           <input type="text" class="form-control border border-primary rounded-right" id="inputBusquedaContrato" placeholder="Buscar Inmuebles en Particular..">
+        </div>
+
+         <div class="row scrollspy-example" id="listContratos">     
+            @foreach (var item in Model)
+            {
+              <div class="col-md-4 contenedor">
+                  <div class="card border border-primary">
+                       <div class="bg-transparent border-bottom border-primary">
+                          <img class="w-75 mx-auto d-block" src="https://thumbs.dreamstime.com/b/casa-de-oro-y-flecha-aislada-en-fondo-blanco-ilustraci%C3%B3n-d-157171838.jpg">
+                       </div>
+
+                   <div class="card-body">
+                       <h5 class="card-title">@Html.DisplayFor(modelItem => item.inmueble.Direccion)</h5>
+                       <p class="card-text">@Html.DisplayFor(modelItem => item.Descripcion)</p>
+                        <div id="MM@(item.Id)" class="collapse">
+
+                           <ul class="list-group">
+                               <li class="list-group-item">Propietario: @Html.DisplayFor(modelItem => item.inmueble.Propietario.Nombre) @Html.DisplayFor(modelItem => item.inmueble.Propietario.Apellido) </li>
+                               <li class="list-group-item">Costo:  @Html.DisplayFor(modelItem => item.inmueble.Costo)</li>
+                               <li class="list-group-item">Inquilino: @Html.DisplayFor(modelItem => item.inquilino.Nombre) @Html.DisplayFor(modelItem => item.inquilino.Apellido)</li>
+                           </ul>
+
+                        </div>
+
+                        <div class="btn-group w-100">
+                           <button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="collapse" data-target="#MM@(item.Id)">Ver más</button>
+                           <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-info">Edit</a>
+                           <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger">Delete</a>
+                           <a asp-controller="Pagos" asp-action="ListaPago" asp-route-id="@item.Id" class="btn btn-outline-secondary"
+                           data-tip="tooltip" data-placement="top" title="Lista de pagos">Pagos</a>@*Listp*@
+                        </div>
+
+                        <div class="mt-2">
+                            <span class="badge badge-primary">@Html.DisplayFor(modelItem => item.inmueble.TipoNombre)</span>
+                        </div>
+                    </div>
+
+                           <div class="bg-primary text-white text-center">
+                                <div class="row">
+                                    <div class="col">
+                                        <p class="mt-3">
+                                            <i class="fas fa-calendar-plus"></i>
+
+                                            @String.Format("{0:d}", item.FechaAlta)
+                                        </p>
+                                    </div>
+                                    <div class="col">
+                                        <p class="mt-3"> <i class="fas fa-calendar-minus"></i> @String.Format("{0:d}", item.FechaBaja) </p>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>}
+               </div>
+         </div>
+      </div>
+ </div>
