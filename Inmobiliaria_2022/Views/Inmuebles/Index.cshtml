@@ -27,14 +27,14 @@
             <th>
                 @Html.DisplayNameFor(model => model.Costo)
             </th>
-            <th>
+           @* <th>
                 @Html.DisplayNameFor(model => model.Superficie)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Latitud)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Longitud)
+                @Html.DisplayNameFor(model => model.Longitud)*@
             </th>
             @*<th>
                 @Html.DisplayNameFor(model => model.EstaPublicado)
@@ -67,7 +67,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Costo)
             </td>
-            <td>
+            @*<td>
                 @Html.DisplayFor(modelItem => item.Superficie)
             </td>
             <td>
@@ -75,20 +75,19 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Longitud)
-            </td>
+            </td>*@
             @*<td>
                 @Html.DisplayFor(modelItem => item.EstaPublicado)
             </td>*@
-           @* <td>
-                @Html.DisplayFor(modelItem => item.PropietarioId)
-            </td>*@
+           
             <td>
 					@(item.Propietario.Nombre + " " + item.Propietario.Apellido)
 			</td>
             <td>
                 @Html.ActionLink("Editar", "Edit", new { id=item.Id }) |
+                @Html.ActionLink("Detalles", "Details", new { id=item.Id}) |
                 @Html.ActionLink("Eliminar", "Delete", new {id=item.Id })
-               
+               	
             </td>
         </tr>
 }

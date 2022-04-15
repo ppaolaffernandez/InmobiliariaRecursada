@@ -15,16 +15,18 @@ namespace Inmobiliaria_2022.Controllers
             repositorioInquilino = new RepositorioInquilino(configuration);
         }
 
-        // GET: InquilinosControllerb
+        // GET: InquilinosController 
         public ActionResult Index()
         {
+            //var lista = repositorioInquilino.ObtenerTodos();
+            //return View(lista);
             try
             {
                 var lista = repositorioInquilino.ObtenerTodos();
                 ViewBag.Id = TempData["Id"];
-                
-                if (TempData.ContainsKey("Mensaje"))
-                    ViewBag.Mensaje = TempData["Mensaje"];
+
+                //if (TempData.ContainsKey("Mensaje"))
+                //    ViewBag.Mensaje = TempData["Mensaje"];
                 return View(lista);
             }
             catch (Exception ex)
@@ -35,16 +37,9 @@ namespace Inmobiliaria_2022.Controllers
 
         // GET: InquilinosController/Details/5
         public ActionResult Details(int id)
-        {
-            try
-            {
-                var entidad = repositorioInquilino.ObtenerPorId(id);
-                return View();
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
+        {          
+            var entidad = repositorioInquilino.ObtenerPorId(id);
+            return View(entidad);
         }
 
         // GET: InquilinosController/Create
@@ -96,11 +91,23 @@ namespace Inmobiliaria_2022.Controllers
         public ActionResult Edit(int id, IFormCollection collection)
         {
             // Si en lugar de IFormCollection ponemos Propietario, el enlace de datos lo hace el sistema
+            //try
+            //{
+            //    // TODO: Add update logic here
+            //    repositorioInquilino.Modificacion(i);
+            //    return RedirectToAction(nameof(Index));
+            //}
+            //catch
+            //{
+            //    ViewBag.Inquilinos = repositorioInquilino.ObtenerTodos();
+            //    var y = repositorioInquilino.ObtenerPorId(id);
+            //    return View(y);
+            //}
             Inquilino i = null;
             try
             {
                 i = repositorioInquilino.ObtenerPorId(id);
-                
+
                 i.Nombre = collection["Nombre"];
                 i.Apellido = collection["Apellido"];
                 i.Dni = collection["Dni"];
@@ -138,7 +145,7 @@ namespace Inmobiliaria_2022.Controllers
             try
             {
                 repositorioInquilino.Baja(id);
-                TempData["Mensaje"] = "Eliminación realizada correctamente";
+                //TempData["Mensaje"] = "Eliminación realizada correctamente";
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)

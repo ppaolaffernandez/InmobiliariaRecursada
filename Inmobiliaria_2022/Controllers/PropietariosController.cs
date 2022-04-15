@@ -44,7 +44,7 @@ namespace Inmobiliaria_2022.Controllers
                 int res = repositorioPropietario.Alta(p);
                 return RedirectToAction(nameof(Index));
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw;
             }
@@ -53,7 +53,7 @@ namespace Inmobiliaria_2022.Controllers
         // GET: PropietariosController/Edit/5
         public ActionResult Edit(int id)
         {
-       
+
             try
             {
                 var p = repositorioPropietario.ObtenerPorId(id);
@@ -75,11 +75,11 @@ namespace Inmobiliaria_2022.Controllers
             {
                 p = repositorioPropietario.ObtenerPorId(id);
                 p.Nombre = c["Nombre"];
-                p.Apellido =c["Apellido"];
+                p.Apellido = c["Apellido"];
                 p.Dni = c["Dni"];
                 p.Email = c["Email"];
                 p.Telefono = c["Telefono"];
-                p.Clave=c["Clave"];
+                p.Clave = c["Clave"];
                 repositorioPropietario.Modificacion(p);
                 TempData["Mensaje"] = "Datos guardados correctamente";
                 return RedirectToAction(nameof(Index));

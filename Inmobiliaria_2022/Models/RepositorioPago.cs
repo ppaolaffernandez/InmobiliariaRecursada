@@ -106,11 +106,11 @@ namespace Inmobiliaria_2022.Models
 							Id = reader.GetInt32(0),
 							Numero = reader.GetString(1),
 							Fecha = reader.GetDateTime(2),
-							Importe = reader.GetString(3),
+							Importe = reader.GetDecimal(3),
 							ContratoId = reader.GetInt32(4),
 							Contrato = new Contrato
 							{
-								Monto = reader.GetString(5),
+								Monto = reader.GetDecimal(5),
 								Descripcion = reader.GetString(6),
 							},
 						};
@@ -144,12 +144,12 @@ namespace Inmobiliaria_2022.Models
 							Id = reader.GetInt32(0),
 							Numero = reader.GetString(1),
 							Fecha = reader.GetDateTime(2),
-							Importe = reader.GetString(3),
+							Importe = reader.GetDecimal(3),
 							ContratoId = reader.GetInt32(4),
 							Contrato = new Contrato
 							{
 								Descripcion = reader.GetString(5),
-								Monto = reader.GetString(6),
+								Monto = reader.GetDecimal(6),
 							}
 						};
 					}
@@ -183,7 +183,7 @@ namespace Inmobiliaria_2022.Models
 							Id = reader.GetInt32(0),
 							Numero = reader.GetString(1),
 							Fecha = reader.GetDateTime(2),
-							Importe = reader.GetString(3),
+							Importe = reader.GetDecimal(3),
 							ContratoId = reader.GetInt32(4),
 							Contrato = new Contrato
 							{
@@ -212,7 +212,7 @@ namespace Inmobiliaria_2022.Models
 		Pago p = null;
 		using (SqlConnection connection = new SqlConnection(connectionString))
 		{
-			string sql = $"SELECT Numero FROM Pagos where ContratoId = @id order by Numero desc";
+			string sql = $"SELECT Numero FROM Pagos where Id = @id order by Numero desc";
 			using (SqlCommand command = new SqlCommand(sql, connection))
 			{
 				command.Parameters.Add("@id", SqlDbType.Int).Value = id;

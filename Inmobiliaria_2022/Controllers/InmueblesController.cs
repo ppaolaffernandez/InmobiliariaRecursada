@@ -21,8 +21,6 @@ namespace Inmobiliaria_2022.Controllers
         // GET: InmueblesController
         public ActionResult Index()
         {
-            ViewBag.TipoNombre = new SelectList(Inmueble.ObtenerTiposIDictionary().Select(x => new { Value = x.Key, Text = x.Value.Replace("_", " ") }), "Value", "Text");
-
             var lista = repositorioInmueble.ObtenerTodos();
             //if (TempData.ContainsKey("Id"))
             //    ViewBag.Id = TempData["Id"];
@@ -53,6 +51,8 @@ namespace Inmobiliaria_2022.Controllers
         // GET: InmueblesController/Create
         public ActionResult Create()
         {
+            //ViewBag.TipoNombre = new SelectList(Inmueble.ObtenerTiposIDictionary().Select(x => new { Value = x.Key, Text = x.Value.Replace("_", " ") }), "Value", "Text");
+            ViewBag.TipoNombre = Inmueble.ObtenerTiposIDictionary();
             ViewBag.Propietarios = repositorioPropietario.ObtenerTodos();
             return View();
         }

@@ -1,0 +1,15 @@
+﻿@{
+    ViewData["Title"] = "Autenticado";
+}
+
+<h1>Autenticado</h1>
+<p>Usted esta autenticado. Su identificacion es @User.Identity.Name</p>
+<p>Lista de claims</p>
+<ul>
+    @foreach (var c in User.Claims)
+    {
+        <li><b>@(c.Type+": ")</b>@c.Value</li>
+    }
+
+</ul>
+@Html.ActionLink("Salir", "Logout", "Usuarios", null, new { @class = "btn btn-primary" })

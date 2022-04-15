@@ -110,7 +110,7 @@ namespace Inmobiliaria_2022.Models
 						Descripcion = reader.GetString(1),
 						FechaAlta = reader.GetDateTime(2),
 						FechaBaja = reader.GetDateTime(3),
-						Monto = reader.GetString(4),
+						Monto = reader.GetDecimal(4),
 						InmuebleId = reader.GetInt32(5),
 						InquilinoId = reader.GetInt32(6),
 						inquilino = new Inquilino
@@ -139,9 +139,11 @@ namespace Inmobiliaria_2022.Models
 		using (SqlConnection connection = new SqlConnection(connectionString))
 		{
 			string sql = $"SELECT c.Id, Descripcion, FechaAlta, FechaBaja, Monto, c.InmuebleId, c.InquilinoId, " +
-				$" inm.Direccion" +
-				$" FROM Contratos c, Inmuebles inm" +
+				$" inm.Direccion, " +
+				$" i.Nombre, i.Apellido " +
+				$" FROM Contratos c, Inmuebles inm, Inquilinos i " +
 				$" WHERE c.InmuebleId = inm.Id and " +
+			    $"       c.InquilinoId = i.Id and " +
 				$"       c.Id=@id";
 
 			using (SqlCommand command = new SqlCommand(sql, connection))
@@ -158,13 +160,19 @@ namespace Inmobiliaria_2022.Models
 						Descripcion = reader.GetString(1),
 						FechaAlta = reader.GetDateTime(2),
 						FechaBaja = reader.GetDateTime(3),
-						Monto = reader.GetString(4),
+						Monto = reader.GetDecimal(4),
 						InmuebleId = reader.GetInt32(5),
 						InquilinoId = reader.GetInt32(6),
 						inmueble = new Inmueble
 						{
 							Direccion = reader.GetString(7),
 						},
+						inquilino = new Inquilino
+						{
+							Nombre = reader.GetString(8),
+							Apellido = reader.GetString(9),
+						},
+
 					};
 				}
 				connection.Close();
@@ -172,29 +180,7 @@ namespace Inmobiliaria_2022.Models
 		}
 		return entidad;
 	}
-// no 
-		
-		public int SafeGetInt(SqlDataReader reader, int ColIndex)
-		{
-			if (!reader.IsDBNull(ColIndex))
-				return reader.GetInt32(ColIndex);
-			return 0;
-		}
-		public string SafeGetString(SqlDataReader reader, int ColIndex)
-		{
-			if (!reader.IsDBNull(ColIndex))
-				return reader.GetString(ColIndex);
-			return string.Empty;
-		}
-
-		public DateTime SafeGetDateTime(SqlDataReader reader, int ColIndex)
-		{
-			if (!reader.IsDBNull(ColIndex))
-				return reader.GetDateTime(ColIndex);
-			return new DateTime(2000,12,1);
-		}
-
-}
+  }
 }
 
 

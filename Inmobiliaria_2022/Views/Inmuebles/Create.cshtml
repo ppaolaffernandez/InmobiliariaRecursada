@@ -1,7 +1,7 @@
 ﻿@model Inmobiliaria_2022.Models.Inmueble
 
 @{
-    ViewData["Title"] = "Crear";
+    ViewData["Title"] = "Create";
 }
 
 <h1>Crear </h1>
@@ -28,10 +28,21 @@
                 <span asp-validation-for="Ambientes" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Tipo" class="control-label"></label>
-                <input asp-for="Tipo" class="form-control" />
+                <label  class="control-label">Tipo</label>
+                <select class="form-control" name="Tipo">
+
+                 @foreach (var tip in (IDictionary<int, string>)ViewBag.TipoNombre)
+                 {
+                    <option value="@tip.Key ">@tip.Value</option>
+                 }
+                </select>
                 <span asp-validation-for="Tipo" class="text-danger"></span>
             </div>
+           @* <div class="form-group">
+                <label asp-for="TipoNombre" class="control-label"></label>
+                <input asp-for="TipoNombre" class="form-control" />
+                <span asp-validation-for="TipoNombre" class="text-danger"></span>
+            </div>*@
             <div class="form-group">
                 <label asp-for="Costo" class="control-label"></label>
                 <input asp-for="Costo" class="form-control" />

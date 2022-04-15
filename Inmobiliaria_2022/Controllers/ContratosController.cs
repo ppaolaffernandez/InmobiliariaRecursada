@@ -30,7 +30,15 @@ namespace Inmobiliaria_2022.Controllers
         // GET: ContratosController/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            try
+            {
+                var entidad = repositorioContrato.ObtenerPorId(id);
+                return View(entidad);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
 
         // GET: ContratosController/Create

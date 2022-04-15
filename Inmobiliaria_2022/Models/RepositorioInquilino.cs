@@ -98,7 +98,8 @@ namespace Inmobiliaria_2022.Models
 							Nombre = reader.GetString(1),
 							Apellido = reader.GetString(2),
 							Dni = reader.GetString(3),
-							Telefono = reader["Telefono"].ToString(),
+							//Telefono = reader["Telefono"].ToString(),
+							Telefono = reader.GetString(4),
 							Email = reader.GetString(5),
 						};
 						res.Add(p);

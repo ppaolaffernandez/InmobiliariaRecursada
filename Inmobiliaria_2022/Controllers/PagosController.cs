@@ -25,7 +25,7 @@ namespace Inmobiliaria_2022.Controllers
         {
             return View();
         }
-        public ActionResult Listapago(string id)
+        public ActionResult Listapagos(string id)
         {
             try
             {
@@ -41,7 +41,17 @@ namespace Inmobiliaria_2022.Controllers
         // GET: PagosController/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            //var entidad = repositorioPago.ObtenerPorId(id);
+            //return View();
+            try
+            {
+                var entidad = repositorioPago.ObtenerPorId(id);
+                return View();
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
 
         // GET: PagosController/Create
@@ -56,7 +66,7 @@ namespace Inmobiliaria_2022.Controllers
         // POST: PagosController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(string Numero, DateTime Fecha, string Importe, int id)
+        public ActionResult Create(string Numero, DateTime Fecha, decimal Importe, int id)
         {
             try
             {
