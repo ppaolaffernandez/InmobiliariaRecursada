@@ -1,7 +1,32 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+// Add services to the container.
+builder.Services.AddControllersWithViews();
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+  .AddCookie(options =>
+  {
+      options.LoginPath = "/Usuarios/Login";                                      
+      options.LogoutPath = "/Usuarios/Logout";
+      options.AccessDeniedPath = "/Home/Restringido";
+  });
+builder.Services.Configure<CookiePolicyOptions>(options =>
+{
+    options.CheckConsentNeeded = context => true;
+    options.MinimumSameSitePolicy = SameSiteMode.None;
+});
+//3_Crear politicas de autorizacion y se usan en el contoller
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("Administrador", policy =>
+    policy.RequireRole("Administrador", "SuperAdministrador")
+    //policy.RequireClaim(ClaimTypes.Role, "Administrador")  requiere q el usuario tenga cpmp rol el adminitrador
+    );
+});
 
 var app = builder.Build();
 
@@ -15,9 +40,10 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseRouting();
-
+app.UseCookiePolicy();
+app.UseRouting();
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(

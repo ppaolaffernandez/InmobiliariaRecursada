@@ -30,7 +30,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.Rol)
             </th>
-            @*<th>
+           @* <th>
                 @Html.DisplayNameFor(model => model.RolNombre)
             </th>*@
             <th></th>
@@ -54,12 +54,12 @@
            @* <td>
                 @Html.DisplayFor(modelItem => item.Clave)
             </td>*@
-            <td>
-                @Html.DisplayFor(modelItem => item.Rol)
-            </td>
             @*<td>
-                @Html.DisplayFor(modelItem => item.RolNombre)
+                @Html.DisplayFor(modelItem => item.Rol)
             </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.RolNombre)
+            </td>
             <td>
                 @Html.ActionLink("Editar", "Edit", new {  id=item.Id  }) |
                 @Html.ActionLink("Detalles", "Details", new {  id=item.Id  }) |

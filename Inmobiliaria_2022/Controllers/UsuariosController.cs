@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Security.Claims;
 
 namespace Inmobiliaria_2022.Controllers
@@ -22,6 +23,7 @@ namespace Inmobiliaria_2022.Controllers
         [Authorize(Policy = "Administrador")]
         public ActionResult Index()
         {
+            //ViewBag.Roles = Usuario.ObtenerRoles();
             var lista = repositorioUsuario.ObtenerTodos();
             return View(lista);
         }
