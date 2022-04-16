@@ -8,8 +8,8 @@
 <h1>Listapagos</h1>
 
 
-<p>
-    <a asp-action="Create">Crear nuevo</a>
+<p>   
+    <a asp-controller="Pagos" asp-action="Create" asp-route-id="@ViewBag.Contrato.Id" title="Lista de pagos">Crear nuevo</a>@*exit*@
 </p>
 <table class="table">
     <thead>

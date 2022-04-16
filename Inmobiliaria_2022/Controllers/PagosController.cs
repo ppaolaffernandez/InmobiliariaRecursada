@@ -12,12 +12,14 @@ namespace Inmobiliaria_2022.Controllers
         private readonly RepositorioPago repositorioPago;
         private readonly RepositorioContrato repositorioContrato;
         private readonly RepositorioInquilino repositorioInquilino;
+        private readonly RepositorioInmueble repositorioinmueble;
         public PagosController(IConfiguration configuration)
         {
             this.configuration = configuration;
             repositorioContrato = new RepositorioContrato(configuration);
             repositorioPago = new RepositorioPago(configuration);
             repositorioInquilino = new RepositorioInquilino(configuration);
+            repositorioinmueble = new RepositorioInmueble(configuration);
         }
    
         // GET: PagosController
@@ -29,6 +31,7 @@ namespace Inmobiliaria_2022.Controllers
         {
             try
             {
+                ViewBag.Contrato = repositorioContrato.ObtenerPorId(int.Parse(id));
                 var lista = repositorioPago.ObtenerPorContrato(id);
                 return View(lista);
             }
@@ -57,10 +60,18 @@ namespace Inmobiliaria_2022.Controllers
         // GET: PagosController/Create
         public ActionResult Create(int id)
         {
-            ViewBag.Contrato = repositorioContrato.ObtenerPorId(id);
-            ViewBag.Inquilino = repositorioInquilino.ObtenerInquilinoPorIdContrato(id);
-            ViewBag.Pago = repositorioPago.ObtenerNumeroDePagoPorIdContrato(id);
-            return View();
+            try
+            {
+                ViewBag.Contrato = repositorioContrato.ObtenerPorId(id);
+                ViewBag.Inquilino = repositorioInquilino.ObtenerInquilinoPorIdContrato(id);
+                ViewBag.Pago = repositorioPago.ObtenerNumeroDePagoPorIdContrato(id);
+                ViewBag.Inmueble = repositorioinmueble.ObtenerInmueblePorIdContrato(id);
+                return View();
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
 
         // POST: PagosController/Create

@@ -96,7 +96,8 @@ namespace Inmobiliaria_2022.Models
 			string sql = $" SELECT c.Id, Descripcion, FechaAlta, FechaBaja, Monto, c.InmuebleId, c.InquilinoId," +
 				$" iq.Nombre, iq.Apellido," +
 				$" i.Direccion, i.Costo" +
-				$" FROM Contratos c join Inmuebles i ON c.InmuebleId = i.Id join Inquilinos iq ON c.InquilinoId = iq.Id";
+				$" FROM Contratos c join Inmuebles i ON c.InmuebleId = i.Id " +
+                $"				    join Inquilinos iq ON c.InquilinoId = iq.Id";
 			using (var command = new SqlCommand(sql, connection))
 			{
 				command.CommandType = CommandType.Text;

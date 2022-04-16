@@ -15,9 +15,9 @@
             @*<th>
                 @Html.DisplayNameFor(model => model.Id)
             </th>*@
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.Descripcion)
-            </th>
+            </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.FechaAlta)
             </th>
@@ -27,12 +27,14 @@
             <th>
                 @Html.DisplayNameFor(model => model.Monto)
             </th>
-           @* <th>
-                @Html.DisplayNameFor(model => model.InmuebleId)
+            <th>
+@*                @Html.DisplayNameFor(model => model.InmuebleId)
+*@                Inmueble
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.InquilinoId)
-            </th>*@
+                Inquilino
+@*                @Html.DisplayNameFor(model => model.InquilinoId)
+*@            </th>
             <th></th>
         </tr>
     </thead>
@@ -42,9 +44,9 @@
             @*<td>
                 @Html.DisplayFor(modelItem => item.Id)
             </td>*@
-            <td>
+            @*<td>
                 @Html.DisplayFor(modelItem => item.Descripcion)
-            </td>
+            </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.FechaAlta)
             </td>
@@ -54,17 +56,18 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Monto)
             </td>
-            @*<td>
-                @Html.DisplayFor(modelItem => item.InmuebleId)
+            <td>
+                @Html.DisplayFor(modelItem => item.inmueble.Direccion)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.InquilinoId)
-            </td>*@
+                @Html.DisplayFor(modelItem => item.inquilino.Apellido)
+                @Html.DisplayFor(modelItem => item.inquilino.Nombre)
+            </td>
             <td>
                 @Html.ActionLink("Editar", "Edit", new {  id=item.Id  }) |
                 @Html.ActionLink("Detalles", "Details", new {  id=item.Id  }) |
                 @Html.ActionLink("Eliminar", "Delete", new {  id=item.Id  }) |
-                <a asp-controller="Pagos" asp-action="ListaPagos" asp-route-id="@item.Id" title="Lista de pagos">Lista de Pagos</a>
+                <a asp-controller="Pagos" asp-action="ListaPagos" asp-route-id="@item.Id" title="Lista de pagos">Lista de Pagos</a> @*exit*@
             </td>
         </tr>
 }

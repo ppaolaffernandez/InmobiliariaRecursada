@@ -180,5 +180,41 @@ namespace Inmobiliaria_2022.Models
 			}
 			return i;
 		}
+		public Inmueble ObtenerInmueblePorIdContrato(int id)
+		{
+			Inmueble i = null;
+			using (SqlConnection connection = new SqlConnection(connectionString))
+			{
+				string sql = $"SELECT i.Id, Direccion, Ambientes, Tipo, Costo, Superficie, Latitud, Longitud, i.PropietarioId " +
+					$" FROM Inmuebles i INNER JOIN Contratos c ON i.Id = c.InmuebleId" +
+					$" WHERE c.Id=@id";
+				using (SqlCommand command = new SqlCommand(sql, connection))
+				{
+					command.Parameters.Add("@id", SqlDbType.Int).Value = id;
+					command.CommandType = CommandType.Text;
+					connection.Open();
+					var reader = command.ExecuteReader();
+					if (reader.Read())
+					{
+						i = new Inmueble
+						{
+							Id = reader.GetInt32(0),
+							Direccion = reader.GetString(1),
+							Ambientes = reader.GetInt32(2),
+							Tipo = reader.GetInt32(3),
+							Costo = reader.GetDecimal(4),
+							Superficie = reader.GetDecimal(5),
+							Latitud = reader.GetDecimal(6),
+							Longitud = reader.GetDecimal(7),
+							PropietarioId = reader.GetInt32(8),
+							
+						};
+					}
+					connection.Close();
+				}
+			}
+			return i;
+		}
 	}
+	
 }

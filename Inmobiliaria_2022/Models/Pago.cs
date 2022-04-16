@@ -12,5 +12,7 @@ namespace Inmobiliaria_2022.Models
         public int ContratoId { get; set; }
         public Contrato Contrato { get; set; }
         public string Buscar { get; set; }
+
+
     }
 }
