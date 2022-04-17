@@ -10,6 +10,7 @@ using System.Security.Claims;
 
 namespace Inmobiliaria_2022.Controllers
 {
+    [Authorize]//agreg
     public class UsuariosController : Controller
     {
         private readonly IConfiguration configuracion;
@@ -42,12 +43,10 @@ namespace Inmobiliaria_2022.Controllers
         {
             ViewBag.Roles = Usuario.ObtenerRoles();
             return View();
-        }
-
-        
+        }      
         [HttpPost]
         // POST: UsuariosController/Create
-        //[Authorize(Policy = "Administrador")]
+        [Authorize(Policy = "Administrador")]
         [ValidateAntiForgeryToken]
         public ActionResult Create(Usuario u)
         {
@@ -208,6 +207,7 @@ namespace Inmobiliaria_2022.Controllers
             }
         }
         // GET: Usuarios/Logout
+        [Route("salir", Name = "logout")]
         public async Task<ActionResult> Logout()//Solo ingresan  los usuarios autenticados 
         {
             await HttpContext.SignOutAsync(

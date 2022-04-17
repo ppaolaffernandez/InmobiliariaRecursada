@@ -1,56 +1,56 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
+using System.Security.Claims;
 
-var builder = WebApplication.CreateBuilder(args);
+//var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddControllersWithViews();
+//// Add services to the container.
+//builder.Services.AddControllersWithViews();
 
-// Add services to the container.
-builder.Services.AddControllersWithViews();
-builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-  .AddCookie(options =>
-  {
-      options.LoginPath = "/Usuarios/Login";                                      
-      options.LogoutPath = "/Usuarios/Logout";
-      options.AccessDeniedPath = "/Home/Restringido";
-  });
-builder.Services.Configure<CookiePolicyOptions>(options =>
-{
-    options.CheckConsentNeeded = context => true;
-    options.MinimumSameSitePolicy = SameSiteMode.None;
-});
-//3_Crear politicas de autorizacion y se usan en el contoller
-builder.Services.AddAuthorization(options =>
-{
-    options.AddPolicy("Administrador", policy =>
-    policy.RequireRole("Administrador", "SuperAdministrador")
-    //policy.RequireClaim(ClaimTypes.Role, "Administrador")  requiere q el usuario tenga cpmp rol el adminitrador
-    );
-});
+//// Add services to the container.
+//builder.Services.AddControllersWithViews();
 
-var app = builder.Build();
+//builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+//  .AddCookie(options =>
+//  {
+//      options.LoginPath = "/Usuarios/Login";                                      
+//      options.LogoutPath = "/Usuarios/Logout";
+//      options.AccessDeniedPath = "/Home/Restringido";
+//  });
+//builder.Services.Configure<CookiePolicyOptions>(options =>
+//{
+//    options.CheckConsentNeeded = context => true;
+//    options.MinimumSameSitePolicy = SameSiteMode.None;
+//});
+////3_Crear politicas de autorizacion y se usan en el contoller
+//builder.Services.AddAuthorization(options =>
+//{
+//options.AddPolicy("Administrador", policy =>
+//policy.RequireRole("Administrador", "SuperAdministrador"));
 
-// Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
-{
-    app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
-}
+//});
 
-app.UseHttpsRedirection();
-app.UseStaticFiles();
-app.UseRouting();
-app.UseCookiePolicy();
-app.UseRouting();
-app.UseAuthentication();
-app.UseAuthorization();
+//var app = builder.Build();
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+//// Configure the HTTP request pipeline.
+//if (!app.Environment.IsDevelopment())
+//{
+//    app.UseExceptionHandler("/Home/Error");
+//    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+//    app.UseHsts();
+//}
 
-app.Run();
+//app.UseHttpsRedirection();
+//app.UseStaticFiles();
+//app.UseRouting();
+//app.UseCookiePolicy();
+//app.UseAuthentication();
+//app.UseAuthorization();
+
+//app.MapControllerRoute(
+//    name: "default",
+//    pattern: "{controller=Home}/{action=Index}/{id?}");
+
+//app.Run();
 //_________________________________________________________________________2
 //using Microsoft.AspNetCore.Authentication.Cookies;
 
@@ -105,52 +105,62 @@ app.Run();
 
 //app.Run();
 //________________________________1__________________________
-//var builder = WebApplication.CreateBuilder(args);
+var builder = WebApplication.CreateBuilder(args);
 
-//// Add services to the container.
-//builder.Services.AddControllersWithViews();
-//builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-//    .AddCookie(options =>//el sitio web valida con cookie
-//    {
-//        options.LoginPath = "/Usuarios/Login";
-//        options.LogoutPath = "/Usuarios/Logout";
-//        options.AccessDeniedPath = "/Home/Restringido";
-//    });
-//var app = builder.Build();
+// Add services to the container.
+builder.Services.AddControllersWithViews();
 
-//// Configure the HTTP request pipeline.
-//if (!app.Environment.IsDevelopment())
-//{
-//    app.UseExceptionHandler("/Home/Error");
-//    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-//    app.UseHsts();
-//}
+//1- Se configura el servicio
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>//el sitio web valida con cookie ,una vez creada la cookie el usario ya debe estar logeado
+    {
+        options.LoginPath = "/Usuarios/Login";
+        options.LogoutPath = "/Usuarios/Logout";
+        options.AccessDeniedPath = "/Home/Restringido";
+    });
+    
+    builder.Services.Configure<CookiePolicyOptions>(options =>
+{
+    options.CheckConsentNeeded = context => true;
+    options.MinimumSameSitePolicy = SameSiteMode.None;
+});
+//3_Crear politicas de autorizacion y se usan en el contoller
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("Administrador", policy =>
+    policy.RequireRole("Administrador", "SuperAdministrador")
+    //policy.RequireClaim(ClaimTypes.Role, "Administrador")  /*requiere q el usuario tenga cpmp rol el adminitrador*/
+    );
+});
+var app = builder.Build();
 
-////app.UseHttpsRedirection();
-////app.UseStaticFiles();
+// Configure the HTTP request pipeline.
+if (!app.Environment.IsDevelopment())
+{
+    app.UseExceptionHandler("/Home/Error");
+    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+    app.UseHsts();
+}
 
-////app.UseRouting();
-
-////app.UseAuthorization();
-//app.UseHttpsRedirection();
-//app.UseStaticFiles();
-//app.UseRouting();
+app.UseHttpsRedirection();
+app.UseStaticFiles();
+app.UseRouting();
 //app.UseCookiePolicy();
-//app.UseRouting();
-//app.UseAuthentication();
-//app.UseAuthorization();
+app.UseCookiePolicy(new CookiePolicyOptions
+{
+    MinimumSameSitePolicy = SameSiteMode.None,
+});
+app.UseAuthentication();
+app.UseAuthorization();
 
 
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute("login", "entrar/{**accion}", new { controller = "Usuarios", action = "Login" });
+    endpoints.MapControllerRoute("rutaFija", "ruteo/{valor}", new { controller = "Home", action = "Ruta", valor = "defecto" });
+    endpoints.MapControllerRoute("fechas", "{controller=Home}/{action=Fecha}/{anio}/{mes}/{dia}");
+    endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
 
+});
 
-
-//app.UseEndpoints(endpoints =>
-//{
-//    endpoints.MapControllerRoute("login", "entrar/{**accion}", new { controller = "Usuarios", action = "Login" });
-//    endpoints.MapControllerRoute("rutaFija", "ruteo/{valor}", new { controller = "Home", action = "Ruta", valor = "defecto" });
-//    endpoints.MapControllerRoute("fechas", "{controller=Home}/{action=Fecha}/{anio}/{mes}/{dia}");
-//    endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
-
-//});
-
-//app.Run();
+app.Run();

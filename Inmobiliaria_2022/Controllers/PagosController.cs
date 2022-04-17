@@ -33,17 +33,15 @@ namespace Inmobiliaria_2022.Controllers
                 var lista = repositorioPago.ObtenerPorContrato(id);
                 return View(lista);
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                throw;
             }
         }
 
         // GET: PagosController/Details/5
         public ActionResult Details(int id)
         {
-            //var entidad = repositorioPago.ObtenerPorId(id);
-            //return View();
             try
             {
                 var entidad = repositorioPago.ObtenerPorId(id);

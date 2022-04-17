@@ -9,7 +9,7 @@
 
 
 <p>   
-    <a asp-controller="Pagos" asp-action="Create" asp-route-id="@ViewBag.Contrato.Id" title="Lista de pagos">Crear nuevo</a>
+    <a asp-controller="Pagos" asp-action="Create" asp-route-id="@ViewBag.Contrato.Id" title="Lista de pagos">Crear nuevo</a> @*exit*@
 </p>
     
 <table class="table">
@@ -39,11 +39,12 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Importe)
             </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.Id  }) |
-                @Html.ActionLink("Delete", "Delete", new {  id=item.Id  })
-            </td>
+            @*<td>
+                @Html.ActionLink("Editar", "Edit", new { id=item.Id  }) |
+                @Html.ActionLink("Eliminar", "Delete", new {  id=item.Id  })
+            </td>*@
         </tr>
 }
+
     </tbody>
 </table>

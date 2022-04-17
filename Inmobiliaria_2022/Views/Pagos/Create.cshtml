@@ -46,7 +46,7 @@
 
             <div class="form-group">
                 <label class="control-label">Inquilino</label>
-                <input class="form-control" value="@ViewBag.Contrato.inquilino.Nombre" readonly />
+                <input class="form-control" value="@ViewBag.Contrato.inquilino.Apellido" readonly />
             </div>
             <input asp-for="ContratoId" class="form-control" type="hidden" value="@ViewBag.Contrato.Id" />@*exit*@
             <div class="form-group">
@@ -56,9 +56,7 @@
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Volver al listado</a>
-</div>
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
