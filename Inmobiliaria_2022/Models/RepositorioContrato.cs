@@ -167,6 +167,7 @@ namespace Inmobiliaria_2022.Models
 						inmueble = new Inmueble
 						{
 							Direccion = reader.GetString(7),
+							//Costo = reader.GetInt32(8),
 						},
 						inquilino = new Inquilino
 						{

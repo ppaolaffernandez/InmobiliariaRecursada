@@ -12,14 +12,12 @@ namespace Inmobiliaria_2022.Controllers
         private readonly RepositorioPago repositorioPago;
         private readonly RepositorioContrato repositorioContrato;
         private readonly RepositorioInquilino repositorioInquilino;
-        private readonly RepositorioInmueble repositorioinmueble;
         public PagosController(IConfiguration configuration)
         {
             this.configuration = configuration;
             repositorioContrato = new RepositorioContrato(configuration);
             repositorioPago = new RepositorioPago(configuration);
             repositorioInquilino = new RepositorioInquilino(configuration);
-            repositorioinmueble = new RepositorioInmueble(configuration);
         }
    
         // GET: PagosController
@@ -31,7 +29,7 @@ namespace Inmobiliaria_2022.Controllers
         {
             try
             {
-                ViewBag.Contrato = repositorioContrato.ObtenerPorId(int.Parse(id));
+                ViewBag.Contrato = repositorioContrato.ObtenerPorId(int.Parse(id));          
                 var lista = repositorioPago.ObtenerPorContrato(id);
                 return View(lista);
             }
@@ -65,7 +63,6 @@ namespace Inmobiliaria_2022.Controllers
                 ViewBag.Contrato = repositorioContrato.ObtenerPorId(id);
                 ViewBag.Inquilino = repositorioInquilino.ObtenerInquilinoPorIdContrato(id);
                 ViewBag.Pago = repositorioPago.ObtenerNumeroDePagoPorIdContrato(id);
-                ViewBag.Inmueble = repositorioinmueble.ObtenerInmueblePorIdContrato(id);
                 return View();
             }
             catch (Exception ex)
@@ -92,7 +89,7 @@ namespace Inmobiliaria_2022.Controllers
                     int res = repositorioPago.Alta(p);
                     string idAlquiler = id.ToString();
                     //return RedirectToAction(nameof(Listapago));
-                    return RedirectToAction("Listapago", new { id });
+                    return RedirectToAction("Listapagos", new { id });
 
                 }
                 else

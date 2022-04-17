@@ -17,7 +17,7 @@
                 <label asp-for="Numero" class="control-label" ></label>
 
                 @if (ViewBag.Pago == null){
-                    <input asp-for="Numero" class="form-control" value="1" reandoly/>
+                    <input asp-for="Numero" class="form-control" value="1" required readonly/>
                 }
                 else{
                     int num = int.Parse(@ViewBag.Pago.Numero) +1;
@@ -39,12 +39,14 @@
 
             <div class="form-group">
                 <label class="control-label">Propiedad</label>
-                <input class="form-control" value="@ViewBag.Inmueble.Costo" readonly/> 
-            </div>
+                <input class="form-control" value="@ViewBag.Contrato.inmueble.Direccion"  readonly/> 
+@*               <input class="form-control" value="@ViewBag.Inmueble.Costo" readonly/> 
+*@            </div>
+            
 
             <div class="form-group">
                 <label class="control-label">Inquilino</label>
-                <input class="form-control" value="@ViewBag.Inquilino.Nombre" readonly />
+                <input class="form-control" value="@ViewBag.Contrato.inquilino.Nombre" readonly />
             </div>
             <input asp-for="ContratoId" class="form-control" type="hidden" value="@ViewBag.Contrato.Id" />@*exit*@
             <div class="form-group">

@@ -28,7 +28,7 @@ namespace Inmobiliaria_2022.Models
 						command.Parameters.AddWithValue("@numero", p.Numero);
 						command.Parameters.AddWithValue("@fecha", p.Fecha);
 						command.Parameters.AddWithValue("@importe", p.Importe);
-						command.Parameters.AddWithValue("@Id", p.ContratoId);
+						command.Parameters.AddWithValue("@ContratoId", p.ContratoId);
 						connection.Open();
 						res = Convert.ToInt32(command.ExecuteScalar());
 						p.Id = res;
@@ -163,16 +163,18 @@ namespace Inmobiliaria_2022.Models
 			IList<Pago> res = new List<Pago>();
 			using (SqlConnection connection = new SqlConnection(connectionString))
 			{
-				string sql = $"SELECT p.Id, p.Numero, p.Fecha, p.Importe, p.ContratoId, i.Direccion, iq.Nombre, iq.Apellido " +
-					"c.Descripcion,c.Monto " +
-					"FROM Pagos p JOIN Contratos c ON p.ContratoId = c.Id JOIN Inquilinos iq ON c.InquilinoId = iq.Id JOIN Inmuebles i ON c.InmuebleId = i.Id " +
-					" WHERE p.ContratoId=@contratoId";
+				string sql = $" SELECT p.Id, p.Numero, p.Fecha, p.Importe, p.ContratoId, i.Direccion, iq.Nombre, iq.Apellido, " +
+					$" c.Descripcion, c.Monto " +
+					$" FROM Pagos p JOIN Contratos c ON p.ContratoId = c.Id " +
+                    $"              JOIN Inquilinos iq ON c.InquilinoId = iq.Id " +
+					$"	            JOIN Inmuebles i ON c.InmuebleId = i.Id " +
+					$" WHERE p.ContratoId=@contratoId";
 
 				using (SqlCommand command = new SqlCommand(sql, connection))
 				{
 					connection.Open();
 					command.CommandType = CommandType.Text;
-					command.Parameters.AddWithValue("@contratoId", contratoId);
+					command.Parameters.AddWithValue("@ContratoId", contratoId);
 					var reader = command.ExecuteReader();//byaca realiz x v
 
 					while (reader.Read())
@@ -212,8 +214,8 @@ namespace Inmobiliaria_2022.Models
 		Pago p = null;
 		using (SqlConnection connection = new SqlConnection(connectionString))
 		{
-			string sql = $"SELECT Numero FROM Pagos where Id = @id order by Numero desc";
-			using (SqlCommand command = new SqlCommand(sql, connection))
+			string sql = $"SELECT Numero FROM Pagos where ContratoId = @id order by Numero desc";//camb Id por contatoId 16/7/2022
+				using (SqlCommand command = new SqlCommand(sql, connection))
 			{
 				command.Parameters.Add("@id", SqlDbType.Int).Value = id;
 				command.CommandType = CommandType.Text;
