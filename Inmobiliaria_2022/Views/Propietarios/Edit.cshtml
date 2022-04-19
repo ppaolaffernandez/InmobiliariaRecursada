@@ -44,7 +44,8 @@
                 <span asp-validation-for="Clave" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Guardar" class="btn btn-primary" />
+                <input type="submit" value="Editar" class="btn btn-primary" />
+                <a class="btn btn-secondary" asp-action="Index">Volver al Listado</a>
             </div>
         </form>
     </div>
@@ -73,9 +74,7 @@
         </form>
     </div>
 </div>*@
-<div>
-    <a asp-action="Index">Volver al listado</a>
-</div>
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Inmobiliaria_2022.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public class ContratosController : Controller
     {
         private readonly IConfiguration configuration;
@@ -92,6 +92,7 @@ namespace Inmobiliaria_2022.Controllers
         }
 
         // GET: ContratosController/Delete/5
+        [Authorize(Policy = "Administrador")]
         public ActionResult Delete(int id)
         {
             var p = repositorioContrato.ObtenerPorId(id);
@@ -101,6 +102,7 @@ namespace Inmobiliaria_2022.Controllers
         // POST: ContratosController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Policy = "Administrador")]
         public ActionResult Delete(int id, Contrato c)
         {
             try

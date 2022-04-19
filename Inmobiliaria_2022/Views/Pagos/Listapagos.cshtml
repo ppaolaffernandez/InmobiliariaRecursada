@@ -39,12 +39,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Importe)
             </td>
-            @*<td>
-                @Html.ActionLink("Editar", "Edit", new { id=item.Id  }) |
-                @Html.ActionLink("Eliminar", "Delete", new {  id=item.Id  })
-            </td>*@
         </tr>
-}
+        }
+        <a asp-controller="Contratos" asp-action="Index">Volver</a> @*exitjho*@
 
     </tbody>
 </table>

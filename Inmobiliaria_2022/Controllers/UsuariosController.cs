@@ -10,7 +10,7 @@ using System.Security.Claims;
 
 namespace Inmobiliaria_2022.Controllers
 {
-    [Authorize]//agreg
+    [Authorize]
     public class UsuariosController : Controller
     {
         private readonly IConfiguration configuracion;
@@ -21,7 +21,7 @@ namespace Inmobiliaria_2022.Controllers
             repositorioUsuario = new RepositorioUsuario(configuration);
         }
         // GET: UsuariosController
-        [Authorize(Policy = "Administrador")]
+        //[Authorize(Policy = "Administrador")]
         public ActionResult Index()
         {
             //ViewBag.Roles = Usuario.ObtenerRoles();
@@ -38,7 +38,7 @@ namespace Inmobiliaria_2022.Controllers
         }
 
         // GET: UsuariosController/Create
-        [Authorize(Policy = "Administrador")]
+        //[Authorize(Policy = "Administrador")]
         public ActionResult Create()
         {
             ViewBag.Roles = Usuario.ObtenerRoles();
@@ -46,7 +46,7 @@ namespace Inmobiliaria_2022.Controllers
         }      
         [HttpPost]
         // POST: UsuariosController/Create
-        [Authorize(Policy = "Administrador")]
+        //[Authorize(Policy = "Administrador")]
         [ValidateAntiForgeryToken]
         public ActionResult Create(Usuario u)
         {
@@ -78,7 +78,7 @@ namespace Inmobiliaria_2022.Controllers
         }
 
         // GET: UsuariosController/Edit/5
-        [Authorize(Policy ="Administrador")]
+        //[Authorize(Policy ="Administrador")]
         public ActionResult Edit(int id)
         {
             ViewData["Title"] = "Editar usuario";
@@ -90,7 +90,8 @@ namespace Inmobiliaria_2022.Controllers
         // POST: UsuariosController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize]
+        //[Authorize]
+        //[Authorize(Policy = "Administrador")]
         public ActionResult Edit(int id, Usuario u)
         {
             var vista = "Edit";
@@ -207,7 +208,7 @@ namespace Inmobiliaria_2022.Controllers
             }
         }
         // GET: Usuarios/Logout
-        [Route("salir", Name = "logout")]
+        //[Route("salir", Name = "logout")]
         public async Task<ActionResult> Logout()//Solo ingresan  los usuarios autenticados 
         {
             await HttpContext.SignOutAsync(

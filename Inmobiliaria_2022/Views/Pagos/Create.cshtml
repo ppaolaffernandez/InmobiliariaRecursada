@@ -19,8 +19,7 @@
                 @if (ViewBag.Pago == null){
                     <input asp-for="Numero" class="form-control" value="1" required readonly/>
                 }
-                else{
-                    int num = int.Parse(@ViewBag.Pago.Numero) +1;
+                else{int num = int.Parse(@ViewBag.Pago.Numero) +1;
                     <input asp-for="Numero" class="form-control" value="@num" />
 
                 }
@@ -39,22 +38,25 @@
 
             <div class="form-group">
                 <label class="control-label">Propiedad</label>
-                <input class="form-control" value="@ViewBag.Contrato.inmueble.Direccion"  readonly/> 
-@*               <input class="form-control" value="@ViewBag.Inmueble.Costo" readonly/> 
-*@            </div>
+                <input class="form-control" value="@ViewBag.Contrato.inmueble.Direccion @ViewBag.Contrato.inmueble.Costo"  readonly/> 
+            </div>
             
 
             <div class="form-group">
                 <label class="control-label">Inquilino</label>
-                <input class="form-control" value="@ViewBag.Contrato.inquilino.Apellido" readonly />
+                <input class="form-control" value="@ViewBag.Contrato.inquilino.Nombre @ViewBag.Contrato.inquilino.Apellido" readonly />
             </div>
             <input asp-for="ContratoId" class="form-control" type="hidden" value="@ViewBag.Contrato.Id" />@*exit*@
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
+                <input type="submit" value="Crear" class="btn btn-primary" />
+@*                <a asp-controller="Pagos" asp-action="ListaPagos">Volver al listado</a>preg j
+*@            </div>
         </form>
     </div>
 </div>
+
+    @*<a asp-action="Index">Volver al listado</a>
+   <a asp-controller="Pagos" asp-action="ListaPagos">Volver al listado</a> exitjho *@
 
 
 

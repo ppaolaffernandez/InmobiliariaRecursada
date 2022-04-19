@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Inmobiliaria_2022.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public class InmueblesController : Controller
     {
         private readonly IConfiguration configuration;
@@ -118,6 +118,7 @@ namespace Inmobiliaria_2022.Controllers
         }
 
         // GET: InmueblesController/Delete/5
+        [Authorize(Policy = "Administrador")]
         public ActionResult Delete(int id)
         {
             var entidad = repositorioInmueble.ObtenerPorId(id);
@@ -131,6 +132,7 @@ namespace Inmobiliaria_2022.Controllers
         // POST: InmueblesController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Policy = "Administrador")]
         public ActionResult Delete(int id, Inmueble entidad)
         {
             try

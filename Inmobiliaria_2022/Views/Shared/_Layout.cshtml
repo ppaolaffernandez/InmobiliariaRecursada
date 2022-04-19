@@ -13,62 +13,50 @@
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Inmobiliaria_2022</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">   
                     <ul class="navbar-nav flex-grow-1">
+                        @if (!User.Identity.IsAuthenticated){ <li class="nav-item"><a class="nav-link text-dark" asp-area="" asp-controller="Usuarios" asp-action="Index">Iniciar Sesion</a></li>}
+                        else
+                        {
+                         <li class="nav-item"><a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Inicio</a></li>
+                         <li class="nav-item"><a class="nav-link text-dark" asp-area="" asp-controller="Usuarios" asp-action="Index">Usuarios</a></li>
+                         <li class="nav-item"><a class="nav-link text-dark" asp-area="" asp-controller="Propietarios" asp-action="Index">Propietario</a></li>
+                         <li class="nav-item"><a class="nav-link text-dark" asp-area="" asp-controller="Inquilinos" asp-action="Index">Inquilino</a></li>
+                         <li class="nav-item"><a class="nav-link text-dark" asp-area="" asp-controller="Inmuebles" asp-action="Index">Inmueble</a> </li>
+                         <li class="nav-item"><a class="nav-link text-dark" asp-area="" asp-controller="Contratos" asp-action="Index">Contrato</a></li> 
 
-                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Usuarios" asp-action="Index">Usuarios</a>
+                         <li class="nav-item dropdown ml-3">
+                             <a class="nav-link text-dark" id="navbarDropdownUsuario" data-toggle="dropdown" href="#">@User.Identity.Name</a>                    
+                             <div class="dropdown-menu" aria-labelledby="navbarDropdownUsuario">
+                                <form class="font-weight-bold ">
+                                    <div class="form-group">
+                                        <ul class="list-group mb-2">
+                                            <li class="list-group-item active text-center bg-primary">@(User.FindFirst("FullName").Value)</li>
+                                            <li class="list-group-item text-center text-primary">@(User.FindFirst("TipoDeUsuario").Value)</li>
+                                        </ul>
+                                        <hr>
+                                        <a class="dropdown-item text-dark" asp-controller="Usuarios" asp-action="Logout">Salir</a>
+                                    </div>
+                                </form>
+                             </div>
                          </li>
-
-                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Propietarios" asp-action="Index">Propietario</a>
-                         </li>
-
-                          <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Inquilinos" asp-action="Index">Inquilino</a>
-                         </li>
-
-                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Inmuebles" asp-action="Index">Inmueble</a>
-                         </li>
-
-                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Contratos" asp-action="Index">Contrato</a>
-                         </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-  
-                    
+                        }
                      </ul>
-
                 </div>
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+    <div class="container"><main role="main" class="pb-3">@RenderBody()</main></div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2022 - Inmobiliaria_2022 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
+    <footer class="border-top footer text-muted"><div class="container">&copy; 2022 - Inmobiliaria_2022 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a></div></footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>

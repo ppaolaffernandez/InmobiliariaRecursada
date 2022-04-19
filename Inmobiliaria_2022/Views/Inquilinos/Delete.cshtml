@@ -6,7 +6,7 @@
 
 <h1>Eliminar</h1>
 
-<h3>¿Seguro que desea eliminar el inquilino?</h3>
+<h4>¿Seguro que desea eliminar el inquilino?</h4>
 <div>
     <h4>Inquilino</h4>
     <hr />
@@ -49,8 +49,10 @@
         </dd>
     </dl>
     
-    <form asp-action="delete">
-        <input type="submit" value="Eliminar" class="btn btn-danger" /> |
-        <a asp-action="Index">Volver al listado</a>
+    <form asp-action="Delete">
+        <div class="form-group">
+            <input type="submit" value="Eliminar" class="btn btn-danger" />
+            <a class="btn btn-secondary" asp-action="Index">Volver a Lista</a>
+        </div>
     </form>
 </div>

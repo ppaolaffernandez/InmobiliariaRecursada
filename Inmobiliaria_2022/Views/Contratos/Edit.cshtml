@@ -55,8 +55,6 @@
                 <div class="form-group">
                     <label class="control-label">Inquilino</label>
                     <select class="form-control" name="InquilinoId">
-
-
                         @foreach (var item in (IList<Inquilino>)ViewBag.Inquilinoss)
                         {
                             @:<option @(item.Id == Model.InquilinoId ? "selected" : "") value="@item.Id">@(item.Nombre + " " + item.Apellido)</option>
@@ -69,11 +67,8 @@
                     <a class="btn btn-secondary" asp-action="Index">Volver al Listado</a>
                 </div>
             </form>
-
-
         </div>
     </div>
-
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

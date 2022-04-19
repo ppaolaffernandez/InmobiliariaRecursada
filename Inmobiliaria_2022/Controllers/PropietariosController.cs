@@ -1,4 +1,5 @@
 ﻿using Inmobiliaria_2022.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -25,7 +26,8 @@ namespace Inmobiliaria_2022.Controllers
         // GET: PropietariosController/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            var i = repositorioPropietario.ObtenerPorId(id);
+            return View(i); ;
         }
 
         // GET: PropietariosController/Create
@@ -104,6 +106,7 @@ namespace Inmobiliaria_2022.Controllers
         }
 
         // GET: PropietariosController/Delete/5
+        [Authorize(Policy = "Administrador")]
         public ActionResult Delete(int id)
         {
 
@@ -121,6 +124,7 @@ namespace Inmobiliaria_2022.Controllers
         // POST: PropietariosController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Policy = "Administrador")]
         public ActionResult Delete(int id, Propietario entidad)
         {
             try

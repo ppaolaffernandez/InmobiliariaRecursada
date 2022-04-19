@@ -1,9 +1,11 @@
 ﻿using Inmobiliaria_2022.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Inmobiliaria_2022.Controllers
 {
+    [Authorize]
     public class InquilinosController : Controller
     {
         private readonly IConfiguration configuration;
@@ -123,7 +125,8 @@ namespace Inmobiliaria_2022.Controllers
             }
         }
 
-    // GET: InquilinosController/Delete/5
+        // GET: InquilinosController/Delete/5
+        [Authorize(Policy = "Administrador")]
         public ActionResult Delete(int id)
         {
             try
@@ -140,6 +143,7 @@ namespace Inmobiliaria_2022.Controllers
         // POST: InquilinosController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Policy = "Administrador")]
         public ActionResult Delete(int id, Propietario entidad)
         {
             try

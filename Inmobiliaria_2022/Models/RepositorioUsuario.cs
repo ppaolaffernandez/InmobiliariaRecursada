@@ -168,35 +168,6 @@ namespace Inmobiliaria_2022.Models
             }
             return u;
         }
-        public Usuario ObtenerPorRol(string rol)
-        {
-            Usuario u = null;
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                string sql = $"SELECT Id, Nombre, Apellido, Email, Clave, Rol FROM Usuarios" +
-                    $" WHERE Rol=@rol";
-                using (SqlCommand command = new SqlCommand(sql, connection))
-                {
-                    command.CommandType = CommandType.Text;
-                    command.Parameters.Add("@rol", SqlDbType.VarChar).Value = rol;
-                    connection.Open();
-                    var reader = command.ExecuteReader();
-                    if (reader.Read())
-                    {
-                        u = new Usuario
-                        {
-                            Id = reader.GetInt32(0),
-                            Nombre = reader.GetString(1),
-                            Apellido = reader.GetString(2),
-                            Email = reader.GetString(3),
-                            Clave = reader.GetString(4),
-                            Rol = reader.GetInt32(5),
-                        };
-                    }
-                    connection.Close();
-                }
-            }
-            return u;
-        }
+        
     }
 }
