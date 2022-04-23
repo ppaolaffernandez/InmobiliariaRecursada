@@ -4,20 +4,14 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create nuevo</h1>
+<div class="card bg-light border border-primary">
+        <div class="card-header border-bottom border-primary bg-light">
+            <h4 class="card-title text-primary">Crear Usuario</h4>
+        </div>
+        <div class="card-body">
 
-<h4>Usuario</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
+            <form asp-action="Create" enctype="multipart/form-data">@* 22-04*@
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-                @*<div class="form-group">
-                    <label asp-for="Id" class="control-label"></label>
-                    <input asp-for="Id" class="form-control" type="hidden" />
-                    <span asp-validation-for="Id" class="text-danger"></span>
-                </div>*@
 
                 <div class="form-group">
                     <label asp-for="Nombre" class="control-label"></label>
@@ -40,6 +34,13 @@
                     <span asp-validation-for="Clave" class="text-danger"></span>
                 </div>
 
+                    <div class="form-group">
+				<label asp-for="AvatarFile" class="control-label"></label> @*22/4/2022*@
+				<input type="file" name="AvatarFile" />
+				<span asp-validation-for="AvatarFile" class="text-danger"></span>
+			
+            </div>
+
                 <div class="form-group">
                     <label class="control-label">Rol</label>
                     <select class="form-control" name="Rol">
@@ -54,7 +55,7 @@
                 <div class="form-group">
                     <input type="submit" value="Crear" class="btn btn-primary" />
                     <a class="btn btn-secondary" asp-action="Index">Volver al Listado</a>
-                </div>
+            </div>
         </form>
     </div>
 </div>

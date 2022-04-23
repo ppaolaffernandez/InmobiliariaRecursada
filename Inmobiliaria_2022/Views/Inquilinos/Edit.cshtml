@@ -4,12 +4,11 @@
     ViewData["Title"] = "Editar Inquilino";
 }
 
-<h1>Editar</h1>
-
-<h4>Inquilino</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
+<div class="card bg-light border border-primary">
+        <div class="card-header border-bottom border-primary bg-light">
+            <h4 class="card-title text-primary mt-2">Editar Inquilino</h4>
+        </div>
+        <div class="card-body">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             

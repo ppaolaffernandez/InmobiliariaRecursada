@@ -4,9 +4,8 @@ namespace Inmobiliaria_2022.Models
 {
     public enum enRoles
     {
-        SuperAdministrador = 1,
-        Administrador = 2,
-        Empleado = 3,
+        Administrador = 1,
+        Empleado = 2,
     }
     public class Usuario
     {
@@ -21,6 +20,8 @@ namespace Inmobiliaria_2022.Models
         [Required]
         [DataType(DataType.Password)]
         public string Clave { get; set; }
+        public string? Avatar { get; set; }  /*agregue esto avatar*/
+        public IFormFile AvatarFile { get; set; } /*22/04/*/
         public int Rol { get; set; }
         public string RolNombre => Rol > 0 ? ((enRoles)Rol).ToString() : "";
 

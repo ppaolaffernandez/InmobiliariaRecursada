@@ -19,27 +19,54 @@ namespace Inmobiliaria_2022.Controllers
             repositorioInmueble = new RepositorioInmueble(configuration);
         }
         // GET: InmueblesController
-        public ActionResult Index()
+        public ActionResult Index(int id)
         {
             var lista = repositorioInmueble.ObtenerTodos();
-            //if (TempData.ContainsKey("Id"))
-            //    ViewBag.Id = TempData["Id"];
-            //if (TempData.ContainsKey("Mensaje"))
-            //    ViewBag.Mensaje = TempData["Mensaje"];
+            if (id == 1)
+            {
+                lista = repositorioInmueble.ObtenerTodos();
+            }
+
+            else if (id == 2)
+            {
+                lista = repositorioInmueble.ObtenerTodosDisponible();
+            }
+
+            else if (id == 3)
+            {
+                lista = repositorioInmueble.ObtenerTodosNoDisponible();
+            }
+
             return View(lista);
         }
+        public ActionResult Activar(int id)
+        {
+            var i = repositorioInmueble.ObtenerPorId(id);
 
-        //public ActionResult PorPropietario(int id)
-        //{
-        //    var lista = repositorioInmueble.ObtenerTodos();//repositorio.ObtenerPorPropietario(id);
-        //    //if (TempData.ContainsKey("Id"))
-        //    //    ViewBag.Id = TempData["Id"];
-        //    //if (TempData.ContainsKey("Mensaje"))
-        //    //    ViewBag.Mensaje = TempData["Mensaje"];
-        //    //ViewBag.Id = id;
-        //    //ViewBag.Propietario = repoPropietario.
-        //    return View("Index", lista);
-        //}
+            return View(i);
+        }
+
+        // POST: Inmuebles/Delete/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Policy = "Administrador")]
+
+        public ActionResult Activar(int id, Inmueble entidad)
+        {
+            try
+            {
+                //var res = repositorioInmueble.ObtenerPorId(id);
+                //return View(res);
+                repositorioInmueble.Publicado(id);
+                return RedirectToAction(nameof(Index));
+            }
+            catch//(Exception ex)
+            {
+                return View();
+            }
+
+        }
+
 
         // GET: InmueblesController/Details/5
         public ActionResult Details(int id)
@@ -51,9 +78,9 @@ namespace Inmobiliaria_2022.Controllers
         // GET: InmueblesController/Create
         public ActionResult Create()
         {
-            //ViewBag.TipoNombre = new SelectList(Inmueble.ObtenerTiposIDictionary().Select(x => new { Value = x.Key, Text = x.Value.Replace("_", " ") }), "Value", "Text");
-            ViewBag.TipoNombre = Inmueble.ObtenerTiposIDictionary();
             ViewBag.Propietarios = repositorioPropietario.ObtenerTodos();
+            ViewBag.TipoNombre = Inmueble.ObtenerTiposIDictionary();
+
             return View();
         }
 
@@ -73,6 +100,7 @@ namespace Inmobiliaria_2022.Controllers
                 else
                 {
                     ViewBag.Propietarios = repositorioPropietario.ObtenerTodos();
+                    ViewBag.TipoNombre = Inmueble.ObtenerTiposIDictionary();
                     return View(entidad);
                 }
             }
@@ -89,6 +117,7 @@ namespace Inmobiliaria_2022.Controllers
         {
             var entidad = repositorioInmueble.ObtenerPorId(id);
             ViewBag.Propietarios = repositorioPropietario.ObtenerTodos();
+            ViewBag.TipoNombre = Inmueble.ObtenerTiposIDictionary();
             //if (TempData.ContainsKey("Mensaje"))
             //    ViewBag.Mensaje = TempData["Mensaje"];
             //if (TempData.ContainsKey("Error"))

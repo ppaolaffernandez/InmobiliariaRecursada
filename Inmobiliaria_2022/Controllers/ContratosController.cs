@@ -58,6 +58,7 @@ namespace Inmobiliaria_2022.Controllers
             try
             {
                 repositorioContrato.Alta(contrato);
+                repositorioInmueble.NoPublicado(contrato.InmuebleId);
                 return RedirectToAction(nameof(Index));
             }
             catch

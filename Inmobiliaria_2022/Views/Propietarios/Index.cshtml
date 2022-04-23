@@ -3,12 +3,15 @@
 @{
     ViewData["Title"] = "Propietarios";
 }
-
-<h1>Propietarios</h1>
-
-<p>
-    <a asp-action="Create">Crear nuevo </a>
-</p>
+<div class="card bg-light border border-primary">
+    <div class="card-header border-bottom border-primary bg-light text-center">
+        <h3>Propietario</h3>
+    </div>
+    <div class="card-header border-bottom border-primary bg-light">
+        <a class="btn btn-success text-white mr-2" asp-action="Create">Crear</a>
+    </div>
+    <div class="card-body">
+        <h5 class="card-title text-primary">Lista</h5>
 <table class="table">
     <thead>
         <tr>
@@ -63,13 +66,13 @@
            <td>
 				@*<a asp-action="Edit" asp-route-id="@item.Id" title="Editar">Editar</a>
 				<a asp-action="Delete" asp-route-id="@item.Id" title="Eliminar">Eliminar</a>*@	           
-               
+       
                   @Html.ActionLink("Editar", "Edit", new { id=item.Id }) |
                   @Html.ActionLink("Detalles", "Details", new { id=item.Id}) |
-                  @Html.ActionLink("Eliminar", "Delete", new {id=item.Id })
-                  
-			</td>
-        </tr>
-}
+                  @Html.ActionLink("Eliminar", "Delete", new {id=item.Id })                 
+		  </td>
+        </tr>}
     </tbody>
-</table>
+  </table>
+ </div>
+</div>

@@ -3,13 +3,11 @@
 @{
     ViewData["Title"] = "eliminar";
 }
-
-<h1>Eliminar</h1>
-
-<h4>¿Estás seguro de que quieres eliminar este inmueble?</h4>
-<div>
-    <h4>Inmueble</h4>
-    <hr />
+<div class="card bg-light border border-primary">
+        <div class="card-header border-bottom border-primary bg-light">
+            <h4 class="card-title text-primary mt-2">Eliminar Inmueble</h4>
+        </div>
+        <div class="card-body">
     <dl class="row">
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Id)
@@ -78,8 +76,10 @@
     
      <form asp-action="Delete">
         <div class="form-group">
-           <input type="submit" value="Eliminar" class="btn btn-danger" />
-           <a class="btn btn-secondary" asp-action="Index">Volver a Lista</a>
+            <input type="submit" value="Eliminar" class="btn btn-danger" />
+            <a class="btn btn-secondary" asp-action="Index">Volver a Lista</a>
         </div>
-      </form>
+    </form>
+
+    </div>
 </div>

@@ -4,12 +4,11 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Crear</h1>
-
-<h4>Pago</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
+<div class="card bg-light border border-primary">
+        <div class="card-header border-bottom border-primary bg-light">
+            <h4 class="card-title text-primary">Crear Pago</h4>
+        </div>
+        <div class="card-body">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             
@@ -39,26 +38,21 @@
             <div class="form-group">
                 <label class="control-label">Propiedad</label>
                 <input class="form-control" value="@ViewBag.Contrato.inmueble.Direccion @ViewBag.Contrato.inmueble.Costo"  readonly/> 
-            </div>
-            
+            </div>  
 
             <div class="form-group">
                 <label class="control-label">Inquilino</label>
                 <input class="form-control" value="@ViewBag.Contrato.inquilino.Nombre @ViewBag.Contrato.inquilino.Apellido" readonly />
             </div>
             <input asp-for="ContratoId" class="form-control" type="hidden" value="@ViewBag.Contrato.Id" />@*exit*@
+            
             <div class="form-group">
                 <input type="submit" value="Crear" class="btn btn-primary" />
-@*                <a asp-controller="Pagos" asp-action="ListaPagos">Volver al listado</a>preg j
-*@            </div>
+                <a asp-controller="Pagos" asp-action="ListaPagos" asp-route-id="@ViewBag.Contrato.Id">Volver</a>
+            </div>
         </form>
     </div>
 </div>
-
-    @*<a asp-action="Index">Volver al listado</a>
-   <a asp-controller="Pagos" asp-action="ListaPagos">Volver al listado</a> exitjho *@
-
-
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

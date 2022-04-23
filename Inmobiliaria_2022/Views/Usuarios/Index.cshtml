@@ -4,11 +4,15 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Usuarios</h1>
-
-<p>
-    <a asp-action="Create">Crear Nuevo</a>
-</p>
+<div class="card bg-light border border-primary">
+    <div class="card-header border-bottom border-primary bg-light text-center">
+        <h3>Usuario</h3>
+    </div>
+    <div class="card-header border-bottom border-primary bg-light">
+        <a class="btn btn-success text-white mr-2" asp-action="Create">Crear</a>
+    </div>
+    <div class="card-body">
+        <h5 class="card-title text-primary">Lista</h5>
 <table class="table">
     <thead>
         <tr>
@@ -27,6 +31,9 @@
             @*<th>
                 @Html.DisplayNameFor(model => model.Clave)
             </th>*@
+                <th>
+                    @Html.DisplayNameFor(model => model.Avatar) @*avatar agreg*@
+                </th>
             <th>
                 @Html.DisplayNameFor(model => model.Rol)
             </th>
@@ -54,6 +61,12 @@
            @* <td>
                 @Html.DisplayFor(modelItem => item.Clave)
             </td>*@
+            <td>
+                @*if(@item.Avatar != null )//vacio
+                {*@
+                    <img src="@item.Avatar" class="rounded-circle" alt="Perfil" width="35" height="35">
+                @*else{}*@
+			</td>
             @*<td>
                 @Html.DisplayFor(modelItem => item.Rol)
             </td>*@
@@ -69,3 +82,5 @@
 }
     </tbody>
 </table>
+</div>
+</div>

@@ -3,12 +3,10 @@
 @{
     ViewData["Title"] = "Details";
 }
-
-<h1>Detalles</h1>
-
-<div>
-    <h4>Propietario</h4>
-    <hr />
+<div class="card bg-light border border-primary">
+    <div class="card-header border-bottom border-primary bg-light">
+        <h4 class="card-title text-primary mt-2">Propietario</h4>
+    </div>
     <dl class="row">
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Id)
@@ -55,6 +53,12 @@
     </dl>
 </div>
 <div>
-    @Html.ActionLink("Edit", "Edit", new {  id = Model.Id  }) |
-    <a asp-action="Index">Volver al Listado</a>
+@*    @Html.ActionLink("Edit", "Edit", new {  id = Model.Id  }) |<a asp-action="Index">Volver al Listado</a>*@
+</div>
+ <form asp-action="Details">
+        <div class="form-group">
+            <input type="submit" value="Detalle" class="btn btn-danger" />
+            <a class="btn btn-secondary" asp-action="Index">Volver al Lista</a>
+        </div>
+    </form>
 </div>

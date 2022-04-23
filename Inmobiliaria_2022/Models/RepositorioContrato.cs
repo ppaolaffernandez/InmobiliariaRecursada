@@ -95,10 +95,13 @@ namespace Inmobiliaria_2022.Models
 		{
 			string sql = $" SELECT c.Id, Descripcion, FechaAlta, FechaBaja, Monto, c.InmuebleId, c.InquilinoId," +
 				$" iq.Nombre, iq.Apellido," +
-				$" i.Direccion, i.Costo" +
+				$" i.Direccion, i.Costo," +
+				$" p.Nombre, p.Apellido" +
 				$" FROM Contratos c join Inmuebles i ON c.InmuebleId = i.Id " +
-                $"				    join Inquilinos iq ON c.InquilinoId = iq.Id";
-			using (var command = new SqlCommand(sql, connection))
+                $"				    join Inquilinos iq ON c.InquilinoId = iq.Id " +
+				$"				    join Propietarios p ON p.Id = i.PropietarioId";
+
+				using (var command = new SqlCommand(sql, connection))
 			{
 				command.CommandType = CommandType.Text;
 				connection.Open();
@@ -123,6 +126,11 @@ namespace Inmobiliaria_2022.Models
 						{
 							Direccion = reader.GetString(9),
 							Costo = reader.GetDecimal(10),
+							Propietario = new Propietario
+							{
+								Nombre = reader.GetString(11),
+								Apellido = reader.GetString(12),
+							},
 						},
 					};
 					res.Add(a);

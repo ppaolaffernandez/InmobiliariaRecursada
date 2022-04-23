@@ -14,10 +14,14 @@ namespace Inmobiliaria_2022.Controllers
     public class UsuariosController : Controller
     {
         private readonly IConfiguration configuracion;
+        private readonly IWebHostEnvironment environment;
+
         private readonly RepositorioUsuario repositorioUsuario;
-        public UsuariosController(IConfiguration configuration)
+        public UsuariosController(IConfiguration configuration, IWebHostEnvironment environment)
         {
             this.configuracion = configuration;
+            this.environment = environment;
+
             repositorioUsuario = new RepositorioUsuario(configuration);
         }
         // GET: UsuariosController
@@ -54,6 +58,7 @@ namespace Inmobiliaria_2022.Controllers
             {
                 ViewBag.Roles = Usuario.ObtenerRoles();
                 return View();
+                //return RedirectToAction(nameof(Index)); saq 22/04/2022
             }
             try
             {
@@ -64,63 +69,42 @@ namespace Inmobiliaria_2022.Controllers
                 iterationCount: 1000,
                 numBytesRequested: 256 / 8));
                 u.Clave = hashed;
-                u.Rol = User.IsInRole("SuperAdministrador") ? u.Rol : (int)enRoles.Empleado;
+                u.Rol = User.IsInRole("Administrador") ? u.Rol : (int)enRoles.Empleado;
                 var nbreRnd = Guid.NewGuid();//posible nombre aleatorio
                 int res = repositorioUsuario.Alta(u);
-
+                if (u.AvatarFile != null && u.Id > 0) /*22/04*/
+                {
+                    string wwwPath = environment.WebRootPath;
+                    string path = Path.Combine(wwwPath, "Uploads");
+                    if (!Directory.Exists(path))
+                    {
+                        Directory.CreateDirectory(path);
+                    }
+                    //Path.GetFileName(u.AvatarFile.FileName);//este nombre se puede repetir
+                    string fileName = "avatar_" + u.Id + Path.GetExtension(u.AvatarFile.FileName);
+                    string pathCompleto = Path.Combine(path, fileName);
+                    u.Avatar = Path.Combine("/Uploads", fileName);
+                    // Esta operación guarda la foto en memoria en el ruta que necesitamos
+                    using (FileStream stream = new FileStream(pathCompleto, FileMode.Create))
+                    {
+                        u.AvatarFile.CopyTo(stream);
+                    }
+                    repositorioUsuario.Modificacion(u);
+                }
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (Exception ex)
             {
                 ViewBag.Roles = Usuario.ObtenerRoles();
                 return View();
             }
         }
+            
 
-        // GET: UsuariosController/Edit/5
-        //[Authorize(Policy ="Administrador")]
-        public ActionResult Edit(int id)
-        {
-            ViewData["Title"] = "Editar usuario";
-            var u = repositorioUsuario.ObtenerPorId(id);
-            ViewBag.Roles = Usuario.ObtenerRoles();
-            return View(u);
-        }
+        
 
-        // POST: UsuariosController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        //[Authorize]
-        //[Authorize(Policy = "Administrador")]
-        public ActionResult Edit(int id, Usuario u)
-        {
-            var vista = "Edit";
-            try
-            {
-                if (!User.IsInRole("Administrador"))
-                {
-                    vista = "Perfil";
-                    var usuarioActual = repositorioUsuario.ObtenerPorEmail(User.Identity.Name);
-                    if (usuarioActual.Id != id)//si no es admin, solo puede modificarse él mismo
-                    {
-                        repositorioUsuario.Modificacion(u);
-                        return RedirectToAction(nameof(Index), "Home");
-                    }
-                    else
-                    {
-                        repositorioUsuario.Modificacion(u);
-                    }
-                }
-                // TODO: Add update logic here
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                ViewBag.Roles = Usuario.ObtenerRoles();
-                return View(vista, u);
-            }
-        }
+        
+        
 
         // GET: UsuariosController/Delete/5
         [Authorize(Policy = "Administrador")]
@@ -134,10 +118,11 @@ namespace Inmobiliaria_2022.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Policy = "Administrador")]
-        public ActionResult Delete(int id, Usuario entidad)
+        public ActionResult Delete(int id, Usuario usuario)
         {
             try
             {
+                //if (System.IO.File.Exists(Path.Combine(environment.WebRootPath, "Uploads", "avatar" + id + Path.GetExtension(usuario.Avatar)));
                 repositorioUsuario.Baja(id);
                 return RedirectToAction(nameof(Index));
             }
@@ -166,15 +151,15 @@ namespace Inmobiliaria_2022.Controllers
                     //Convertir la clave de texto plano que tipio el usuario en un correspondiente hashed
                     string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
                     password: login.Clave,
-                    salt: System.Text.Encoding.ASCII.GetBytes(configuracion["Salt"]),//es un string ,obtine los byte
+                    salt: System.Text.Encoding.ASCII.GetBytes(configuracion["Salt"]),
                     prf: KeyDerivationPrf.HMACSHA1,
                     iterationCount: 1000,
                     numBytesRequested: 256 / 8));
 
-                    var e = repositorioUsuario.ObtenerPorEmail(login.Email);//Obtiene el usuario por el email(el q el dice q es)
+                    var e = repositorioUsuario.ObtenerPorEmail(login.Email);
 
-                    //no existia ese usuario con email o las claves no estan bien
-                    if (e == null || e.Clave != hashed) //Cuando lo recupero reviso q la clave guardada en la base de datos sea igual q la q el puso                                                                               
+                    
+                    if (e == null || e.Clave != hashed)                                                                                
                     {
 
                         ModelState.AddModelError("", "El email o clave no son correctos");
@@ -187,8 +172,9 @@ namespace Inmobiliaria_2022.Controllers
                        new Claim("TipoDeUsuario", e.RolNombre),
                        new Claim("FullName", e.Nombre + " " + e.Apellido),
                        new Claim(ClaimTypes.Role, e.RolNombre),
+                        new Claim("Avatar", e.Avatar), /*Img*/
                     };
-                    //claimsIdentity lleva como paraemtro el listado de esas claim y el nombre de la autenticwcion
+                    
                     var claimsIdentity = new ClaimsIdentity(
                     claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
@@ -215,6 +201,64 @@ namespace Inmobiliaria_2022.Controllers
                 CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Index", "Home");
         }
+
+        [Authorize] /*22/04 (edita empleado) min 1:47*/
+        public ActionResult Perfil()
+        {
+            ViewData["Title"] = "Mi perfil";
+            var u = repositorioUsuario.ObtenerPorEmail(User.Identity.Name);
+            ViewBag.Roles = Usuario.ObtenerRoles();
+            return View("Edit", u);
+        }
+
+        // GET: UsuariosController/Edit/5
+        [Authorize(Policy ="Administrador")]
+        public ActionResult Edit(int id)
+        {
+            ViewData["Title"] = "Editar usuario";
+            var u = repositorioUsuario.ObtenerPorId(id);
+            ViewBag.Roles = Usuario.ObtenerRoles();
+            return View(u);
+        }
+        // POST: UsuariosController/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize]
+        public ActionResult Edit(int id, Usuario u)//Controlar contraseña min 1:21
+        {
+            var vista = nameof(Edit);
+            try
+            {
+                if (!User.IsInRole("Administrador"))
+                {
+                    vista = nameof(Perfil);
+                    var usuarioActual = repositorioUsuario.ObtenerPorEmail(User.Identity.Name);
+                    if (usuarioActual.Id != id)//si no es admin, solo puede modificarse él mismo
+                    {
+                        repositorioUsuario.Modificacion(u);
+                        return RedirectToAction(nameof(Index), "Home");
+
+                    }
+                    else
+                    {
+                        repositorioUsuario.Modificacion(u);
+                        return RedirectToAction(nameof(Index));
+                    }
+                }
+                // TODO: Add update logic here
+                return RedirectToAction(vista);
+
+                //return RedirectToAction(nameof(Index)); 22/4
+            }
+            catch (Exception ex)
+            {
+                //ViewBag.Roles = Usuario.ObtenerRoles(); 22/4
+                //return View(vista, u);
+                throw;
+            }
+
+        }
+        
     }
 }
     

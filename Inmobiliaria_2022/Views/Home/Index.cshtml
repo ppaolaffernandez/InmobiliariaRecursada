@@ -2,7 +2,30 @@
     ViewData["Title"] = "Pagina de inicio";
 }
 
-<div class="text-center" >
-    </p>Bienvenido a tu inmobiliaria preferida por su excelencia<p>
-    @*<p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>*@
-</div>
+@*<div class="text-center" >
+    </p>Bienvenidos!!<p>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>*@
+@if (!User.Identity.IsAuthenticated)
+{
+
+    <div class="card card-cascade wider reverse mt-4">
+
+        <div class="card-body card-body-cascade text-center">
+
+            <h4 class="card-title"><strong>Inmobiliaria</strong></h4>
+            <h6 class="font-weight-bold indigo-text">Bienvenidos</h6>
+
+            <div>
+                <a class="btn btn-outline-success" asp-area="" asp-controller="Usuarios" asp-action="Login">Acceder</a>
+            </div>
+            <hr />
+
+           
+
+        </div>
+
+
+    </div>
+
+}

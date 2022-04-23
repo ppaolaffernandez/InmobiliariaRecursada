@@ -4,12 +4,11 @@
     ViewData["Title"] = "Delete";
 }
 
-<h1>Eliminar</h1>
-
-<h4>¿Seguro que desea eliminar el propietario?</h4>
-<div>
-    <h4>Propietario</h4>
-    <hr />
+<div class="card bg-light border border-primary">
+        <div class="card-header border-bottom border-primary bg-light">
+            <h4 class="card-title text-primary mt-2">Eliminar Propietario</h4>
+        </div>
+        <div class="card-body">
     <dl class="row">
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Id)
@@ -61,4 +60,5 @@
             <a class="btn btn-secondary" asp-action="Index">Volver a Lista</a>
         </div>
     </form>
+   </div>
 </div>

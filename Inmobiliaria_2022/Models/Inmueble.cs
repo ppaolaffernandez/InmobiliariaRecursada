@@ -13,7 +13,7 @@ namespace Inmobiliaria_2022.Models
         Local = 6,
         Mina = 7,
         Parcela = 8,
-        Centro_comercial = 9,
+        CentroComercial = 9,
         Finca = 10,
     }
     public class Inmueble
@@ -31,8 +31,8 @@ namespace Inmobiliaria_2022.Models
         public decimal Superficie { get; set; }
         public decimal Latitud { get; set; }
         public decimal Longitud { get; set; }
-        public int EstaPublicado { get; set; }
-        public int EstaHabilitado { get; set; }
+        public Boolean EstaPublicado { get; set; }
+        public Boolean EstaHabilitado { get; set; }
         public int PropietarioId { get; set; }
         [ForeignKey(nameof(PropietarioId))]
         public Propietario? Propietario { get; set; }//Sin ? no me deja create inmueb

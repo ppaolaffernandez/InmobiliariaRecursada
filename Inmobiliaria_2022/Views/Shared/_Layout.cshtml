@@ -12,35 +12,47 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Inmobiliaria_2022</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Inmobiliaria</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">   
                     <ul class="navbar-nav flex-grow-1">
-                        @if (!User.Identity.IsAuthenticated){ <li class="nav-item"><a class="nav-link text-dark" asp-area="" asp-controller="Usuarios" asp-action="Index">Iniciar Sesion</a></li>}
-                        else
-                        {
+                        @if (!User.Identity.IsAuthenticated){ <li class="nav-item"><a class="nav-link text-dark" asp-area="" asp-controller="Usuarios" asp-action="Index"></a></li>}
+                        else{
+                            @if (User.IsInRole("Administrador")){
+                               <li class="nav-item"><a class="nav-link text-dark" asp-area="" asp-controller="Usuarios" asp-action="Index">Usuarios</a></li>}
+                        
                          <li class="nav-item"><a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Inicio</a></li>
-                         <li class="nav-item"><a class="nav-link text-dark" asp-area="" asp-controller="Usuarios" asp-action="Index">Usuarios</a></li>
                          <li class="nav-item"><a class="nav-link text-dark" asp-area="" asp-controller="Propietarios" asp-action="Index">Propietario</a></li>
                          <li class="nav-item"><a class="nav-link text-dark" asp-area="" asp-controller="Inquilinos" asp-action="Index">Inquilino</a></li>
                          <li class="nav-item"><a class="nav-link text-dark" asp-area="" asp-controller="Inmuebles" asp-action="Index">Inmueble</a> </li>
                          <li class="nav-item"><a class="nav-link text-dark" asp-area="" asp-controller="Contratos" asp-action="Index">Contrato</a></li> 
-
-                         <li class="nav-item dropdown ml-3">
-                             <a class="nav-link text-dark" id="navbarDropdownUsuario" data-toggle="dropdown" href="#">@User.Identity.Name</a>                    
-                             <div class="dropdown-menu" aria-labelledby="navbarDropdownUsuario">
-                                <form class="font-weight-bold ">
-                                    <div class="form-group">
-                                        <ul class="list-group mb-2">
-                                            <li class="list-group-item active text-center bg-primary">@(User.FindFirst("FullName").Value)</li>
-                                            <li class="list-group-item text-center text-primary">@(User.FindFirst("TipoDeUsuario").Value)</li>
-                                        </ul>
-                                        <hr>
+                         
+                         @*ImagenxDireccionint*@
+                         <li class="nav-item dropdown user user-menu">
+                             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
+                                 <img src="@(User.FindFirst("Avatar").Value)" class="rounded-circle" alt="Cinque Terre" width="30" height="30">
+                                 <span class="hidden-xs">@User.Identity.Name</span>
+                             </a>
+                             <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                                <!-- User image -->
+                                <li class="user-header bg-primary">
+                                       <img src="@(User.FindFirst("Avatar").Value)" class="rounded-circle" alt="Cinque Terre" width="200" height="200">
+                                   <ul class="list-group mb-2">
+                                       <li class="list-group-item active text-center bg-primary">@(User.FindFirst("FullName").Value)</li>
+                                       <li class="list-group-item text-center text-primary">@(User.FindFirst("TipoDeUsuario").Value)</li>
+                                   </ul>
+                                </li>                                            
+                                <!-- Menu Footer-->
+                                <li class="user-footer">
+                                    <div class="pull-left">
+@*                                        <a href="#" class="btn btn-default btn-flat">Editar</a></div><div class="pull-right">
+*@                                        <a class="dropdown-item text-dark" asp-controller="Usuarios" asp-action="Perfil">Editar</a>
                                         <a class="dropdown-item text-dark" asp-controller="Usuarios" asp-action="Logout">Salir</a>
                                     </div>
-                                </form>
-                             </div>
-                         </li>
+                                </li>
+                             </ul>
+                        </li>
+
                         }
                      </ul>
                 </div>

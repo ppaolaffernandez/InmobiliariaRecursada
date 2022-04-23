@@ -17,8 +17,8 @@ namespace Inmobiliaria_2022.Models
             int res = -1;
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string sql = $"INSERT INTO Usuarios (Nombre, Apellido, Email, Clave, Rol) " +
-                    $"VALUES (@nombre, @apellido, @email, @clave, @rol);" +
+                string sql = $"INSERT INTO Usuarios (Nombre, Apellido, Email, Clave, Avatar, Rol) " +
+                    $"VALUES (@nombre, @apellido, @email, @clave, @avatar, @rol);" +
                     $"SELECT SCOPE_IDENTITY();";//devuelve el id insertado
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
@@ -27,7 +27,12 @@ namespace Inmobiliaria_2022.Models
                     command.Parameters.AddWithValue("@apellido", u.Apellido);
                     command.Parameters.AddWithValue("@email", u.Email);
                     command.Parameters.AddWithValue("@clave", u.Clave);
+                    if (String.IsNullOrEmpty(u.Avatar))
+                        command.Parameters.AddWithValue("@avatar", DBNull.Value);
+                    else
+                        command.Parameters.AddWithValue("@avatar", u.Avatar);
                     command.Parameters.AddWithValue("@rol", u.Rol);
+                    command.Parameters.AddWithValue("@id", u.Id);
                     connection.Open();
                     res = Convert.ToInt32(command.ExecuteScalar());
                     u.Id = res;
@@ -58,7 +63,7 @@ namespace Inmobiliaria_2022.Models
             int res = -1;
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string sql = $"UPDATE Usuarios SET Nombre=@nombre, Apellido=@apellido, Email=@email, Clave=@clave, Rol=@rol " +
+                string sql = $"UPDATE Usuarios SET Nombre=@nombre, Apellido=@apellido, Email=@email, Clave=@clave, Avatar=@avatar, Rol=@rol " +
                     $"WHERE Id = @id";
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
@@ -67,6 +72,7 @@ namespace Inmobiliaria_2022.Models
                     command.Parameters.AddWithValue("@apellido", u.Apellido);
                     command.Parameters.AddWithValue("@email", u.Email);
                     command.Parameters.AddWithValue("@clave", u.Clave);
+                    command.Parameters.AddWithValue("@avatar", u.Avatar);
                     command.Parameters.AddWithValue("@rol", u.Rol);
                     command.Parameters.AddWithValue("@id", u.Id);
                     connection.Open();
@@ -82,8 +88,8 @@ namespace Inmobiliaria_2022.Models
             Usuario u = null;
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string sql = $"SELECT Id, Nombre, Apellido, Email, Clave, Rol FROM Usuarios" +
-                    $" WHERE Email=@email";
+                string sql = $"SELECT Id, Nombre, Apellido, Email, Clave, Avatar, Rol FROM Usuarios" +
+                             $" WHERE Email=@email";
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
                     command.CommandType = CommandType.Text;
@@ -99,7 +105,10 @@ namespace Inmobiliaria_2022.Models
                             Apellido = reader.GetString(2),
                             Email = reader.GetString(3),
                             Clave = reader.GetString(4),
-                            Rol = reader.GetInt32(5),
+                            Avatar = reader["Avatar"].ToString(),
+
+                            //Avatar = reader.GetString(5),
+                            Rol = reader.GetInt32(6),
                         };
                     }
                     connection.Close();
@@ -113,8 +122,8 @@ namespace Inmobiliaria_2022.Models
             IList<Usuario> res = new List<Usuario>();
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string sql = $"SELECT Id, Nombre, Apellido, Email, Clave, Rol" +
-                    $" FROM Usuarios";
+                string sql = $" SELECT Id, Nombre, Apellido, Email, Clave, Avatar, Rol " +
+                             $" FROM Usuarios";
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
                     command.CommandType = CommandType.Text;
@@ -129,7 +138,10 @@ namespace Inmobiliaria_2022.Models
                             Apellido = reader.GetString(2),
                             Email = reader.GetString(3),
                             Clave = reader.GetString(4),
-                            Rol = reader.GetInt32(5),
+                            Avatar = reader["Avatar"].ToString(),
+
+                            //Avatar = reader.GetString(5),
+                            Rol = reader.GetInt32(6),
                         };
                         res.Add(u);
                     }
@@ -143,7 +155,7 @@ namespace Inmobiliaria_2022.Models
             Usuario u = null;
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string sql = $"SELECT Id, Nombre, Apellido, Email, Clave, Rol FROM Usuarios" +
+                string sql = $"SELECT Id, Nombre, Apellido, Email, Clave, Avatar, Rol FROM Usuarios" +
                     $" WHERE Id=@id";
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
@@ -160,7 +172,10 @@ namespace Inmobiliaria_2022.Models
                             Apellido = reader.GetString(2),
                             Email = reader.GetString(3),
                             Clave = reader.GetString(4),
-                            Rol = reader.GetInt32(5),
+                            Avatar = reader["Avatar"].ToString(),
+
+                            //Avatar = reader.GetString(5),
+                            Rol = reader.GetInt32(6),
                         };
                     }
                     connection.Close();
