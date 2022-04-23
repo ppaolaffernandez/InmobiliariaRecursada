@@ -63,7 +63,7 @@ namespace Inmobiliaria_2022.Models
             int res = -1;
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string sql = $"UPDATE Usuarios SET Nombre=@nombre, Apellido=@apellido, Email=@email, Clave=@clave, Avatar=@avatar, Rol=@rol " +
+                string sql = $"UPDATE Usuarios SET Nombre=@nombre, Apellido=@apellido, Email=@email, Rol=@rol " +
                     $"WHERE Id = @id";
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
@@ -71,8 +71,6 @@ namespace Inmobiliaria_2022.Models
                     command.Parameters.AddWithValue("@nombre", u.Nombre);
                     command.Parameters.AddWithValue("@apellido", u.Apellido);
                     command.Parameters.AddWithValue("@email", u.Email);
-                    command.Parameters.AddWithValue("@clave", u.Clave);
-                    command.Parameters.AddWithValue("@avatar", u.Avatar);
                     command.Parameters.AddWithValue("@rol", u.Rol);
                     command.Parameters.AddWithValue("@id", u.Id);
                     connection.Open();
@@ -183,6 +181,6 @@ namespace Inmobiliaria_2022.Models
             }
             return u;
         }
-        
+
     }
 }

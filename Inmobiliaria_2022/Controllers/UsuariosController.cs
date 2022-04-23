@@ -47,7 +47,7 @@ namespace Inmobiliaria_2022.Controllers
         {
             ViewBag.Roles = Usuario.ObtenerRoles();
             return View();
-        }      
+        }
         [HttpPost]
         // POST: UsuariosController/Create
         //[Authorize(Policy = "Administrador")]
@@ -99,12 +99,12 @@ namespace Inmobiliaria_2022.Controllers
                 return View();
             }
         }
-            
 
-        
 
-        
-        
+
+
+
+
 
         // GET: UsuariosController/Delete/5
         [Authorize(Policy = "Administrador")]
@@ -158,8 +158,8 @@ namespace Inmobiliaria_2022.Controllers
 
                     var e = repositorioUsuario.ObtenerPorEmail(login.Email);
 
-                    
-                    if (e == null || e.Clave != hashed)                                                                                
+
+                    if (e == null || e.Clave != hashed)
                     {
 
                         ModelState.AddModelError("", "El email o clave no son correctos");
@@ -174,7 +174,7 @@ namespace Inmobiliaria_2022.Controllers
                        new Claim(ClaimTypes.Role, e.RolNombre),
                         new Claim("Avatar", e.Avatar), /*Img*/
                     };
-                    
+
                     var claimsIdentity = new ClaimsIdentity(
                     claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
@@ -212,7 +212,7 @@ namespace Inmobiliaria_2022.Controllers
         }
 
         // GET: UsuariosController/Edit/5
-        [Authorize(Policy ="Administrador")]
+        [Authorize(Policy = "Administrador")]
         public ActionResult Edit(int id)
         {
             ViewData["Title"] = "Editar usuario";
@@ -239,13 +239,15 @@ namespace Inmobiliaria_2022.Controllers
                         return RedirectToAction(nameof(Index), "Home");
 
                     }
-                    else
-                    {
-                        repositorioUsuario.Modificacion(u);
-                        return RedirectToAction(nameof(Index));
-                    }
+
                 }
                 // TODO: Add update logic here
+                else
+                {
+                    repositorioUsuario.Modificacion(u);
+                    return RedirectToAction(nameof(Index));
+                }
+
                 return RedirectToAction(vista);
 
                 //return RedirectToAction(nameof(Index)); 22/4
@@ -258,7 +260,7 @@ namespace Inmobiliaria_2022.Controllers
             }
 
         }
-        
+
     }
 }
-    
+
