@@ -385,6 +385,51 @@ namespace Inmobiliaria_2022.Models
 			return res;
 		}
 
+		public IList<Inmueble> ObtenerInmueblePorDni(string dni)
+		{
+			IList<Inmueble> res = new List<Inmueble>();
+			Inmueble i = null;
+			using (SqlConnection connection = new SqlConnection(connectionString))
+			{
+				string sql = $"SELECT i.Id, Direccion, Ambientes, Tipo, Costo, Superficie, Latitud, Longitud, i.PropietarioId, " +
+					$" p.Nombre, p.Apellido, p.dni " +
+					$" FROM Propietarios p  INNER JOIN Inmuebles i ON p.Id = i.PropietarioId" +
+					$" WHERE p.Dni = @dni";
+				using (var command = new SqlCommand(sql, connection))
+				{
+					command.CommandType = CommandType.Text;
+					command.Parameters.Add("@dni", SqlDbType.VarChar).Value = dni;
+					connection.Open();
+					var reader = command.ExecuteReader();
+					while (reader.Read())
+					{
+						i = new Inmueble
+						{
+							Id = reader.GetInt32(0),
+							Direccion = reader.GetString(1),
+							Ambientes = reader.GetInt32(2),
+							Tipo = reader.GetInt32(3),
+							Costo = reader.GetDecimal(4),
+							Superficie = reader.GetDecimal(5),
+							Latitud = reader.GetDecimal(6),
+							Longitud = reader.GetDecimal(7),
+							PropietarioId = reader.GetInt32(8),
+							Propietario = new Propietario
+							{
+								Nombre = reader.GetString(9),
+								Apellido = reader.GetString(10),
+								Dni= reader.GetString(11),
+							},
+
+						};
+						res.Add(i);
+					}
+					connection.Close();
+				}
+			}
+			return res;
+		}
+
 
 	}
 

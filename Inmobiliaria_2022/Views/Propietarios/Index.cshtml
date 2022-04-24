@@ -63,16 +63,16 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Clave)
             </td>*@
-           <td>
+            <td>
 				@*<a asp-action="Edit" asp-route-id="@item.Id" title="Editar">Editar</a>
 				<a asp-action="Delete" asp-route-id="@item.Id" title="Eliminar">Eliminar</a>*@	           
-       
-                  @Html.ActionLink("Editar", "Edit", new { id=item.Id }) |
-                  @Html.ActionLink("Detalles", "Details", new { id=item.Id}) |
-                  @Html.ActionLink("Eliminar", "Delete", new {id=item.Id })                 
-		  </td>
+                @Html.ActionLink("Editar", "Edit", new { id=item.Id }) |
+                @Html.ActionLink("Detalles", "Details", new { id=item.Id}) |
+                @Html.ActionLink("Eliminar", "Delete", new {id=item.Id }) | 
+                @Html.ActionLink("Ver Inmueble", "VerInmueble", new {dni=item.Dni })
+		    </td>
         </tr>}
-    </tbody>
-  </table>
+     </tbody>
+   </table>
+  </div>
  </div>
-</div>

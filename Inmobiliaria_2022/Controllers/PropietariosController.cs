@@ -9,11 +9,13 @@ namespace Inmobiliaria_2022.Controllers
     {
         private readonly IConfiguration configuration;
         private readonly RepositorioPropietario repositorioPropietario;
+        private readonly RepositorioInmueble repositorioInmueble;
 
         public PropietariosController(IConfiguration configuration)
         {
             this.configuration = configuration;
             repositorioPropietario = new RepositorioPropietario(configuration);
+            repositorioInmueble = new RepositorioInmueble(configuration);
         }
 
         // GET: PropietariosController
@@ -136,6 +138,18 @@ namespace Inmobiliaria_2022.Controllers
             catch (Exception ex)
             {//poner breakpoints para detectar errores
                 throw;
+            }
+        }
+        public ActionResult VerInmueble(string dni)//recibe 
+        {
+            try
+            {
+                var lista = repositorioInmueble.ObtenerInmueblePorDni(dni);
+                return View(lista);
+            }
+            catch
+            {
+                return View();
             }
         }
     }
