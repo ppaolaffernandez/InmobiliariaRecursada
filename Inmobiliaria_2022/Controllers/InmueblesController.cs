@@ -39,32 +39,28 @@ namespace Inmobiliaria_2022.Controllers
 
             return View(lista);
         }
-        public ActionResult Activar(int id)
-        {
-            var i = repositorioInmueble.ObtenerPorId(id);
+        //public ActionResult Activar(int id)
+        //{
+        //    var i = repositorioInmueble.ObtenerPorId(id);
 
-            return View(i);
-        }
+        //    return View(i);
+        //}
 
         // POST: Inmuebles/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        
         [Authorize(Policy = "Administrador")]
 
-        public ActionResult Activar(int id, Inmueble entidad)
+        public ActionResult Habilitar(int id)
         {
-            try
-            {
-                //var res = repositorioInmueble.ObtenerPorId(id);
-                //return View(res);
-                repositorioInmueble.Publicado(id);
-                return RedirectToAction(nameof(Index));
-            }
-            catch//(Exception ex)
-            {
-                return View();
-            }
-
+            repositorioInmueble.Publicado(id);
+            return RedirectToAction(nameof(Index));
+        }
+        
+        [Authorize(Policy = "Administrador")]
+        public ActionResult Deshabilitar(int id)
+        {
+            repositorioInmueble.NoPublicado(id);
+            return RedirectToAction(nameof(Index));
         }
 
 

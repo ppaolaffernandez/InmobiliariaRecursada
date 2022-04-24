@@ -21,11 +21,36 @@ namespace Inmobiliaria_2022.Controllers
             repositorioInmueble = new RepositorioInmueble(configuration);
         }
         // GET: ContratosController
-        public ActionResult Index()
+        public ActionResult Index(int id,DateTime? fechaIni, DateTime? fechaFin)
         {
+            
+            String hoy = DateTime.Now.ToString("dd/MM/yyyy");
             var lista = repositorioContrato.ObtenerTodos();
+
+            if (id == 1)
+            {
+                lista = repositorioContrato.ObtenerVigentes(id);
+            }
+
+            else if (id == 2)
+            {
+                lista = repositorioContrato.ObtenerNoVigentes(id, fechaIni, fechaFin);
+            }
+
+            else if (id == 3)
+
+
+            {
+                lista = repositorioContrato.ObtenerVigentesxFecha(id, fechaIni, fechaFin);
+            }
+            else if (id == 4)
+            {
+                lista = repositorioContrato.ObtenerInmueblesDisponibles(id, fechaIni, fechaFin);
+            }
+
             return View(lista);
         }
+
 
         // GET: ContratosController/Details/5
         public ActionResult Details(int id)
@@ -44,7 +69,7 @@ namespace Inmobiliaria_2022.Controllers
         // GET: ContratosController/Create
         public ActionResult Create()
         {
-            ViewBag.Inmuebless = repositorioInmueble.ObtenerTodos();
+            ViewBag.Inmuebless = repositorioInmueble.ObtenerTodosDisponible();
             ViewBag.Inquilinoss = repositorioInquilino.ObtenerTodos();
 
             return View();
@@ -71,7 +96,7 @@ namespace Inmobiliaria_2022.Controllers
         public ActionResult Edit(int id)
         {
             var al = repositorioContrato.ObtenerPorId(id);
-            ViewBag.Inmuebless = repositorioInmueble.ObtenerTodos();
+            ViewBag.Inmuebless = repositorioInmueble.ObtenerTodosDisponible();
             ViewBag.Inquilinoss = repositorioInquilino.ObtenerTodos();
             return View(al);
         }
@@ -116,5 +141,15 @@ namespace Inmobiliaria_2022.Controllers
                 return View();
             }
         }
+        //public ActionResult ContratoVigentesxFecha(int vigencia, DateTime? fechaIni, DateTime? fechaFin)
+        //{
+        //    if (fechaIni != null || fechaFin != null)
+        //    {
+        //        var lista = repositorioContrato.ObtenerContratos(vigencia,fechaIni, fechaFin);
+        //        return View(lista);
+        //    }
+
+        //    return View();
+        //}
     }
 }

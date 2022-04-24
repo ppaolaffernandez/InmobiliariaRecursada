@@ -13,6 +13,14 @@
     </div>
     <div class="card-body">
         <h5 class="card-title text-primary">Lista</h5>
+
+        <div class="input-group-prepend mb-2">
+            <a class="btn btn-info" asp-action="Index" asp-route-id="1">Vigentes</a>
+            <a class="btn btn-info" asp-action="Index" asp-route-id="2">No vigentes</a>
+            <a class="btn btn-info" asp-action="Index" asp-route-id="3">Vigentes por fecha</a>
+            <a class="btn btn-info" asp-action="Index" asp-route-id="4">Inmuebles disponibles</a>
+        </div>
+
 <table class="table">
     <thead>
         <tr>
@@ -75,8 +83,9 @@
                 @Html.ActionLink("Editar", "Edit", new {  id=item.Id  }) |
                 @Html.ActionLink("Detalles", "Details", new {  id=item.Id  }) |
                 @Html.ActionLink("Eliminar", "Delete", new {  id=item.Id  }) |
-                <a asp-controller="Pagos" asp-action="ListaPagos" asp-route-id="@item.Id" title="Lista de pagos">Lista de Pagos</a> @*exit*@
-            </td>
+                <a asp-controller="Pagos" asp-action="ListaPagos" asp-route-id="@item.Id" title="Lista de pagos">Lista de Pagos</a> @*exit*@ 
+@*                @Html.ActionLink("VigentesxFechas", "ContratoVigentesxFecha", new {  id=item.Id  }) |
+*@            </td>
         </tr>
 }
     </tbody>

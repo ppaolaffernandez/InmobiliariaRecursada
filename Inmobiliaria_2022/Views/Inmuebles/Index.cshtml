@@ -102,11 +102,11 @@
 
                 @if (item.EstaPublicado == false)
                 {
-                    <a asp-action="Activar" asp-route-id="@item.Id" class="btn btn-success"><i class="fas fa-minus-square"></i>Habilitar</a>                    
+                    <a asp-action="Habilitar" asp-route-id="@item.Id" class="btn btn-success"><i class="fas fa-minus-square"></i>Habilitar</a>                    
                 }
                 else
                 {
-                    <a asp-action="Delete" asp-route-id="@item.Id" class=" btn btn-danger"><i class="fas fa-minus-square"></i>Deshabilitar</a>                                  
+                    <a asp-action="Deshabilitar" asp-route-id="@item.Id" class=" btn btn-danger"><i class="fas fa-minus-square"></i>Deshabilitar</a>                                  
                 }
                            
         </tr>

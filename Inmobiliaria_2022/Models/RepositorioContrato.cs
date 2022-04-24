@@ -99,7 +99,7 @@ namespace Inmobiliaria_2022.Models
 				$" p.Nombre, p.Apellido" +
 				$" FROM Contratos c join Inmuebles i ON c.InmuebleId = i.Id " +
                 $"				    join Inquilinos iq ON c.InquilinoId = iq.Id " +
-				$"				    join Propietarios p ON p.Id = i.PropietarioId";
+				$"				    join Propietarios p ON p.Id = i.PropietarioId ";
 
 				using (var command = new SqlCommand(sql, connection))
 			{
@@ -187,10 +187,229 @@ namespace Inmobiliaria_2022.Models
 				}
 				connection.Close();
 			}
+
 		}
 		return entidad;
 	}
-  }
+		//  contrato entre esas fechas
+		public IList<Contrato> ObtenerVigentes(int id)
+		{		
+			IList<Contrato> res = new List<Contrato>();
+			using (SqlConnection connection = new SqlConnection(connectionString))
+			{
+				string sql = $"SELECT c.Id, Descripcion, FechaAlta, FechaBaja, Monto, c.InmuebleId, c.InquilinoId, " +
+				$" inm.Direccion, " +
+				$" iq.Nombre, iq.Apellido " +
+				$" FROM Contratos c, Inmuebles inm, Inquilinos iq " +
+				$" WHERE c.InmuebleId = inm.Id and " +
+				$"       c.InquilinoId = iq.Id and " +
+				$"       c.FechaBaja >= GETDATE() " +
+                $" ORDER BY c.FechaBaja ";
+
+			//	SELECT c.AlquilerId, c.Descripcion, c.FechaAlta, c.FechaBaja, c.Monto, c.InmuebleId, c.InquilinoId, iq.Nombre iq.Apellido , i.Direccion, i.Costo, i.Tipo, p.Nombre , p.Apellido 
+			//FROM Contratos c JOIN Inquilinos iq ON c.InquilinoId = iq.InquilinoId JOIN nmuebles i ON c.InmuebleId = i.InmuebleId JOIN Propietarios p ON p.PropietarioId = i.PropietarioId WHERE c.FechaBaja >= @hoy
+				using (SqlCommand command = new SqlCommand(sql, connection))
+				{
+					connection.Open();
+					command.CommandType = CommandType.Text; ;
+					command.Parameters.AddWithValue("@id", id);
+					
+
+					var reader = command.ExecuteReader();
+
+					while (reader.Read())
+					{
+						Contrato c = new Contrato()
+						{
+							Id = reader.GetInt32(0),
+						Descripcion = reader.GetString(1),
+						FechaAlta = reader.GetDateTime(2),
+						FechaBaja = reader.GetDateTime(3),
+						Monto = reader.GetDecimal(4),
+						InmuebleId = reader.GetInt32(5),
+						InquilinoId = reader.GetInt32(6),
+						inmueble = new Inmueble
+						{
+							Direccion = reader.GetString(7),
+							Costo = reader.GetDecimal(8),
+						},
+						inquilino = new Inquilino
+						{
+							Nombre = reader.GetString(9),
+							Apellido = reader.GetString(10),
+						},
+					  };
+						res.Add(c);
+					}
+					connection.Close();
+				}
+			}
+			return res;
+		}
+		public IList<Contrato> ObtenerNoVigentes(int id, DateTime? fechaIni, DateTime? fechaFin)
+		{
+			//DECLARE @hoy DATETIME
+			//       SET @hoy = Getdate()
+			IList<Contrato> res = new List<Contrato>();
+			using (SqlConnection connection = new SqlConnection(connectionString))
+			{
+				string sql = $"SELECT c.Id, Descripcion, FechaAlta, FechaBaja, Monto, c.InmuebleId, c.InquilinoId, " +
+				$" inm.Direccion, " +
+				$" iq.Nombre, iq.Apellido " +
+				$" FROM Contratos c, Inmuebles inm, Inquilinos iq " +
+				$" WHERE c.InmuebleId = inm.Id and " +
+				$"       c.InquilinoId = iq.Id and " +
+				$"       c.FechaBaja < @hoy";
+
+				using (SqlCommand command = new SqlCommand(sql, connection))
+				{
+					connection.Open();
+					command.CommandType = CommandType.Text; ;
+					command.Parameters.AddWithValue("@id", id);
+					command.Parameters.AddWithValue("@fechaIni", fechaIni);
+					command.Parameters.AddWithValue("@fechaFin", fechaFin);
+
+					var reader = command.ExecuteReader();
+
+					while (reader.Read())
+					{
+						Contrato c = new Contrato()
+						{
+							Id = reader.GetInt32(0),
+							Descripcion = reader.GetString(1),
+							FechaAlta = reader.GetDateTime(2),
+							FechaBaja = reader.GetDateTime(3),
+							Monto = reader.GetDecimal(4),
+							InmuebleId = reader.GetInt32(5),
+							InquilinoId = reader.GetInt32(6),
+							inmueble = new Inmueble
+							{
+								Direccion = reader.GetString(7),
+								Costo = reader.GetInt32(8),
+							},
+							inquilino = new Inquilino
+							{
+								Nombre = reader.GetString(9),
+								Apellido = reader.GetString(10),
+							},
+						};
+						res.Add(c);
+					}
+					connection.Close();
+				}
+			}
+			return res;
+		}
+		public IList<Contrato> ObtenerVigentesxFecha(int id, DateTime? fechaIni, DateTime? fechaFin)
+		{
+			//DECLARE @hoy DATETIME
+			//       SET @hoy = Getdate()
+			IList<Contrato> res = new List<Contrato>();
+			using (SqlConnection connection = new SqlConnection(connectionString))
+			{
+				string sql = $"SELECT c.Id, Descripcion, FechaAlta, FechaBaja, Monto, c.InmuebleId, c.InquilinoId, " +
+				$" inm.Direccion, " +
+				$" iq.Nombre, iq.Apellido " +
+				$" FROM Contratos c, Inmuebles inm, Inquilinos iq " +
+				$" WHERE c.InmuebleId = inm.Id and " +
+				$"       c.InquilinoId = iq.Id and " +
+				$"       c.FechaBaja BETWEEN @fechaIni AND @fechaFin AND c.FechaBaja >= @hoy";
+
+				
+				using (SqlCommand command = new SqlCommand(sql, connection))
+				{
+					connection.Open();
+					command.CommandType = CommandType.Text; ;
+					command.Parameters.AddWithValue("@id", id);
+					command.Parameters.AddWithValue("@fechaIni", fechaIni);
+					command.Parameters.AddWithValue("@fechaFin", fechaFin);
+
+					var reader = command.ExecuteReader();
+
+					while (reader.Read())
+					{
+						Contrato c = new Contrato()
+						{
+							Id = reader.GetInt32(0),
+							Descripcion = reader.GetString(1),
+							FechaAlta = reader.GetDateTime(2),
+							FechaBaja = reader.GetDateTime(3),
+							Monto = reader.GetDecimal(4),
+							InmuebleId = reader.GetInt32(5),
+							InquilinoId = reader.GetInt32(6),
+							inmueble = new Inmueble
+							{
+								Direccion = reader.GetString(7),
+								Costo = reader.GetInt32(8),
+							},
+							inquilino = new Inquilino
+							{
+								Nombre = reader.GetString(9),
+								Apellido = reader.GetString(10),
+							},
+						};
+						res.Add(c);
+					}
+					connection.Close();
+				}
+			}
+			return res;
+		}
+		public IList<Contrato> ObtenerInmueblesDisponibles(int id, DateTime? fechaIni, DateTime? fechaFin)
+		{
+			//DECLARE @hoy DATETIME
+			//       SET @hoy = Getdate()
+			IList<Contrato> res = new List<Contrato>();
+			using (SqlConnection connection = new SqlConnection(connectionString))
+			{
+				string sql = $"SELECT c.Id, Descripcion, FechaAlta, FechaBaja, Monto, c.InmuebleId, c.InquilinoId, " +
+				$" inm.Direccion, " +
+				$" iq.Nombre, iq.Apellido " +
+				$" FROM Contratos c, Inmuebles inm, Inquilinos iq " +
+				$" WHERE c.InmuebleId = inm.Id and " +
+				$"       c.InquilinoId = iq.Id and " +
+				$"       c.FechaBaja NOT BETWEEN (@fechaIni) AND (@fechaFin) OR c.InmuebleId Is NULL ";
+
+				using (SqlCommand command = new SqlCommand(sql, connection))
+				{
+					connection.Open();
+					command.CommandType = CommandType.Text; ;
+					command.Parameters.AddWithValue("@id", id);
+					command.Parameters.AddWithValue("@fechaIni", fechaIni);
+					command.Parameters.AddWithValue("@fechaFin", fechaFin);
+
+					var reader = command.ExecuteReader();
+
+					while (reader.Read())
+					{
+						Contrato c = new Contrato()
+						{
+							Id = reader.GetInt32(0),
+							Descripcion = reader.GetString(1),
+							FechaAlta = reader.GetDateTime(2),
+							FechaBaja = reader.GetDateTime(3),
+							Monto = reader.GetDecimal(4),
+							InmuebleId = reader.GetInt32(5),
+							InquilinoId = reader.GetInt32(6),
+							inmueble = new Inmueble
+							{
+								Direccion = reader.GetString(7),
+								Costo = reader.GetInt32(8),
+							},
+							inquilino = new Inquilino
+							{
+								Nombre = reader.GetString(9),
+								Apellido = reader.GetString(10),
+							},
+						};
+						res.Add(c);
+					}
+					connection.Close();
+				}
+			}
+			return res;
+		}
+	}
 }
 
 

@@ -368,9 +368,9 @@ namespace Inmobiliaria_2022.Models
 			int res = -1;
 			using (SqlConnection connection = new SqlConnection(connectionString))
 			{
-				string sql = $"UPDATE Inmuebles SET " +
-					"EstaPublicado = @estaPublicado " +
-					"WHERE Id = @id";
+				string sql = $" UPDATE Inmuebles SET " +
+					$" EstaPublicado = @estaPublicado " +
+					$" WHERE Id = @id";
 				using (SqlCommand command = new SqlCommand(sql, connection))
 				{
 					command.CommandType = CommandType.Text;
