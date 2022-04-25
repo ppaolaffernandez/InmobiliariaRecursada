@@ -1,18 +1,15 @@
 ﻿@model Inmobiliaria_2022.Models.LoginView
 
 @{
-    ViewData["Title"] = "Login";
+    ViewData["Title"] = "Iniciar Sesion";
 }
 
 <div class="card shadow">
     <div class="card-body col-md-4 align-self-center bg-light border border-primary">
-        <div class="card-header border-bottom border-primary bg-light">
-            <h5 class="card-title text-primary mt-2">Iniciar Sesión</h5>
-        </div>
+        <div class="card-header border-bottom border-primary bg-light"><h5 class="card-title text-primary mt-2">Iniciar Sesión</h5></div>
         <div class="card-body">
             <form asp-action="Login">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
                 <div class="form-group">
                     <label asp-for="Email" class="control-label"></label>
                     <input asp-for="Email" class="form-control" />

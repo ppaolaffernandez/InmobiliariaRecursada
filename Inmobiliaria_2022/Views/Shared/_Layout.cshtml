@@ -27,13 +27,12 @@
                          <li class="nav-item"><a class="nav-link text-dark" asp-area="" asp-controller="Inmuebles" asp-action="Index">Inmueble</a> </li>
                          <li class="nav-item"><a class="nav-link text-dark" asp-area="" asp-controller="Contratos" asp-action="Index">Contrato</a></li> 
                          
-                         @*ImagenxDireccionint*@
-                         <li class="nav-item dropdown user user-menu">
+                         <li class="nav-item dropdown user user-menu" >
                              <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
                                  <img src="@(User.FindFirst("Avatar").Value)" class="rounded-circle" alt="Cinque Terre" width="30" height="30">
                                  <span class="hidden-xs">@User.Identity.Name</span>
                              </a>
-                             <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                             <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-left">
                                 <!-- User image -->
                                 <li class="user-header bg-primary">
                                        <img src="@(User.FindFirst("Avatar").Value)" class="rounded-circle" alt="Cinque Terre" width="200" height="200">
@@ -45,15 +44,14 @@
                                 <!-- Menu Footer-->
                                 <li class="user-footer">
                                     <div class="pull-left">
-@*                                        <a href="#" class="btn btn-default btn-flat">Editar</a></div><div class="pull-right">
-*@                                        <a class="dropdown-item text-dark" asp-controller="Usuarios" asp-action="Perfil">Editar</a>
+                                        <a class="dropdown-item text-dark" asp-controller="Usuarios" asp-action="CambiarClave">Cambiar Clave</a>
+                                        <a class="dropdown-item text-dark" asp-controller="Usuarios" asp-action="Cambiaravatar">Cambiar Avatar</a>
+                                        <a class="dropdown-item text-dark" asp-controller="Usuarios" asp-action="Perfil">Cambiar Perfil</a>
                                         <a class="dropdown-item text-dark" asp-controller="Usuarios" asp-action="Logout">Salir</a>
                                     </div>
                                 </li>
                              </ul>
-                        </li>
-
-                        }
+                        </li>}
                      </ul>
                 </div>
             </div>

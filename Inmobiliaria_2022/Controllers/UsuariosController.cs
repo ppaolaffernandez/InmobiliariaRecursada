@@ -261,6 +261,100 @@ namespace Inmobiliaria_2022.Controllers
 
         }
 
+        //-------------------------------------------------------
+        // GET: UsuariosController/Cambiaravatar
+        [Authorize]
+        public ActionResult CambiarAvatar()
+        {
+            var u = repositorioUsuario.ObtenerPorEmail(User.Identity.Name);
+            return View(u);
+        }
+
+        [HttpPost]
+        public ActionResult CambiarAvatar(Usuario u)
+        {
+            try
+            {
+                if (u.AvatarFile != null && u.Id > 0) /*22/04*/
+                {
+                    string wwwPath = environment.WebRootPath;
+                    string path = Path.Combine(wwwPath, "Uploads");
+                    if (!Directory.Exists(path))
+                    {
+                        Directory.CreateDirectory(path);
+                    }
+                    //Path.GetFileName(u.AvatarFile.FileName);//este nombre se puede repetir
+                    string fileName = "avatar_" + u.Id + Path.GetExtension(u.AvatarFile.FileName);
+                    string pathCompleto = Path.Combine(path, fileName);
+                    u.Avatar = Path.Combine("/Uploads", fileName);
+                    // Esta operación guarda la foto en memoria en el ruta que necesitamos
+                    using (FileStream stream = new FileStream(pathCompleto, FileMode.Create))
+                    {
+                        u.AvatarFile.CopyTo(stream);
+                    }
+                    repositorioUsuario.CambiarAvatar(u);
+                }
+                return RedirectToAction(nameof(Index), "Home");
+            }
+            catch (Exception ex)
+            {
+
+                return View();
+            }
+        }
+
+
+        [Authorize]
+        public ActionResult CambiarClave()
+        {
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult CambiarClave(CambioClaveView u)
+        {
+            try
+            {
+
+                string hashedVieja = Convert.ToBase64String(KeyDerivation.Pbkdf2(
+                password: u.ClaveVieja,
+                salt: System.Text.Encoding.ASCII.GetBytes(configuracion["Salt"]),
+                prf: KeyDerivationPrf.HMACSHA1,
+                iterationCount: 1000,
+                numBytesRequested: 256 / 8));
+
+                var us = repositorioUsuario.ObtenerPorEmail(User.Identity.Name);
+
+
+                if (us.Clave != hashedVieja)
+                {
+
+                    ModelState.AddModelError("", "Clave no es correctos");
+                    return View();
+                }
+                else
+                {
+                    string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
+                    password: u.ClaveNueva,
+                    salt: System.Text.Encoding.ASCII.GetBytes(configuracion["Salt"]),
+                    prf: KeyDerivationPrf.HMACSHA1,
+                    iterationCount: 1000,
+                    numBytesRequested: 256 / 8));
+                    u.ClaveNueva = hashed;
+
+                    int res = repositorioUsuario.CambiarClave(us.Id, u);
+                }
+
+                return RedirectToAction(nameof(Index), "Home");
+            }
+            catch (Exception ex)
+            {
+
+                return View();
+            }
+        }
+
     }
 }
 

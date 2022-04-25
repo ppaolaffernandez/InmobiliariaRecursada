@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<Inmobiliaria_2022.Models.Usuario>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Lista";
 }
 
 <div class="card bg-light border border-primary">
@@ -16,6 +16,9 @@
 <table class="table">
     <thead>
         <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Avatar) @*avatar agreg*@
+            </th>
             @*<th>
                 @Html.DisplayNameFor(model => model.Id)
             </th>*@
@@ -31,9 +34,7 @@
             @*<th>
                 @Html.DisplayNameFor(model => model.Clave)
             </th>*@
-                <th>
-                    @Html.DisplayNameFor(model => model.Avatar) @*avatar agreg*@
-                </th>
+                
             <th>
                 @Html.DisplayNameFor(model => model.Rol)
             </th>
@@ -46,6 +47,12 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
+            <td>
+                @*if(@item.Avatar != null )//vacio
+                {*@
+                    <img src="@item.Avatar" class="rounded-circle" alt="Perfil" width="35" height="35">
+                @*else{}*@
+			</td>
             @*<td>
                 @Html.DisplayFor(modelItem => item.Id)
             </td>*@
@@ -61,12 +68,7 @@
            @* <td>
                 @Html.DisplayFor(modelItem => item.Clave)
             </td>*@
-            <td>
-                @*if(@item.Avatar != null )//vacio
-                {*@
-                    <img src="@item.Avatar" class="rounded-circle" alt="Perfil" width="35" height="35">
-                @*else{}*@
-			</td>
+            
             @*<td>
                 @Html.DisplayFor(modelItem => item.Rol)
             </td>*@

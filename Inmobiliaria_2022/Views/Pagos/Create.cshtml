@@ -1,11 +1,16 @@
 ﻿@model Inmobiliaria_2022.Models.Pago
 
-@{ViewData["Title"] = "Crear";}
+@{
+    ViewData["Title"] = "Crear";
+}
 
 <div class="card bg-light border border-primary">
-        <div class="card-header border-bottom border-primary bg-light"><h4 class="card-title text-primary">Nuevo Pago</h4></div>
-        <div class="card-body">
+        <div class="card-header border-bottom border-primary bg-light">
+            <h4 class="card-title text-primary">Nuevo Pago</h4>
+        </div>
         <form asp-action="Create">
+        <div class="card-body">
+        
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             
             <div class="form-group">
@@ -33,21 +38,22 @@
 
             <div class="form-group">
                 <label class="control-label">Propiedad</label>
-                <input class="form-control" value="@ViewBag.Contrato.inmueble.Direccion @ViewBag.Contrato.inmueble.Costo"  readonly/> 
+                <input class="form-control" value="@ViewBag.Contrato.inmueble.Direccion $@ViewBag.Contrato.inmueble.Costo"  readonly/> 
             </div>  
 
             <div class="form-group">
                 <label class="control-label">Inquilino</label>
                 <input class="form-control" value="@ViewBag.Contrato.inquilino.Nombre @ViewBag.Contrato.inquilino.Apellido" readonly />
             </div>
-            <input asp-for="ContratoId" class="form-control" type="hidden" value="@ViewBag.Contrato.Id" />@*exit*@
-            
-            <div class="form-group">
-                <input type="submit" value="Guardar" class="btn btn-primary" />
-                <a asp-controller="Pagos" asp-action="ListaPagos" asp-route-id="@ViewBag.Contrato.Id">Volver</a>
-            </div>
-        </form>
+            <input asp-for="ContratoId" class="form-control" type="hidden" value="@ViewBag.Contrato.Id" />@*exit*@     
     </div>
+    <div class="card-header border-top border-primary bg-light">
+        <div class="form-group">
+            <input type="submit" value="Guardar" class="btn btn-primary" />
+            <a class="btn btn-secondary" asp-controller="Pagos" asp-action="ListaPagos" asp-route-id="@ViewBag.Contrato.Id">Volver a Lista</a>
+        </div>
+    </div>
+ </form>
 </div>
 
 @section Scripts {

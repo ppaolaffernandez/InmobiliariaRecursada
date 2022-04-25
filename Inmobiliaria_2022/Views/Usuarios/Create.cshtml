@@ -1,14 +1,11 @@
 ﻿@model Inmobiliaria_2022.Models.Usuario
 
-@{
-    ViewData["Title"] = "Crear";
-}
+@{ViewData["Title"] = "Crear";}
 
 <div class="card bg-light border border-primary">
         <div class="card-header border-bottom border-primary bg-light"><h4 class="card-title text-primary">Nuevo Usuario</h4></div>
+        <form asp-action="Create" enctype="multipart/form-data">
         <div class="card-body">
-
-            <form asp-action="Create" enctype="multipart/form-data">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
                 <div class="form-group">
@@ -33,9 +30,10 @@
                 </div>
 
                 <div class="form-group">
-			        <label asp-for="AvatarFile" class="control-label"></label> 
+			        <label asp-for="AvatarFile" class="control-label"></label> @*22/4/2022*@
 			        <input type="file" name="AvatarFile" />
 			        <span asp-validation-for="AvatarFile" class="text-danger"></span>
+			
                 </div>
 
                 <div class="form-group">
@@ -49,15 +47,17 @@
                     <span asp-validation-for="Rol" class="text-danger"></span>
                 </div>
 
+            
+        
+        </div>
+        <div class="card-header border-top border-primary bg-light">
             <div class="form-group">
                 <input type="submit" value="Guardar" class="btn btn-primary" />
                 <a class="btn btn-secondary" asp-action="Index">Volver al Listado</a>
             </div>
-        </form>
+        </div>
+     </form>
     </div>
-</div>
 
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+@section Scripts {@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}}

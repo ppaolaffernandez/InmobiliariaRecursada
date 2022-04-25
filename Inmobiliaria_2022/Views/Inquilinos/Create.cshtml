@@ -1,13 +1,19 @@
 ﻿@model Inmobiliaria_2022.Models.Inquilino
 
-@{ViewData["Title"] = "Crear";}
+@{
+    ViewData["Title"] = "Crear";
+}
 
 <div class="card bg-light border border-primary">
-        <div class="card-header border-bottom border-primary bg-light"><h4 class="card-title text-primary">Nuevo Inquilino</h4></div>
-        <div class="card-body">
-            <form asp-action="Create">
+        <div class="card-header border-bottom border-primary bg-light">
+            <h4 class="card-title text-primary">Nuevo Inquilino</h4>
+        </div>
+        <form asp-action="Create">
+        <div class="card-body">           
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="form-group"><input asp-for="Id" class="form-control" type="hidden" /></div>
+                <div class="form-group">
+                    <input asp-for="Id" class="form-control" type="hidden" />
+                </div>
             <div class="form-group">
                 <label asp-for="Nombre" class="control-label"></label>
                 <input asp-for="Nombre" class="form-control" />
@@ -32,13 +38,15 @@
                 <label asp-for="Email" class="control-label"></label>
                 <input asp-for="Email" class="form-control" />
                 <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                    <input type="submit" value="Guardar" class="btn btn-primary" />
-                    <a class="btn btn-secondary" asp-action="Index">Volver al Listado</a>
-            </div>
-        </form>
+            </div>   
     </div>
+    <div class="card-header border-top border-primary bg-light">
+        <div class="form-group">
+            <input type="submit" value="Guardar" class="btn btn-primary" />
+            <a class="btn btn-secondary" asp-action="Index">Volver al Listado</a>
+        </div>
+    </div>
+    </form>
 </div>
 
 @section Scripts {
