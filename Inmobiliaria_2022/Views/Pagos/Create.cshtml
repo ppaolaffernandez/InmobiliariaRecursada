@@ -1,27 +1,19 @@
 ﻿@model Inmobiliaria_2022.Models.Pago
 
-@{
-    ViewData["Title"] = "Crear";
-}
+@{ViewData["Title"] = "Crear";}
 
 <div class="card bg-light border border-primary">
-        <div class="card-header border-bottom border-primary bg-light">
-            <h4 class="card-title text-primary">Nuevo Pago</h4>
-        </div>
+        <div class="card-header border-bottom border-primary bg-light"><h4 class="card-title text-primary">Nuevo Pago</h4></div>
         <form asp-action="Create">
         <div class="card-body">
-        
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            
             <div class="form-group">
                 <label asp-for="Numero" class="control-label" ></label>
-
                 @if (ViewBag.Pago == null){
                     <input asp-for="Numero" class="form-control" value="1" required readonly/>
                 }
                 else{int num = int.Parse(@ViewBag.Pago.Numero) +1;
                     <input asp-for="Numero" class="form-control" value="@num" />
-
                 }
                 <span asp-validation-for="Numero" class="text-danger"></span>
             </div>
@@ -38,7 +30,7 @@
 
             <div class="form-group">
                 <label class="control-label">Propiedad</label>
-                <input class="form-control" value="@ViewBag.Contrato.inmueble.Direccion $@ViewBag.Contrato.inmueble.Costo"  readonly/> 
+                <input class="form-control" value="@ViewBag.Contrato.inmueble.Direccion Costo:$@ViewBag.Contrato.inmueble.Costo"  readonly/> 
             </div>  
 
             <div class="form-group">
@@ -53,9 +45,7 @@
             <a class="btn btn-secondary" asp-controller="Pagos" asp-action="ListaPagos" asp-route-id="@ViewBag.Contrato.Id">Volver a Lista</a>
         </div>
     </div>
- </form>
+  </form>
 </div>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+@section Scripts {@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}}

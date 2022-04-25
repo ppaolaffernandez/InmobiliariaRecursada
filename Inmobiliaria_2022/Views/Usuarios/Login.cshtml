@@ -1,8 +1,6 @@
 ﻿@model Inmobiliaria_2022.Models.LoginView
 
-@{
-    ViewData["Title"] = "Iniciar Sesion";
-}
+@{ViewData["Title"] = "Iniciar Sesion";}
 
 <div class="card shadow">
     <div class="card-body col-md-4 align-self-center bg-light border border-primary">
@@ -29,6 +27,4 @@
 </div>
 
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+@section Scripts {@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}}

@@ -1,13 +1,9 @@
 ﻿@model Inmobiliaria_2022.Models.Inquilino
 
-@{
-    ViewData["Title"] = "Crear";
-}
+@{ViewData["Title"] = "Crear";}
 
 <div class="card bg-light border border-primary">
-        <div class="card-header border-bottom border-primary bg-light">
-            <h4 class="card-title text-primary">Nuevo Inquilino</h4>
-        </div>
+        <div class="card-header border-bottom border-primary bg-light"><h4 class="card-title text-primary">Nuevo Inquilino</h4></div>
         <form asp-action="Create">
         <div class="card-body">           
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -49,6 +45,4 @@
     </form>
 </div>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+@section Scripts {@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}}

@@ -1,16 +1,11 @@
 ﻿@model Inmobiliaria_2022.Models.Propietario
 
-@{
-    ViewData["Title"] = "Editar Propietario";
-}
+@{ViewData["Title"] = "Editar Propietario";}
 
 <div class="card bg-light border border-primary">
-        <div class="card-header border-bottom border-primary bg-light">
-            <h4 class="card-title text-primary mt-2">Editar Propietario</h4>
-        </div>
+        <div class="card-header border-bottom border-primary bg-light"><h4 class="card-title text-primary mt-2">Editar Propietario</h4></div>
         <form asp-action="Edit">
         <div class="card-body">
-        
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" name="Id" value="@Model.Id" />
             <div class="form-group">
@@ -38,21 +33,17 @@
                 <input asp-for="Email" class="form-control" />
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                
-                <input asp-for="Clave" class="form-control" hidden/>
-                
-            </div>
+            <div class="form-group"><input asp-for="Clave" class="form-control" hidden/></div>
            
         
     </div>
     <div class="card-header border-top border-primary bg-light">
         <div class="form-group">
             <input type="submit" value="Editar" class="btn btn-primary" />
-                <a class="btn btn-secondary" asp-action="Index">Volver al Listado</a>
+            <a class="btn btn-secondary" asp-action="Index">Volver al Listado</a>
         </div>
     </div>
-    </form>
+ </form>
 </div>
 @*<h4>Cambiar contraseña</h4>
 <hr />

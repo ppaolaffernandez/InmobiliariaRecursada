@@ -1,8 +1,6 @@
 ﻿@model Inmobiliaria_2022.Models.Usuario
 
-@{
-    ViewData["Title"] = "Cambiar Avatar";
-}
+@{ViewData["Title"] = "Cambiar Avatar";}
 
 <div class="card bg-light border border-primary">
         <div class="card-header border-bottom border-primary bg-light"><h4 class="card-title text-primary">Avatar</h4></div>
@@ -10,8 +8,8 @@
         <div class="card-body">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
-                    <label asp-for="Id" class="control-label"></label>
-                    <input asp-for="Id" class="form-control" />
+              @*    <label asp-for="Id" class="control-label"></label>*@
+                    <input asp-for="Id" class="form-control"type="hidden" />
                     <span asp-validation-for="Id" class="text-danger"></span>
                 </div>
            

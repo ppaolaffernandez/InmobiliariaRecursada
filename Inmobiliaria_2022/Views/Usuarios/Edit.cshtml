@@ -1,26 +1,19 @@
 ﻿@model Inmobiliaria_2022.Models.Usuario
 
-@{
-    ViewData["Title"] = "Edit";
-}
+@{ViewData["Title"] = "Editar";}
 
  <div class="card bg-light border border-primary">
-        <div class="card-header border-bottom border-primary bg-light">
-            <h4 class="card-title text-primary mt-2">Editar Usuario</h4>
-        </div>
+        <div class="card-header border-bottom border-primary bg-light"><h4 class="card-title text-primary mt-2">Editar Usuario</h4></div>
         <form asp-action="Edit">
-        <div class="card-body">
-        
+        <div class="card-body">        
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-        @*a avatar*@
-        <div class="form-group">
-			
-			@if (Model.Avatar != "") {<img src="@Model.Avatar" class="rounded-circle" alt="Perfil" width="100" height="100">}
-			else {<p>Sin avatar</p>}
+        <div class="form-group">	
+			@if (Model.Avatar != "") 
+            {<img src="@Model.Avatar" class="rounded-circle" alt="Perfil" width="100" height="100">}
+			else 
+            {<p>Sin avatar</p>}
 		</div>
         <div class="form-group">
-           
             <input asp-for="Id" class="form-control" type="hidden"/>
             <span asp-validation-for="Id" class="text-danger" ></span>
         </div>
@@ -40,8 +33,6 @@
             <span asp-validation-for="Email" class="text-danger"></span>
         </div>
         
-        
-
         @if (User.IsInRole("Administrador"))
         {
             <div class="form-group">
@@ -55,18 +46,15 @@
                 <span asp-validation-for="Rol" class="text-danger"></span>
             </div>
         }
-        
       
     </div>
-     <div class="card-header border-top border-primary bg-light">
+    <div class="card-header border-top border-primary bg-light">
     <div class="form-group">
-            <input type="submit" value="Editar" class="btn btn-primary" />
-            <a class="btn btn-secondary" asp-action="Index">Volver al Listado</a>
-        </div>
-        </div>
-    </form>
+       <input type="submit" value="Editar" class="btn btn-primary" />
+       <a class="btn btn-secondary" asp-action="Index">Volver al Listado</a>
+    </div>
+  </div>
+ </form>
 </div>
        
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+@section Scripts {@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}}

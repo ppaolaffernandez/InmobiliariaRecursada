@@ -275,7 +275,7 @@ namespace Inmobiliaria_2022.Controllers
         {
             try
             {
-                if (u.AvatarFile != null && u.Id > 0) /*22/04*/
+                if (u.AvatarFile != null && u.Id > 0) 
                 {
                     string wwwPath = environment.WebRootPath;
                     string path = Path.Combine(wwwPath, "Uploads");

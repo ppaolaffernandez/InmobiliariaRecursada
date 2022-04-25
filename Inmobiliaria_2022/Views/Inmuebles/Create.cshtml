@@ -21,7 +21,6 @@
             <div class="form-group">
                 <label  class="control-label">Tipo</label>
                 <select class="form-control" name="Tipo">
-
                  @foreach (var tip in (IDictionary<int, string>)ViewBag.TipoNombre)
                  {
                      @:<option value="@tip.Key ">@tip.Value</option>
