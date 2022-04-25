@@ -9,36 +9,22 @@
     <div class="card-header border-bottom border-primary bg-light">
        <a asp-controller="Pagos" asp-action="Create" asp-route-id="@ViewBag.Contrato.Id" title="Lista de pagos">Crear</a> @*exit*@
     </div>
-    <div class="card-body">
-        <h5 class="card-title text-primary">Lista</h5>
-@*<h1>Listapagos</h1><p> <a asp-controller="Pagos" asp-action="Create" asp-route-id="@ViewBag.Contrato.Id" title="Lista de pagos">Crear nuevo</a> exit</p>*@   
+    <div class="card-body"><h5 class="card-title text-primary">Lista</h5>
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Numero)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Fecha)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Importe)
-            </th>
+            <th>@Html.DisplayNameFor(model => model.Numero)</th>
+            <th>@Html.DisplayNameFor(model => model.Fecha)</th>
+            <th>@Html.DisplayNameFor(model => model.Importe)</th>
         </tr>
     </thead>
     <tbody>
         @if(Model!=null)
 @foreach (var item in Model) {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Numero)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Fecha)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Importe)
-            </td>
+            <td> @Html.DisplayFor(modelItem => item.Numero)</td>
+            <td>@Html.DisplayFor(modelItem => item.Fecha)</td>
+            <td>@Html.DisplayFor(modelItem => item.Importe)</td>
         </tr>
         }
 
@@ -46,4 +32,4 @@
   </table>
  </div>
 </div>
- <a asp-controller="Contratos" asp-action="Index">Volver</a> @*exitjho*@
+ <a asp-controller="Contratos" asp-action="Index">Volver</a> 

@@ -172,72 +172,50 @@ namespace Inmobiliaria_2022.Models
 						Monto = reader.GetDecimal(4),
 						InmuebleId = reader.GetInt32(5),
 						InquilinoId = reader.GetInt32(6),
-						inmueble = new Inmueble
-						{
+						inmueble = new Inmueble{
 							Direccion = reader.GetString(7),
 							//Costo = reader.GetInt32(8),
 						},
-						inquilino = new Inquilino
-						{
+						inquilino = new Inquilino{
 							Nombre = reader.GetString(8),
 							Apellido = reader.GetString(9),
 						},
-
 					};
-				}
-				connection.Close();
+				}connection.Close();
 			}
-
-		}
-		return entidad;
+		}return entidad;
 	}
-		//  contrato entre esas fechas
-		public IList<Contrato> ObtenerVigentes(int id)
+		//..........................................VIGENTES.............................................
+		public IList<Contrato> ObtenerVigentes()
 		{		
 			IList<Contrato> res = new List<Contrato>();
 			using (SqlConnection connection = new SqlConnection(connectionString))
 			{
-				string sql = $"SELECT c.Id, Descripcion, FechaAlta, FechaBaja, Monto, c.InmuebleId, c.InquilinoId, " +
-				$" inm.Direccion, " +
-				$" iq.Nombre, iq.Apellido " +
-				$" FROM Contratos c, Inmuebles inm, Inquilinos iq " +
-				$" WHERE c.InmuebleId = inm.Id and " +
-				$"       c.InquilinoId = iq.Id and " +
-				$"       c.FechaBaja >= GETDATE() " +
-                $" ORDER BY c.FechaBaja ";
+				string sql = $"SELECT Id, Descripcion, FechaAlta, FechaBaja, Monto, InmuebleId, c.InquilinoId, " +
+				$" inq.Nombre, inq.Apellido " +
+				$" FROM Contratos c, Inquilinos inq " +
+                $" WHERE  FechaBaja >= GETDATE() " +
+				$"        c.InquilinoId = inq.Id ";
 
-			//	SELECT c.AlquilerId, c.Descripcion, c.FechaAlta, c.FechaBaja, c.Monto, c.InmuebleId, c.InquilinoId, iq.Nombre iq.Apellido , i.Direccion, i.Costo, i.Tipo, p.Nombre , p.Apellido 
+			//SELECT c.AlquilerId, c.Descripcion, c.FechaAlta, c.FechaBaja, c.Monto, c.InmuebleId, c.InquilinoId, iq.Nombre iq.Apellido , i.Direccion, i.Costo, i.Tipo, p.Nombre , p.Apellido 
 			//FROM Contratos c JOIN Inquilinos iq ON c.InquilinoId = iq.InquilinoId JOIN nmuebles i ON c.InmuebleId = i.InmuebleId JOIN Propietarios p ON p.PropietarioId = i.PropietarioId WHERE c.FechaBaja >= @hoy
 				using (SqlCommand command = new SqlCommand(sql, connection))
 				{
 					connection.Open();
-					command.CommandType = CommandType.Text; ;
-					command.Parameters.AddWithValue("@id", id);
-					
-
+					command.CommandType = CommandType.Text; 
 					var reader = command.ExecuteReader();
-
 					while (reader.Read())
 					{
 						Contrato c = new Contrato()
 						{
 							Id = reader.GetInt32(0),
-						Descripcion = reader.GetString(1),
-						FechaAlta = reader.GetDateTime(2),
-						FechaBaja = reader.GetDateTime(3),
-						Monto = reader.GetDecimal(4),
-						InmuebleId = reader.GetInt32(5),
-						InquilinoId = reader.GetInt32(6),
-						inmueble = new Inmueble
-						{
-							Direccion = reader.GetString(7),
-							Costo = reader.GetDecimal(8),
-						},
-						inquilino = new Inquilino
-						{
-							Nombre = reader.GetString(9),
-							Apellido = reader.GetString(10),
-						},
+							Descripcion = reader.GetString(1),
+							FechaAlta = reader.GetDateTime(2),
+							FechaBaja = reader.GetDateTime(3),
+							Monto = reader.GetDecimal(4),
+							InmuebleId = reader.GetInt32(5),
+							InquilinoId = reader.GetInt32(6),
+						
 					  };
 						res.Add(c);
 					}
@@ -246,10 +224,10 @@ namespace Inmobiliaria_2022.Models
 			}
 			return res;
 		}
-		public IList<Contrato> ObtenerNoVigentes(int id, DateTime? fechaIni, DateTime? fechaFin)
+		//..........................................NO VIGENTES.............................................
+
+		public IList<Contrato> ObtenerNoVigentes(DateTime? fechaIni, DateTime? fechaFin)
 		{
-			//DECLARE @hoy DATETIME
-			//       SET @hoy = Getdate()
 			IList<Contrato> res = new List<Contrato>();
 			using (SqlConnection connection = new SqlConnection(connectionString))
 			{
@@ -259,13 +237,12 @@ namespace Inmobiliaria_2022.Models
 				$" FROM Contratos c, Inmuebles inm, Inquilinos iq " +
 				$" WHERE c.InmuebleId = inm.Id and " +
 				$"       c.InquilinoId = iq.Id and " +
-				$"       c.FechaBaja < @hoy";
+				$"       c.FechaBaja < GETDATE()";
 
 				using (SqlCommand command = new SqlCommand(sql, connection))
 				{
 					connection.Open();
 					command.CommandType = CommandType.Text; ;
-					command.Parameters.AddWithValue("@id", id);
 					command.Parameters.AddWithValue("@fechaIni", fechaIni);
 					command.Parameters.AddWithValue("@fechaFin", fechaFin);
 
@@ -300,7 +277,8 @@ namespace Inmobiliaria_2022.Models
 			}
 			return res;
 		}
-		public IList<Contrato> ObtenerVigentesxFecha(int id, DateTime? fechaIni, DateTime? fechaFin)
+		//..........................................VIGENTES X FECHA.............................................
+		public IList<Contrato> ObtenerVigentesxFecha(DateTime? fechaIni, DateTime? fechaFin)
 		{
 			//DECLARE @hoy DATETIME
 			//       SET @hoy = Getdate()
@@ -313,14 +291,13 @@ namespace Inmobiliaria_2022.Models
 				$" FROM Contratos c, Inmuebles inm, Inquilinos iq " +
 				$" WHERE c.InmuebleId = inm.Id and " +
 				$"       c.InquilinoId = iq.Id and " +
-				$"       c.FechaBaja BETWEEN @fechaIni AND @fechaFin AND c.FechaBaja >= @hoy";
+				$"       c.FechaBaja BETWEEN @fechaIni AND @fechaFin AND c.FechaBaja >= GETDATE()";
 
 				
 				using (SqlCommand command = new SqlCommand(sql, connection))
 				{
 					connection.Open();
 					command.CommandType = CommandType.Text; ;
-					command.Parameters.AddWithValue("@id", id);
 					command.Parameters.AddWithValue("@fechaIni", fechaIni);
 					command.Parameters.AddWithValue("@fechaFin", fechaFin);
 
@@ -355,7 +332,8 @@ namespace Inmobiliaria_2022.Models
 			}
 			return res;
 		}
-		public IList<Contrato> ObtenerInmueblesDisponibles(int id, DateTime? fechaIni, DateTime? fechaFin)
+		//..........................................INMUEBLES DISPONIBLES DADO 2 FECHAS.............................................
+		public IList<Contrato> ObtenerInmueblesDisponibles(DateTime? fechaIni, DateTime? fechaFin)
 		{
 			//DECLARE @hoy DATETIME
 			//       SET @hoy = Getdate()
@@ -374,7 +352,6 @@ namespace Inmobiliaria_2022.Models
 				{
 					connection.Open();
 					command.CommandType = CommandType.Text; ;
-					command.Parameters.AddWithValue("@id", id);
 					command.Parameters.AddWithValue("@fechaIni", fechaIni);
 					command.Parameters.AddWithValue("@fechaFin", fechaFin);
 

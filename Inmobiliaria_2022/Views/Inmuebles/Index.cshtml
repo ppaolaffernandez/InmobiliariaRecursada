@@ -4,14 +4,9 @@
     ViewData["Title"] = "Inmuebles";
 }
 <div class="card bg-light border border-primary">
-    <div class="card-header border-bottom border-primary bg-light text-center">
-        <h3>Inmueble</h3>
-    </div>
-    <div class="card-header border-bottom border-primary bg-light">
-        <a class="btn btn-success text-white mr-2" asp-action="Create">Crear</a>
-    </div>
-    <div class="card-body">
-<h5 class="card-title text-primary">Listar</h5>
+    <div class="card-header border-bottom border-primary bg-light text-center"><h3>Inmueble</h3></div>
+    <div class="card-header border-bottom border-primary bg-light"><a class="btn btn-success text-white mr-2" asp-action="Create">Crear</a></div>
+    <div class="card-body"><h5 class="card-title text-primary">Listar</h5>
 
         <div class="input-group-prepend mb-2">
             <a class="btn btn-info" asp-action="Index" asp-route-id="1">Todos</a>
@@ -20,98 +15,45 @@
         </div>
 
         <table class="table table-hover table-bordered w-100" id="dtHorizontalVertical">
-            
         <thead class="table-info">
-                <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Direccion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Ambientes)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Tipo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Costo)
-            </th>
-           @* <th>
-                @Html.DisplayNameFor(model => model.Superficie)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Latitud)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Longitud)*@
-            </th>
-            @*<th>
-                @Html.DisplayNameFor(model => model.EstaPublicado)
-            </th>*@
-            <th>
-                @*@Html.DisplayNameFor(model => model.PropietarioId)*@
-                Propietario
-            </th>
-            <th style="display:none;">
-                @Html.DisplayNameFor(model => model.Propietario.Dni)
-            </th>
+         <tr>
+            <th>@Html.DisplayNameFor(model => model.Direccion)</th>
+            <th>@Html.DisplayNameFor(model => model.Ambientes)</th>
+            <th>@Html.DisplayNameFor(model => model.Tipo)</th>
+            <th>@Html.DisplayNameFor(model => model.Costo)</th>
+            <th>@*@Html.DisplayNameFor(model => model.PropietarioId)*@Propietario</th>
+            <th style="display:none;">@Html.DisplayNameFor(model => model.Propietario.Dni)</th>
             <th></th>
         </tr>
-    </thead>
+       </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>
           
-            <td>
-                @Html.DisplayFor(modelItem => item.Direccion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Ambientes)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TipoNombre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Costo)
-            </td>
-            @*<td>
-                @Html.DisplayFor(modelItem => item.Superficie)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Latitud)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Longitud)
-            </td>*@
-            @*<td>
-                @Html.DisplayFor(modelItem => item.EstaPublicado)
-            </td>*@
-           
-            <td>
-					@(item.Propietario.Nombre + " " + item.Propietario.Apellido)
-			</td>
-
-            <td style="display:none;">
-             @Html.DisplayFor(modelItem => item.Propietario.Dni)
-            </td>
-         <td class="d-flex justify-content-center">
-            <di class="btn-group" role="group">
+            <td>@Html.DisplayFor(modelItem => item.Direccion)</td>
+            <td>@Html.DisplayFor(modelItem => item.Ambientes)</td>
+            <td>@Html.DisplayFor(modelItem => item.TipoNombre)</td>
+            <td>@Html.DisplayFor(modelItem => item.Costo)</td>
+            <td>@(item.Propietario.Nombre + " " + item.Propietario.Apellido)</td>
+            <td style="display:none;">@Html.DisplayFor(modelItem => item.Propietario.Dni)</td>
+            <td class="d-flex justify-content-center">
+            <div class="btn-group" role="group">
 
                 <a asp-action="Edit" asp-route-id="@item.Id" asp-ro class="btn btn-warning"><i class="fas fa-edit">Editar</i></a>
                 <a asp-action="Details" asp-route-id="@item.Id" asp-ro class="btn btn-info"><i class="fas fa-edit">Detalle</i></a>
-                <a asp-action="Delete" asp-route-id="@item.Id" asp-ro class="btn btn-primary"><i class="fas fa-edit">Eliminar</i></a>
+                <a asp-action="Delete" asp-route-id="@item.Id" asp-ro class="btn btn-danger"><i class="fas fa-edit">Eliminar</i></a>
 
                 @if (item.EstaPublicado == false)
                 {
-                    <a asp-action="Habilitar" asp-route-id="@item.Id" class="btn btn-success"><i class="fas fa-minus-square"></i>Habilitar</a>                    
+                    <a asp-action="Habilitar" asp-route-id="@item.Id" class="btn btn-light"><i class="fas fa-minus-square"></i>Habilitar</a>                    
                 }
                 else
                 {
-                    <a asp-action="Deshabilitar" asp-route-id="@item.Id" class=" btn btn-danger"><i class="fas fa-minus-square"></i>Deshabilitar</a>                                  
+                    <a asp-action="Deshabilitar" asp-route-id="@item.Id" class="btn btn-secondary"><i class="fas fa-minus-square"></i>Deshabilitar</a>                                  
                 }
-                           
-        </tr>
-}
-    </tbody>
-  </table>
+            </div>              
+        </tr>}
+     </tbody>
+   </table>
  </div>
 </div>

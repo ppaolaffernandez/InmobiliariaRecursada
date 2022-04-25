@@ -1,13 +1,9 @@
 ﻿@model Inmobiliaria_2022.Models.Pago
 
-@{
-    ViewData["Title"] = "Create";
-}
+@{ViewData["Title"] = "Crear";}
 
 <div class="card bg-light border border-primary">
-        <div class="card-header border-bottom border-primary bg-light">
-            <h4 class="card-title text-primary">Crear Pago</h4>
-        </div>
+        <div class="card-header border-bottom border-primary bg-light"><h4 class="card-title text-primary">Nuevo Pago</h4></div>
         <div class="card-body">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -47,7 +43,7 @@
             <input asp-for="ContratoId" class="form-control" type="hidden" value="@ViewBag.Contrato.Id" />@*exit*@
             
             <div class="form-group">
-                <input type="submit" value="Crear" class="btn btn-primary" />
+                <input type="submit" value="Guardar" class="btn btn-primary" />
                 <a asp-controller="Pagos" asp-action="ListaPagos" asp-route-id="@ViewBag.Contrato.Id">Volver</a>
             </div>
         </form>

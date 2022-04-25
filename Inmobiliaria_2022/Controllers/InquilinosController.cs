@@ -20,8 +20,6 @@ namespace Inmobiliaria_2022.Controllers
         // GET: InquilinosController 
         public ActionResult Index()
         {
-            //var lista = repositorioInquilino.ObtenerTodos();
-            //return View(lista);
             try
             {
                 var lista = repositorioInquilino.ObtenerTodos();

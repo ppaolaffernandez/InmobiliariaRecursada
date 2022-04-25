@@ -1,16 +1,14 @@
 ﻿@model Inmobiliaria_2022.Models.Usuario
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Crear";
 }
 
 <div class="card bg-light border border-primary">
-        <div class="card-header border-bottom border-primary bg-light">
-            <h4 class="card-title text-primary">Crear Usuario</h4>
-        </div>
+        <div class="card-header border-bottom border-primary bg-light"><h4 class="card-title text-primary">Nuevo Usuario</h4></div>
         <div class="card-body">
 
-            <form asp-action="Create" enctype="multipart/form-data">@* 22-04*@
+            <form asp-action="Create" enctype="multipart/form-data">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
                 <div class="form-group">
@@ -35,10 +33,9 @@
                 </div>
 
                 <div class="form-group">
-			        <label asp-for="AvatarFile" class="control-label"></label> @*22/4/2022*@
+			        <label asp-for="AvatarFile" class="control-label"></label> 
 			        <input type="file" name="AvatarFile" />
 			        <span asp-validation-for="AvatarFile" class="text-danger"></span>
-			
                 </div>
 
                 <div class="form-group">
@@ -53,7 +50,7 @@
                 </div>
 
             <div class="form-group">
-                <input type="submit" value="Crear" class="btn btn-primary" />
+                <input type="submit" value="Guardar" class="btn btn-primary" />
                 <a class="btn btn-secondary" asp-action="Index">Volver al Listado</a>
             </div>
         </form>
