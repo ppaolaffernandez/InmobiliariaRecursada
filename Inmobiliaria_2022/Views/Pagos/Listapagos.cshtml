@@ -2,7 +2,7 @@
 
 @{ViewData["Title"] = "Lista";}
 <div class="card bg-light border border-primary">  
-    <div class="card-header border-bottom border-primary bg-light text-center"><h3>Lista de Pagos</h3></div>
+    <div class="card-header border-bottom border-primary bg-light text-center"><h3>Listado de Pagos</h3></div>
     <div class="card-header border-bottom border-primary bg-light">
         <a class="btn btn-success text-white asp-controller="Pagos" asp-action="Create" asp-route-id="@ViewBag.Contrato.Id" title="Lista de pagos">Crear</a> @*exit*@
     </div>
@@ -14,6 +14,7 @@
             <th>@Html.DisplayNameFor(model => model.Numero)</th>
             <th>@Html.DisplayNameFor(model => model.Fecha)</th>
             <th>@Html.DisplayNameFor(model => model.Importe)</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>

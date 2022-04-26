@@ -58,7 +58,6 @@ namespace Inmobiliaria_2022.Controllers
             {
                 ViewBag.Roles = Usuario.ObtenerRoles();
                 return View();
-                //return RedirectToAction(nameof(Index)); saq 22/04/2022
             }
             try
             {
@@ -72,7 +71,7 @@ namespace Inmobiliaria_2022.Controllers
                 u.Rol = User.IsInRole("Administrador") ? u.Rol : (int)enRoles.Empleado;
                 var nbreRnd = Guid.NewGuid();//posible nombre aleatorio
                 int res = repositorioUsuario.Alta(u);
-                if (u.AvatarFile != null && u.Id > 0) /*22/04*/
+                if (u.AvatarFile != null && u.Id > 0) 
                 {
                     string wwwPath = environment.WebRootPath;
                     string path = Path.Combine(wwwPath, "Uploads");
@@ -99,12 +98,6 @@ namespace Inmobiliaria_2022.Controllers
                 return View();
             }
         }
-
-
-
-
-
-
 
         // GET: UsuariosController/Delete/5
         [Authorize(Policy = "Administrador")]

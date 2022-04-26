@@ -33,7 +33,7 @@ namespace Inmobiliaria_2022.Controllers
                 lista = repositorioContrato.ObtenerVigentes();
             }
             else if (id == 2){
-                lista = repositorioContrato.ObtenerNoVigentes(fechaIni, fechaFin);
+                lista = repositorioContrato.ObtenerNoVigentes();
             }
             else if (id == 3){
                 lista = repositorioContrato.ObtenerVigentesxFecha(fechaIni, fechaFin);

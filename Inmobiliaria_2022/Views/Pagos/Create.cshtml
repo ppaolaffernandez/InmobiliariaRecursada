@@ -27,12 +27,10 @@
                 <input asp-for="Importe" class="form-control required" />
                 <span asp-validation-for="Importe" class="text-danger"></span>
             </div>
-
             <div class="form-group">
                 <label class="control-label">Propiedad</label>
                 <input class="form-control" value="@ViewBag.Contrato.inmueble.Direccion Costo:$@ViewBag.Contrato.inmueble.Costo"  readonly/> 
             </div>  
-
             <div class="form-group">
                 <label class="control-label">Inquilino</label>
                 <input class="form-control" value="@ViewBag.Contrato.inquilino.Nombre @ViewBag.Contrato.inquilino.Apellido" readonly />

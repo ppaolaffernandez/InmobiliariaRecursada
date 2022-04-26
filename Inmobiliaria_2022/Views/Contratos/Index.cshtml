@@ -5,13 +5,13 @@
 <div class="card bg-light border border-primary">
     <div class="card-header border-bottom border-primary bg-light text-center"><h3>Contrato</h3></div>
     <div class="card-header border-bottom border-primary bg-light"><a class="btn btn-success text-white mr-2" asp-action="Create">Nuevo Contrato</a></div>
-    <div class="card-body"><h5 class="card-title text-primary">Lista</h5>
+    <div class="card-body"><h5 class="card-title text-primary">Listado de Contratos</h5>
 
         <div class="input-group-prepend mb-2">
             <a class="btn btn-info" asp-action="Index" asp-route-id="0">Todos</a>
             <a class="btn btn-info" asp-action="Index" asp-route-id="1">Vigentes</a>
-          @*<a class="btn btn-info" asp-action="Index" asp-route-id="2">No vigentes</a>
-            <a class="btn btn-info" asp-action="Index" asp-route-id="3">Vigentes por fecha</a>
+            <a class="btn btn-info" asp-action="Index" asp-route-id="2">No vigentes</a>
+            @*<a class="btn btn-info" asp-action="Index" asp-route-id="3">Vigentes por fecha</a>
             <a class="btn btn-info" asp-action="Index" asp-route-id="4">Inmuebles disponibles</a>*@
         </div>
 
@@ -21,8 +21,8 @@
             <th>@Html.DisplayNameFor(model => model.FechaAlta)</th>
             <th>@Html.DisplayNameFor(model => model.FechaBaja)</th>
             <th>@Html.DisplayNameFor(model => model.Monto)</th>
-            <th>@*@Html.DisplayNameFor(model => model.InmuebleId)*@Inmueble</th>
-            <th>Inquilino@*@Html.DisplayNameFor(model => model.InquilinoId)*@</th>
+            <th>Inmueble</th>
+            <th>Inquilino</th>
             <th>Propietario</th>
         </tr>
     </thead>

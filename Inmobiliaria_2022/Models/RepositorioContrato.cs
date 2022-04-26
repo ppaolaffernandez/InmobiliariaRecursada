@@ -102,7 +102,7 @@ namespace Inmobiliaria_2022.Models
 				$"				    join Propietarios p ON p.Id = i.PropietarioId ";
 
 				using (var command = new SqlCommand(sql, connection))
-			{
+			    {
 				command.CommandType = CommandType.Text;
 				connection.Open();
 				var reader = command.ExecuteReader();
@@ -148,7 +148,7 @@ namespace Inmobiliaria_2022.Models
 		using (SqlConnection connection = new SqlConnection(connectionString))
 		{
 			string sql = $"SELECT c.Id, Descripcion, FechaAlta, FechaBaja, Monto, c.InmuebleId, c.InquilinoId, " +
-				$" inm.Direccion, " +
+				$" inm.Direccion, inm.Costo, " +
 				$" i.Nombre, i.Apellido " +
 				$" FROM Contratos c, Inmuebles inm, Inquilinos i " +
 				$" WHERE c.InmuebleId = inm.Id and " +
@@ -174,11 +174,11 @@ namespace Inmobiliaria_2022.Models
 						InquilinoId = reader.GetInt32(6),
 						inmueble = new Inmueble{
 							Direccion = reader.GetString(7),
-							//Costo = reader.GetInt32(8),
+							Costo = reader.GetDecimal(8),
 						},
 						inquilino = new Inquilino{
-							Nombre = reader.GetString(8),
-							Apellido = reader.GetString(9),
+							Nombre = reader.GetString(9),
+							Apellido = reader.GetString(10),
 						},
 					};
 				}connection.Close();
@@ -187,26 +187,25 @@ namespace Inmobiliaria_2022.Models
 	}
 		//..........................................VIGENTES.............................................
 		public IList<Contrato> ObtenerVigentes()
-		{		
+		{
 			IList<Contrato> res = new List<Contrato>();
 			using (SqlConnection connection = new SqlConnection(connectionString))
 			{
-				string sql = $"SELECT Id, Descripcion, FechaAlta, FechaBaja, Monto, InmuebleId, c.InquilinoId, " +
-				$" inq.Nombre, inq.Apellido " +
-				$" FROM Contratos c, Inquilinos inq " +
-                $" WHERE  FechaBaja >= GETDATE() " +
-				$"        c.InquilinoId = inq.Id ";
+				string sql = $" SELECT c.Id, Descripcion, FechaAlta, FechaBaja, Monto, c.InmuebleId, c.InquilinoId," +
+				$" iq.Nombre, iq.Apellido," +
+				$" i.Direccion, i.Costo" +
+				$" FROM Contratos c join Inmuebles i ON c.InmuebleId = i.Id " +
+				$"				    join Inquilinos iq ON c.InquilinoId = iq.Id " +
+				$"                          WHERE c.FechaBaja >= GETDATE()";
 
-			//SELECT c.AlquilerId, c.Descripcion, c.FechaAlta, c.FechaBaja, c.Monto, c.InmuebleId, c.InquilinoId, iq.Nombre iq.Apellido , i.Direccion, i.Costo, i.Tipo, p.Nombre , p.Apellido 
-			//FROM Contratos c JOIN Inquilinos iq ON c.InquilinoId = iq.InquilinoId JOIN nmuebles i ON c.InmuebleId = i.InmuebleId JOIN Propietarios p ON p.PropietarioId = i.PropietarioId WHERE c.FechaBaja >= @hoy
-				using (SqlCommand command = new SqlCommand(sql, connection))
+				using (var command = new SqlCommand(sql, connection))
 				{
+					command.CommandType = CommandType.Text;
 					connection.Open();
-					command.CommandType = CommandType.Text; 
 					var reader = command.ExecuteReader();
 					while (reader.Read())
 					{
-						Contrato c = new Contrato()
+						Contrato a = new Contrato
 						{
 							Id = reader.GetInt32(0),
 							Descripcion = reader.GetString(1),
@@ -215,9 +214,19 @@ namespace Inmobiliaria_2022.Models
 							Monto = reader.GetDecimal(4),
 							InmuebleId = reader.GetInt32(5),
 							InquilinoId = reader.GetInt32(6),
-						
-					  };
-						res.Add(c);
+							inquilino = new Inquilino
+							{
+								Nombre = reader.GetString(7),
+								Apellido = reader.GetString(8),
+							},
+							inmueble = new Inmueble
+							{
+								Direccion = reader.GetString(9),
+								Costo = reader.GetDecimal(10),
+								
+							},
+						};
+						res.Add(a);
 					}
 					connection.Close();
 				}
@@ -226,31 +235,26 @@ namespace Inmobiliaria_2022.Models
 		}
 		//..........................................NO VIGENTES.............................................
 
-		public IList<Contrato> ObtenerNoVigentes(DateTime? fechaIni, DateTime? fechaFin)
-		{
-			IList<Contrato> res = new List<Contrato>();
+		public IList<Contrato> ObtenerNoVigentes()
+		{ 
+		    IList<Contrato> res = new List<Contrato>();
 			using (SqlConnection connection = new SqlConnection(connectionString))
 			{
-				string sql = $"SELECT c.Id, Descripcion, FechaAlta, FechaBaja, Monto, c.InmuebleId, c.InquilinoId, " +
-				$" inm.Direccion, " +
-				$" iq.Nombre, iq.Apellido " +
-				$" FROM Contratos c, Inmuebles inm, Inquilinos iq " +
-				$" WHERE c.InmuebleId = inm.Id and " +
-				$"       c.InquilinoId = iq.Id and " +
-				$"       c.FechaBaja < GETDATE()";
+				string sql = $" SELECT c.Id, Descripcion, FechaAlta, FechaBaja, Monto, c.InmuebleId, c.InquilinoId," +
+				$" iq.Nombre, iq.Apellido," +
+				$" i.Direccion, i.Costo" +
+				$" FROM Contratos c join Inmuebles i ON c.InmuebleId = i.Id " +
+				$"				    join Inquilinos iq ON c.InquilinoId = iq.Id " +
+				$"                          WHERE c.FechaBaja < GETDATE()";
 
-				using (SqlCommand command = new SqlCommand(sql, connection))
+				using (var command = new SqlCommand(sql, connection))
 				{
+					command.CommandType = CommandType.Text;
 					connection.Open();
-					command.CommandType = CommandType.Text; ;
-					command.Parameters.AddWithValue("@fechaIni", fechaIni);
-					command.Parameters.AddWithValue("@fechaFin", fechaFin);
-
 					var reader = command.ExecuteReader();
-
 					while (reader.Read())
 					{
-						Contrato c = new Contrato()
+						Contrato a = new Contrato
 						{
 							Id = reader.GetInt32(0),
 							Descripcion = reader.GetString(1),
@@ -259,20 +263,21 @@ namespace Inmobiliaria_2022.Models
 							Monto = reader.GetDecimal(4),
 							InmuebleId = reader.GetInt32(5),
 							InquilinoId = reader.GetInt32(6),
-							inmueble = new Inmueble
-							{
-								Direccion = reader.GetString(7),
-								Costo = reader.GetInt32(8),
-							},
 							inquilino = new Inquilino
 							{
-								Nombre = reader.GetString(9),
-								Apellido = reader.GetString(10),
+								Nombre = reader.GetString(7),
+								Apellido = reader.GetString(8),
+							},
+							inmueble = new Inmueble
+							{
+								Direccion = reader.GetString(9),
+								Costo = reader.GetDecimal(10),
+
 							},
 						};
-						res.Add(c);
-					}
-					connection.Close();
+	                    res.Add(a);
+				 }
+                connection.Close();
 				}
 			}
 			return res;
