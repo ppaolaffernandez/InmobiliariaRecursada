@@ -24,6 +24,7 @@ namespace Inmobiliaria_2022.Models
         public IFormFile AvatarFile { get; set; } /*22/04/*/
         public int Rol { get; set; }
         public string RolNombre => Rol > 0 ? ((enRoles)Rol).ToString() : "";
+        public Boolean EstaHabilitado { get; set; }
 
         public static IDictionary<int, string> ObtenerRoles()
         {

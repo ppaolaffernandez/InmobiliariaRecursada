@@ -18,5 +18,7 @@ namespace Inmobiliaria_2022.Models
 		public string Email { get; set; }
 		//[Required, DataType(DataType.Password)]
 		public string Clave { get; set; }
+		public Boolean EstaHabilitado { get; set; }
+
 	}
 }

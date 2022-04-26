@@ -292,8 +292,9 @@ namespace Inmobiliaria_2022.Models
 				$" iq.Nombre, iq.Apellido," +
 				$" i.Direccion, i.Costo" +
 				$" FROM Contratos c join Inmuebles i ON c.InmuebleId = i.Id " +
-				$"				    join Inquilinos iq ON c.InquilinoId = iq.Id " +
-				$"            WHERE c.FechaBaja BETWEEN @fechaIni AND @fechaFin AND c.FechaBaja >= GETDATE()";
+				$"				 join Inquilinos iq ON c.InquilinoId = iq.Id " +
+				$" WHERE c.FechaBaja BETWEEN @fechaIni AND @fechaFin AND c.FechaBaja >= GETDATE()";
+
 				using (SqlCommand command = new SqlCommand(sql, connection))
 				{
 					connection.Open();

@@ -16,5 +16,7 @@ namespace Inmobiliaria_2022.Models
 		public string Telefono { get; set; }
 		[Required, EmailAddress]
 		public string Email { get; set; }
+		public Boolean EstaHabilitado { get; set; }
+
 	}
 }

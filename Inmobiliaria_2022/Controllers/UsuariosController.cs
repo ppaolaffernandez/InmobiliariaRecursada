@@ -217,7 +217,7 @@ namespace Inmobiliaria_2022.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public ActionResult Edit(int id, Usuario u)//Controlar contraseña min 1:21
+        public ActionResult Edit(int id, Usuario u)
         {
             var vista = nameof(Edit);
             try
@@ -232,17 +232,14 @@ namespace Inmobiliaria_2022.Controllers
                         return RedirectToAction(nameof(Index), "Home");
 
                     }
-
                 }
                 // TODO: Add update logic here
                 else
                 {
-                    repositorioUsuario.Modificacion(u);
+                    repositorioUsuario.ModificacionGeneral(u);
                     return RedirectToAction(nameof(Index));
                 }
-
                 return RedirectToAction(vista);
-
                 //return RedirectToAction(nameof(Index)); 22/4
             }
             catch (Exception ex)

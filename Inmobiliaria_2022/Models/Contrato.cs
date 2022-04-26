@@ -14,5 +14,7 @@ namespace Inmobiliaria_2022.Models
         public Inmueble inmueble { get; set; }
         public int InquilinoId { get; set; }
         public Inquilino inquilino { get; set; }
+        public Boolean EstaHabilitado { get; set; }
+
     }
 }

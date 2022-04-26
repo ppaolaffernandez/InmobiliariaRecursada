@@ -81,6 +81,29 @@ namespace Inmobiliaria_2022.Models
             }
             return res;
         }
+        public int ModificacionGeneral(Usuario u)
+        {
+            int res = -1;
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string sql = $"UPDATE Usuarios SET Nombre=@nombre, Apellido=@apellido, Email=@email, Rol=@rol " +
+                    $"WHERE Id = @id";
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    command.CommandType = CommandType.Text;
+                    command.Parameters.AddWithValue("@nombre", u.Nombre);
+                    command.Parameters.AddWithValue("@apellido", u.Apellido);
+                    command.Parameters.AddWithValue("@email", u.Email);
+                    command.Parameters.AddWithValue("@rol", u.Rol);
+                    command.Parameters.AddWithValue("@id", u.Id);
+                    connection.Open();
+                    res = command.ExecuteNonQuery();
+                    connection.Close();
+                }
+            }
+            return res;
+        }
+
 
         public Usuario ObtenerPorEmail(string email)
         {
