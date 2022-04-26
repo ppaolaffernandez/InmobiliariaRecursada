@@ -23,7 +23,7 @@ namespace Inmobiliaria_2022.Controllers
         // GET: ContratosController
         public ActionResult Index(int id,DateTime? fechaIni, DateTime? fechaFin)
         {   
-            String hoy = DateTime.Now.ToString("dd/MM/yyyy");
+            //String hoy = DateTime.Now.ToString("dd/MM/yyyy");
             var lista = repositorioContrato.ObtenerTodos();
             
             if (id == 0){

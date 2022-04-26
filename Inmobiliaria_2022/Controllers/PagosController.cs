@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Inmobiliaria_2022.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public class PagosController : Controller
     {
         private readonly IConfiguration configuration;

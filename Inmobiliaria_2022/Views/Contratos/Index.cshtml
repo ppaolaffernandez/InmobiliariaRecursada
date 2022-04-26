@@ -6,7 +6,6 @@
     <div class="card-header border-bottom border-primary bg-light text-center"><h3>Contrato</h3></div>
     <div class="card-header border-bottom border-primary bg-light"><a class="btn btn-success text-white mr-2" asp-action="Create">Nuevo Contrato</a></div>
     <div class="card-body"><h5 class="card-title text-primary">Listado de Contratos</h5>
-
         <div class="input-group-prepend mb-2">
             <a class="btn btn-info" asp-action="Index" asp-route-id="0">Todos</a>
             <a class="btn btn-info" asp-action="Index" asp-route-id="1">Vigentes</a>
@@ -14,6 +13,7 @@
             @*<a class="btn btn-info" asp-action="Index" asp-route-id="3">Vigentes por fecha</a>
             <a class="btn btn-info" asp-action="Index" asp-route-id="4">Inmuebles disponibles</a>*@
         </div>
+
 
 <table class="table">
     <thead>
@@ -42,9 +42,10 @@
                   @Html.DisplayFor(modelItem => item.inmueble.Propietario.Apellido) 
             </td>
             <td>
-                @Html.ActionLink("Editar", "Edit", new {  id=item.Id  }) |
-                @Html.ActionLink("Detalles", "Details", new {  id=item.Id  }) |
-                @Html.ActionLink("Eliminar", "Delete", new {  id=item.Id  }) |
+                @if (User.IsInRole("Administrador")){
+                 @Html.ActionLink("Eliminar", "Delete", new {id=item.Id })} |
+                 @Html.ActionLink("Editar", "Edit", new {  id=item.Id  }) |
+                 @Html.ActionLink("Detalles", "Details", new {  id=item.Id  }) |
                 <a asp-controller="Pagos" asp-action="ListaPagos" asp-route-id="@item.Id" title="Lista de pagos">Lista de Pagos</a> @*exit*@ 
             </td>
         </tr>}

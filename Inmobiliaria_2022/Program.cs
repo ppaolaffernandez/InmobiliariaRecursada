@@ -25,7 +25,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("Administrador", policy =>
-    policy.RequireRole("Administrador", "SuperAdministrador")
+    policy.RequireRole("Administrador")
     //policy.RequireClaim(ClaimTypes.Role, "Administrador")  /*requiere q el usuario tenga cpmp rol el adminitrador*/
     );
 });

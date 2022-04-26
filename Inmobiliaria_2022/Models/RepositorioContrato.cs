@@ -285,20 +285,15 @@ namespace Inmobiliaria_2022.Models
 		//..........................................VIGENTES X FECHA.............................................
 		public IList<Contrato> ObtenerVigentesxFecha(DateTime? fechaIni, DateTime? fechaFin)
 		{
-			//DECLARE @hoy DATETIME
-			//       SET @hoy = Getdate()
 			IList<Contrato> res = new List<Contrato>();
 			using (SqlConnection connection = new SqlConnection(connectionString))
 			{
-				string sql = $"SELECT c.Id, Descripcion, FechaAlta, FechaBaja, Monto, c.InmuebleId, c.InquilinoId, " +
-				$" inm.Direccion, " +
-				$" iq.Nombre, iq.Apellido " +
-				$" FROM Contratos c, Inmuebles inm, Inquilinos iq " +
-				$" WHERE c.InmuebleId = inm.Id and " +
-				$"       c.InquilinoId = iq.Id and " +
-				$"       c.FechaBaja BETWEEN @fechaIni AND @fechaFin AND c.FechaBaja >= GETDATE()";
-
-				
+				string sql = $" SELECT c.Id, Descripcion, FechaAlta, FechaBaja, Monto, c.InmuebleId, c.InquilinoId," +
+				$" iq.Nombre, iq.Apellido," +
+				$" i.Direccion, i.Costo" +
+				$" FROM Contratos c join Inmuebles i ON c.InmuebleId = i.Id " +
+				$"				    join Inquilinos iq ON c.InquilinoId = iq.Id " +
+				$"            WHERE c.FechaBaja BETWEEN @fechaIni AND @fechaFin AND c.FechaBaja >= GETDATE()";
 				using (SqlCommand command = new SqlCommand(sql, connection))
 				{
 					connection.Open();

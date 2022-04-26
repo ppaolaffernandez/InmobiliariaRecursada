@@ -34,10 +34,12 @@
             <td>@(item.Propietario.Nombre + " " + item.Propietario.Apellido)</td>
             <td style="display:none;">@Html.DisplayFor(modelItem => item.Propietario.Dni)</td>
             <td class="d-flex justify-content-center">
-             <div class="btn-group" role="group">
+             <div class="btn-group" role="group">  
+                @if (User.IsInRole("Administrador"))
+                { 
+                 <a asp-action="Delete" asp-route-id="@item.Id" asp-ro class="btn btn-danger"><i class="fas fa-edit">Eliminar</i></a>} 
                  <a asp-action="Edit" asp-route-id="@item.Id" asp-ro class="btn btn-warning"><i class="fas fa-edit">Editar</i></a>
                  <a asp-action="Details" asp-route-id="@item.Id" asp-ro class="btn btn-dark"><i class="fas fa-edit">Detalles</i></a>
-                 <a asp-action="Delete" asp-route-id="@item.Id" asp-ro class="btn btn-danger"><i class="fas fa-edit">Eliminar</i></a>
 
                 @if (item.EstaPublicado == false)
                 {

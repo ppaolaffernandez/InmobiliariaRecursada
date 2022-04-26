@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Inmobiliaria_2022.Controllers
 {
+    [Authorize]
     public class PropietariosController : Controller
     {
         private readonly IConfiguration configuration;
