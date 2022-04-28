@@ -23,7 +23,7 @@ namespace Inmobiliaria_2022.Controllers
         // GET: PagosController
         public ActionResult Index()
         {
-            return View();
+             return View();
         }
         public ActionResult Listapagos(string id)
         {

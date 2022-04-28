@@ -418,7 +418,7 @@ namespace Inmobiliaria_2022.Models
 							{
 								Nombre = reader.GetString(9),
 								Apellido = reader.GetString(10),
-								Dni= reader.GetString(11),
+								Dni = reader.GetString(11),
 							},
 
 						};
@@ -430,6 +430,54 @@ namespace Inmobiliaria_2022.Models
 			return res;
 		}
 
+		public IList<Inmueble> ObtenerInmueblesDisponibles(DateTime? fechaIni, DateTime? fechaFin)
+		{
+			IList<Inmueble> res = new List<Inmueble>();
+			Inmueble i = null;
+			using (SqlConnection connection = new SqlConnection(connectionString))
+			{
+				string sql = $" SELECT DISTINCT i.Id, Direccion, Ambientes, Tipo, Costo, Superficie, Latitud, Longitud, i.PropietarioId, " +
+							 $"                 p.Nombre, p.Apellido " +
+							 $" FROM Inmuebles i INNER JOIN Propietarios p ON i.PropietarioId = p.Id " +
+							 $" WHERE i.EstaPublicado = 1 AND " +
+							 $" i.Id NOT IN(SELECT InmuebleId " +
+							 $"             FROM Contratos " +
+							 $"             WHERE((FechaAlta BETWEEN @fechaIni AND @fechaFin) OR " +
+							 $"                   (FechaBaja BETWEEN @fechaIni AND @fechaFin)) )";
+				using (var command = new SqlCommand(sql, connection))
+				{
+					command.CommandType = CommandType.Text;
+					command.Parameters.AddWithValue("@fechaIni", fechaIni);
+					command.Parameters.AddWithValue("@fechaFin", fechaFin);
+					connection.Open();
+					var reader = command.ExecuteReader();
+					while (reader.Read())
+					{
+						i = new Inmueble
+						{
+							Id = reader.GetInt32(0),
+							Direccion = reader.GetString(1),
+							Ambientes = reader.GetInt32(2),
+							Tipo = reader.GetInt32(3),
+							Costo = reader.GetDecimal(4),
+							Superficie = reader.GetDecimal(5),
+							Latitud = reader.GetDecimal(6),
+							Longitud = reader.GetDecimal(7),
+							PropietarioId = reader.GetInt32(8),
+							Propietario = new Propietario
+							{
+								Nombre = reader.GetString(9),
+								Apellido = reader.GetString(10),
+							},
+
+						};
+						res.Add(i);
+					}
+					connection.Close();
+				}
+			}
+			return res;
+		}
 
 	}
 

@@ -20,8 +20,8 @@ namespace Inmobiliaria_2022.Models
         [Required]
         [DataType(DataType.Password)]
         public string Clave { get; set; }
-        public string? Avatar { get; set; }  /*agregue esto avatar*/
-        public IFormFile AvatarFile { get; set; } /*22/04/*/
+        public string? Avatar { get; set; }  /*agregue esto avatarRuta*/
+        public IFormFile AvatarFile { get; set; } 
         public int Rol { get; set; }
         public string RolNombre => Rol > 0 ? ((enRoles)Rol).ToString() : "";
         public Boolean EstaHabilitado { get; set; }

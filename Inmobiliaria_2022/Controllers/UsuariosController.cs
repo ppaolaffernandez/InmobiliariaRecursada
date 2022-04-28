@@ -15,7 +15,6 @@ namespace Inmobiliaria_2022.Controllers
     {
         private readonly IConfiguration configuracion;
         private readonly IWebHostEnvironment environment;
-
         private readonly RepositorioUsuario repositorioUsuario;
         public UsuariosController(IConfiguration configuration, IWebHostEnvironment environment)
         {
@@ -28,7 +27,6 @@ namespace Inmobiliaria_2022.Controllers
         //[Authorize(Policy = "Administrador")]
         public ActionResult Index()
         {
-            //ViewBag.Roles = Usuario.ObtenerRoles();
             var lista = repositorioUsuario.ObtenerTodos();
             return View(lista);
         }
@@ -54,13 +52,11 @@ namespace Inmobiliaria_2022.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Usuario u)
         {
-            if (!ModelState.IsValid)
-            {
+            if (!ModelState.IsValid){
                 ViewBag.Roles = Usuario.ObtenerRoles();
                 return View();
             }
-            try
-            {
+            try{
                 string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
                 password: u.Clave,
                 salt: System.Text.Encoding.ASCII.GetBytes(configuracion["Salt"]),
@@ -115,7 +111,8 @@ namespace Inmobiliaria_2022.Controllers
         {
             try
             {
-                //if (System.IO.File.Exists(Path.Combine(environment.WebRootPath, "Uploads", "avatar" + id + Path.GetExtension(usuario.Avatar)));
+                //if (System.IO.File.Exists(Path.Combine(environment.WebRootPath, "Uploads", "avatar_" + id + Path.GetExtension(usuario.Avatar)))
+                //System.IO.File.Delete(Path.Combine(environment.WebRootPath, "Uploads", "avatar_" + id + Path.GetExtension(usuario.Avatar)));
                 repositorioUsuario.Baja(id);
                 return RedirectToAction(nameof(Index));
             }
@@ -135,13 +132,12 @@ namespace Inmobiliaria_2022.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Login(LoginView login)//me llega un login
+        public async Task<ActionResult> Login(LoginView login)
         {
             try
             {
-                if (ModelState.IsValid)//chekeo q el login sea valido 
+                if (ModelState.IsValid) 
                 {
-                    //Convertir la clave de texto plano que tipio el usuario en un correspondiente hashed
                     string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
                     password: login.Clave,
                     salt: System.Text.Encoding.ASCII.GetBytes(configuracion["Salt"]),
@@ -150,11 +146,8 @@ namespace Inmobiliaria_2022.Controllers
                     numBytesRequested: 256 / 8));
 
                     var e = repositorioUsuario.ObtenerPorEmail(login.Email);
-
-
                     if (e == null || e.Clave != hashed)
                     {
-
                         ModelState.AddModelError("", "El email o clave no son correctos");
                         return View();
                     }
@@ -195,7 +188,7 @@ namespace Inmobiliaria_2022.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        [Authorize] /*22/04 (edita empleado) min 1:47*/
+        [Authorize]
         public ActionResult Perfil()
         {
             ViewData["Title"] = "Mi perfil";
@@ -240,12 +233,9 @@ namespace Inmobiliaria_2022.Controllers
                     return RedirectToAction(nameof(Index));
                 }
                 return RedirectToAction(vista);
-                //return RedirectToAction(nameof(Index)); 22/4
             }
             catch (Exception ex)
             {
-                //ViewBag.Roles = Usuario.ObtenerRoles(); 22/4
-                //return View(vista, u);
                 throw;
             }
 
@@ -297,7 +287,6 @@ namespace Inmobiliaria_2022.Controllers
         [Authorize]
         public ActionResult CambiarClave()
         {
-
             return View();
         }
 

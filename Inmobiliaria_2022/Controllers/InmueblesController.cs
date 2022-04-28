@@ -12,14 +12,16 @@ namespace Inmobiliaria_2022.Controllers
         private readonly IConfiguration configuration;
         private readonly RepositorioPropietario repositorioPropietario;
         private readonly RepositorioInmueble repositorioInmueble;
+        private readonly RepositorioContrato repositorioContrato;
         public InmueblesController(IConfiguration configuration)
         {
             this.configuration = configuration;
             repositorioPropietario = new RepositorioPropietario(configuration);
             repositorioInmueble = new RepositorioInmueble(configuration);
+            repositorioContrato = new RepositorioContrato(configuration);
         }
         // GET: InmueblesController
-        public ActionResult Index(int id)
+        public ActionResult Index(int id, DateTime? fechaIni, DateTime? fechaFin)
         {
             var lista = repositorioInmueble.ObtenerTodos();
             if (id == 1)
@@ -36,6 +38,10 @@ namespace Inmobiliaria_2022.Controllers
             {
                 lista = repositorioInmueble.ObtenerTodosNoDisponible();
             }
+            else if (id == 4)
+            {
+                lista = repositorioInmueble.ObtenerInmueblesDisponibles(fechaIni, fechaFin);
+            }
 
             return View(lista);
         }
@@ -47,7 +53,7 @@ namespace Inmobiliaria_2022.Controllers
         //}
 
         // POST: Inmuebles/Delete/5
-        
+
         [Authorize(Policy = "Administrador")]
 
         public ActionResult Habilitar(int id)
@@ -55,7 +61,7 @@ namespace Inmobiliaria_2022.Controllers
             repositorioInmueble.Publicado(id);
             return RedirectToAction(nameof(Index));
         }
-        
+
         [Authorize(Policy = "Administrador")]
         public ActionResult Deshabilitar(int id)
         {
@@ -114,11 +120,9 @@ namespace Inmobiliaria_2022.Controllers
             var entidad = repositorioInmueble.ObtenerPorId(id);
             ViewBag.Propietarios = repositorioPropietario.ObtenerTodos();
             ViewBag.TipoNombre = Inmueble.ObtenerTiposIDictionary();
-            //if (TempData.ContainsKey("Mensaje"))
-            //    ViewBag.Mensaje = TempData["Mensaje"];
-            //if (TempData.ContainsKey("Error"))
-            //    ViewBag.Error = TempData["Error"];
+
             return View(entidad);
+
         }
 
         // POST: InmueblesController/Edit/5
@@ -126,6 +130,7 @@ namespace Inmobiliaria_2022.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, Inmueble entidad)
         {
+
             try
             {
                 entidad.Id = id;
@@ -147,10 +152,7 @@ namespace Inmobiliaria_2022.Controllers
         public ActionResult Delete(int id)
         {
             var entidad = repositorioInmueble.ObtenerPorId(id);
-            //if (TempData.ContainsKey("Mensaje"))
-            //    ViewBag.Mensaje = TempData["Mensaje"];
-            //if (TempData.ContainsKey("Error"))
-            //    ViewBag.Error = TempData["Error"];
+
             return View(entidad);
         }
 
@@ -168,6 +170,7 @@ namespace Inmobiliaria_2022.Controllers
             }
             catch (Exception ex)
             {
+                //return View();
                 ViewBag.Error = ex.Message;
                 ViewBag.StackTrate = ex.StackTrace;
                 return View(entidad);

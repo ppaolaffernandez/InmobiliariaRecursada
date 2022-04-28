@@ -3,7 +3,7 @@
 @{ViewData["Title"] = "Editar";}
 
 <div class="card bg-light border border-primary">
-        <div class="card-header border-bottom border-primary bg-light"><h4 class="card-title text-primary mt-2">Editar Alquiler</h4></div>
+        <div class="card-header border-bottom border-primary bg-light"><h4 class="card-title text-primary mt-2">Editar Contrato</h4></div>
         <form asp-action="Edit">
           <div class="card-body">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -25,7 +25,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Monto" class="control-label"></label>
-                <input asp-for="Monto" class="form-control" />
+                <input asp-for="Monto" class="form-control" type="number" />
                 <span asp-validation-for="Monto" class="text-danger"></span>
             </div>
             <div class="form-group">

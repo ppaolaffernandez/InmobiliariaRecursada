@@ -9,28 +9,26 @@
         <div class="input-group-prepend mb-2">
             <a class="btn btn-info" asp-action="Index" asp-route-id="0">Todos</a>
             <a class="btn btn-info" asp-action="Index" asp-route-id="1">Vigentes</a>
-            <a class="btn btn-info" asp-action="Index" asp-route-id="2">No vigentes</a>
-            @*<a class="btn btn-info" asp-action="Index" asp-route-id="3">Vigentes por fecha</a>
-            <a class="btn btn-info" asp-action="Index" asp-route-id="4">Inmuebles disponibles</a>*@
+            <a class="btn btn-info" asp-action="Index" asp-route-id="2">No vigentes</a>   
         </div>
 
-        @* Vigentes Por Fechas *@
-                @*<form asp-controller="Contratos" asp-action="Index">
-                    <div class="form-group">
-                        <label for="fechas">Vigencia por fechas</label>
-                         <div class="input-group">
+         @*3-Listar todos los contratos de alquiler que se encuentren vigentes(por fechas)  
+         <div class="input-group-prepend mb-2">
+            <form asp-controller="Contratos" asp-action="Index" asp-route-id="3">
+                <div class="form-group"><label for="fechas">Vigencia por fechas</label>
+                        <div class="input-group">
                             <div class="input-group-prepend"><span class="input-group-text">Desde</span></div>
-                                <input type="text" name="vigencia" value="3" hidden>
-                                <input type="date" name="fechaIni" id="fechas" class="form-control" required>
-                                <div class="input-group-prepend"><span class="input-group-text">Hasta</span></div>
-                                <input type="date" name="fechaFin" class="form-control" required>
-                         </div>
-                          <small class="form-text text-muted">Introduzca un rango de fechas.</small>
-                    </div>
-                    <hr />
-                    <button class="btn btn-outline-primary w-100" type="submit">Buscar</button>
-                  </form>*@
-
+                            <input type="date" name="fechaIni" id="fechas" class="form-control" required>
+                            <div class="input-group-prepend"><span class="input-group-text">Hasta</span></div>
+                            <input type="date" name="fechaFin" class="form-control" required>
+                        </div>
+                        <small class="form-text text-muted">Introduzca un rango de fechas.</small>
+                </div>
+                    <hr/>
+                <button class="btn btn-outline-primary w-100" type="submit">Buscar</button>
+            </form>
+        </div>*@
+        
 <table class="table">
     <thead>
         <tr>

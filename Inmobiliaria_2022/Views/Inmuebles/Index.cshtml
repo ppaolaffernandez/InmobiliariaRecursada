@@ -3,16 +3,53 @@
 @{ViewData["Title"] = "Lista";}
 
 <div class="card bg-light border border-primary">
-    <div class="card-header border-bottom border-primary bg-light text-center"><h3>Inmueble</h3></div>
-    <div class="card-header border-bottom border-primary bg-light"><a class="btn btn-success text-white mr-2" asp-action="Create">Crear</a></div>
-    <div class="card-body"><h5 class="card-title text-primary">Listado de Inmuebles</h5>
+    <div class="card-header border-bottom border-primary bg-light text-center">
+        <h3>Inmueble</h3>
+    </div>
+    <div class="card-header border-bottom border-primary bg-light">
+        <a class="btn btn-success text-white mr-2" asp-action="Create">Crear</a>
+    </div>
+    <div class="card-body">
+        <h5 class="card-title text-primary">Listado de Inmuebles</h5>
 
-        <div class="input-group-prepend mb-2">
-            <a class="btn btn-info" asp-action="Index" asp-route-id="1">Todos</a>
-            <a class="btn btn-info" asp-action="Index" asp-route-id="2">Disponible</a>
-            <a class="btn btn-info" asp-action="Index" asp-route-id="3">No Disponible</a>
-        </div>
+       @* 1-Listar los inmuebles que esteen disponibles y su dueño*@
+       
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-8">
+                    
+                        <div class="input-group-prepend mb-2">
+                            <a class="btn btn-info" asp-action="Index" asp-route-id="1">Todos</a>
+                            <a class="btn btn-info" asp-action="Index" asp-route-id="2">Disponible</a>
+                            <a class="btn btn-info" asp-action="Index" asp-route-id="3">No Disponible</a>
+                        </div>
+                    
+                </div>
+                <div class="col-lg-4 border border-primary bg-light">
+                    
+                    <div class="card-body">
+                        <h5 class="card-title text-primary">Listar Inmuebles desocupados</h5>
+                        <form asp-controller="Inmuebles" asp-action="Index" asp-route-id="4">
+                    
+                    
+                            <div class="form-group">
+                                <label class="control-label">Desde</label>
+                                <input class="form-control" type="date" name="fechaIni" id="fechas" required/>
+                            </div>
 
+                            <div class="form-group">
+                                <label class="control-label">Hasta</label>
+                                <input class="form-control" type="date" name="fechaFin" required/>
+                            </div>
+                                        
+                            <div class="form-group">
+                                <button class="btn btn-outline-primary w-100" type="submit">Buscar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div> 
+        </div> 
         <table class="table table-hover table-bordered w-100" >      
         <thead class="table-info">
          <tr>
@@ -41,10 +78,10 @@
                  <a asp-action="Details" asp-route-id="@item.Id"  class="btn btn-outline-info"><i class="fas fa-edit">Detalles</i></a>
 
                 @if (item.EstaPublicado == false){
-                    <a asp-action="Habilitar" asp-route-id="@item.Id" class="btn btn-outline-primary"><i class="fas fa-minus-square"></i>Habilitar</a>                    
+                    <a asp-action="Habilitar" asp-route-id="@item.Id" class="btn btn-outline-primary"><i class="fas fa-minus-square"></i>Desocupado</a>                    
                 }
                 else{
-                    <a asp-action="Deshabilitar" asp-route-id="@item.Id" class="btn btn-outline-secondary"><i class="fas fa-minus-square"></i>Deshabilitar</a>                                  
+                    <a asp-action="Deshabilitar" asp-route-id="@item.Id" class="btn btn-outline-secondary"><i class="fas fa-minus-square"></i>Ocupado</a>                                  
                 }
              </div>
             </td>

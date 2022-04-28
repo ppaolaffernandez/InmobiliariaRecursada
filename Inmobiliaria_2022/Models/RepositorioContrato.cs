@@ -290,15 +290,16 @@ namespace Inmobiliaria_2022.Models
 			{
 				string sql = $" SELECT c.Id, Descripcion, FechaAlta, FechaBaja, Monto, c.InmuebleId, c.InquilinoId," +
 				$" iq.Nombre, iq.Apellido," +
-				$" i.Direccion, i.Costo" +
+				$" i.Direccion, i.Costo," +
+				$" p.Nombre, p.Apellido" +
 				$" FROM Contratos c join Inmuebles i ON c.InmuebleId = i.Id " +
 				$"				 join Inquilinos iq ON c.InquilinoId = iq.Id " +
+				$"				 join Propietarios p ON p.Id = i.PropietarioId " +
 				$" WHERE c.FechaBaja BETWEEN @fechaIni AND @fechaFin AND c.FechaBaja >= GETDATE()";
-
 				using (SqlCommand command = new SqlCommand(sql, connection))
 				{
 					connection.Open();
-					command.CommandType = CommandType.Text; ;
+					command.CommandType = CommandType.Text; 
 					command.Parameters.AddWithValue("@fechaIni", fechaIni);
 					command.Parameters.AddWithValue("@fechaFin", fechaFin);
 
@@ -306,7 +307,7 @@ namespace Inmobiliaria_2022.Models
 
 					while (reader.Read())
 					{
-						Contrato c = new Contrato()
+						Contrato a = new Contrato
 						{
 							Id = reader.GetInt32(0),
 							Descripcion = reader.GetString(1),
@@ -315,23 +316,27 @@ namespace Inmobiliaria_2022.Models
 							Monto = reader.GetDecimal(4),
 							InmuebleId = reader.GetInt32(5),
 							InquilinoId = reader.GetInt32(6),
-							inmueble = new Inmueble
-							{
-								Direccion = reader.GetString(7),
-								Costo = reader.GetInt32(8),
-							},
 							inquilino = new Inquilino
 							{
-								Nombre = reader.GetString(9),
-								Apellido = reader.GetString(10),
+								Nombre = reader.GetString(7),
+								Apellido = reader.GetString(8),
+							},
+							inmueble = new Inmueble
+							{
+								Direccion = reader.GetString(9),
+								Costo = reader.GetDecimal(10),
+								Propietario = new Propietario
+								{
+									Nombre = reader.GetString(11),
+									Apellido = reader.GetString(12),
+								},
 							},
 						};
-						res.Add(c);
-					}
-					connection.Close();
+					res.Add(a);
 				}
+				connection.Close();
 			}
-			return res;
+		  }return res;
 		}
 		//..........................................INMUEBLES DISPONIBLES DADO 2 FECHAS.............................................
 		public IList<Contrato> ObtenerInmueblesDisponibles(DateTime? fechaIni, DateTime? fechaFin)
@@ -372,7 +377,7 @@ namespace Inmobiliaria_2022.Models
 							inmueble = new Inmueble
 							{
 								Direccion = reader.GetString(7),
-								Costo = reader.GetInt32(8),
+								Costo = reader.GetDecimal(8),
 							},
 							inquilino = new Inquilino
 							{
@@ -387,6 +392,7 @@ namespace Inmobiliaria_2022.Models
 			}
 			return res;
 		}
+		
 	}
 }
 
