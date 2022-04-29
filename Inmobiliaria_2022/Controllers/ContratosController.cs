@@ -21,12 +21,12 @@ namespace Inmobiliaria_2022.Controllers
             repositorioInmueble = new RepositorioInmueble(configuration);
         }
         // GET: ContratosController
-        public ActionResult Index(int id,DateTime? fechaIni, DateTime? fechaFin)
+        public ActionResult Index(int id, string dato, DateTime? fechaIni, DateTime? fechaFin )
         {   
-            //String hoy = DateTime.Now.ToString("dd/MM/yyyy");
             var lista = repositorioContrato.ObtenerTodos();
             
-            if (id == 0){
+            if (id == 0)
+            {
                 lista = repositorioContrato.ObtenerTodos();
             }
             else if (id == 1){
@@ -35,13 +35,10 @@ namespace Inmobiliaria_2022.Controllers
             else if (id == 2){
                 lista = repositorioContrato.ObtenerNoVigentes();
             }
-            else if (id == 3){
-                lista = repositorioContrato.ObtenerVigentesxFecha(fechaIni, fechaFin);
+            else if (id == 3)
+            {
+                lista = repositorioContrato.ObtenerPorDireccion(dato);
             }
-            else if (id == 4){
-                lista = repositorioContrato.ObtenerInmueblesDisponibles(fechaIni, fechaFin);
-            }
-
             return View(lista);
         }
 

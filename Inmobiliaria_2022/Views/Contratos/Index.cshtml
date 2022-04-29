@@ -6,64 +6,67 @@
     <div class="card-header border-bottom border-primary bg-light text-center"><h3>Contrato</h3></div>
     <div class="card-header border-bottom border-primary bg-light"><a class="btn btn-success text-white mr-2" asp-action="Create">Nuevo Contrato</a></div>
     <div class="card-body"><h5 class="card-title text-primary">Listado de Contratos</h5>
-        <div class="input-group-prepend mb-2">
+        <div class="container-fluid">
+            <div class="row">
+        <div class="col-lg-8">
+            <div class="input-group-prepend mb-2">
             <a class="btn btn-info" asp-action="Index" asp-route-id="0">Todos</a>
             <a class="btn btn-info" asp-action="Index" asp-route-id="1">Vigentes</a>
             <a class="btn btn-info" asp-action="Index" asp-route-id="2">No vigentes</a>   
         </div>
-
-         @*3-Listar todos los contratos de alquiler que se encuentren vigentes(por fechas)  
-         <div class="input-group-prepend mb-2">
-            <form asp-controller="Contratos" asp-action="Index" asp-route-id="3">
-                <div class="form-group"><label for="fechas">Vigencia por fechas</label>
-                        <div class="input-group">
-                            <div class="input-group-prepend"><span class="input-group-text">Desde</span></div>
-                            <input type="date" name="fechaIni" id="fechas" class="form-control" required>
-                            <div class="input-group-prepend"><span class="input-group-text">Hasta</span></div>
-                            <input type="date" name="fechaFin" class="form-control" required>
-                        </div>
-                        <small class="form-text text-muted">Introduzca un rango de fechas.</small>
-                </div>
-                    <hr/>
-                <button class="btn btn-outline-primary w-100" type="submit">Buscar</button>
-            </form>
-        </div>*@
+        </div>
+        <div class="col-lg-4 border border-primary bg-light">
+            <div class="card-body">
+                <h5 class="card-title text-primary">Listar Contratos Dado Un Inmueble </h5>
+                <form asp-controller="Contratos" asp-action="Index" asp-route-id="3">    
+                    <div class="form-group">
+                        <label class="control-label">Ingrese Direccion</label>
+                        <input class="form-control" type="search" name="dato" required/>
+                    </div>                    
+                    <div class="form-group">
+                        <button class="btn btn-outline-primary w-50" type="submit">Buscar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        </div>
+        </div>
         
-<table class="table">
-    <thead>
-        <tr>
-            <th>@Html.DisplayNameFor(model => model.FechaAlta)</th>
-            <th>@Html.DisplayNameFor(model => model.FechaBaja)</th>
-            <th>@Html.DisplayNameFor(model => model.Monto)</th>
-            <th>Inmueble</th>
-            <th>Inquilino</th>
-            <th>Propietario</th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>@Html.DisplayFor(modelItem => item.FechaAlta)</td>
-            <td>@Html.DisplayFor(modelItem => item.FechaBaja)</td>
-            <td>@Html.DisplayFor(modelItem => item.Monto)</td>
-            <td>@Html.DisplayFor(modelItem => item.inmueble.Direccion)</td>
-            <td>
-                @Html.DisplayFor(modelItem => item.inquilino.Apellido)
-                @Html.DisplayFor(modelItem => item.inquilino.Nombre)
-            </td>
-            <td>
-                  @Html.DisplayFor(modelItem => item.inmueble.Propietario.Nombre)
-                  @Html.DisplayFor(modelItem => item.inmueble.Propietario.Apellido) 
-            </td>
-            <td>
-                @if (User.IsInRole("Administrador")){
-                 @Html.ActionLink("Eliminar", "Delete", new {id=item.Id })} |
-                 @Html.ActionLink("Editar", "Edit", new {  id=item.Id  }) |
-                 @Html.ActionLink("Detalles", "Details", new {  id=item.Id  }) |
-                <a asp-controller="Pagos" asp-action="ListaPagos" asp-route-id="@item.Id" title="Lista de pagos">Lista de Pagos</a> @*exit*@ 
-            </td>
-        </tr>}
-    </tbody>
-  </table>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.FechaAlta)</th>
+                    <th>@Html.DisplayNameFor(model => model.FechaBaja)</th>
+                    <th>@Html.DisplayNameFor(model => model.Monto)</th>
+                    <th>Inmueble</th>
+                    <th>Inquilino</th>
+                    <th>Propietario</th>
+                </tr>
+            </thead>
+            <tbody>
+        @foreach (var item in Model) {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.FechaAlta)</td>
+                    <td>@Html.DisplayFor(modelItem => item.FechaBaja)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Monto)</td>
+                    <td>@Html.DisplayFor(modelItem => item.inmueble.Direccion)</td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.inquilino.Apellido)
+                        @Html.DisplayFor(modelItem => item.inquilino.Nombre)
+                    </td>
+                    <td>
+                          @Html.DisplayFor(modelItem => item.inmueble.Propietario.Nombre)
+                          @Html.DisplayFor(modelItem => item.inmueble.Propietario.Apellido) 
+                    </td>
+                    <td>
+                        @if (User.IsInRole("Administrador")){
+                         @Html.ActionLink("Eliminar", "Delete", new {id=item.Id })} |
+                         @Html.ActionLink("Editar", "Edit", new {  id=item.Id  }) |
+                         @Html.ActionLink("Detalles", "Details", new {  id=item.Id  }) |
+                        <a asp-controller="Pagos" asp-action="ListaPagos" asp-route-id="@item.Id" title="Lista de pagos">Lista de Pagos</a> @*exit*@ 
+                    </td>
+                </tr>}
+            </tbody>
+          </table>
  </div>
 </div>

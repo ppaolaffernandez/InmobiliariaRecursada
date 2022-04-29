@@ -7,7 +7,7 @@
         <h3>Inmueble</h3>
     </div>
     <div class="card-header border-bottom border-primary bg-light">
-        <a class="btn btn-success text-white mr-2" asp-action="Create">Crear</a>
+        <a class="btn btn-success text-white mr-2" asp-action="Create">Nuevo Inmueble</a>
     </div>
     <div class="card-body">
         <h5 class="card-title text-primary">Listado de Inmuebles</h5>
@@ -78,10 +78,10 @@
                  <a asp-action="Details" asp-route-id="@item.Id"  class="btn btn-outline-info"><i class="fas fa-edit">Detalles</i></a>
 
                 @if (item.EstaPublicado == false){
-                    <a asp-action="Habilitar" asp-route-id="@item.Id" class="btn btn-outline-primary"><i class="fas fa-minus-square"></i>Desocupado</a>                    
+                    <a asp-action="Habilitar" asp-route-id="@item.Id" class="btn btn-outline-primary"><i class="fas fa-minus-square"></i>Ocupado</a>                    
                 }
                 else{
-                    <a asp-action="Deshabilitar" asp-route-id="@item.Id" class="btn btn-outline-secondary"><i class="fas fa-minus-square"></i>Ocupado</a>                                  
+                    <a asp-action="Deshabilitar" asp-route-id="@item.Id" class="btn btn-outline-secondary"><i class="fas fa-minus-square"></i>Desocupado</a>                                  
                 }
              </div>
             </td>
