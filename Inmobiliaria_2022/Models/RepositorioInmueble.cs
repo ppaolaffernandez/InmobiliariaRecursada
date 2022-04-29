@@ -479,7 +479,50 @@ namespace Inmobiliaria_2022.Models
 			return res;
 		}
 
-	}
+	//	public IList<Inmueble> ObtenerInmueblesDadoUnPropietario(string nombre)
+	//	{
+	//		IList<Inmueble> res = new List<Inmueble>();
+	//		using (SqlConnection connection = new SqlConnection(connectionString))
+	//		{
+	//			string sql = $" SELECT i.Id, Direccion, Ambientes, Tipo, Costo, Superficie, Latitud, Longitud, i.PropietarioId, " +
+	//						$" p.Nombre, p.Apellido " +
+	//						$" FROM Propietarios p  INNER JOIN Inmuebles i ON i.PropietarioId=  p.Id" +
+	//						$" WHERE p.Nombre like @nombre";
 
+	//			using (SqlCommand command = new SqlCommand(sql, connection))
+	//			{
+	//				command.Parameters.Add("@nombre", SqlDbType.NVarChar).Value = nombre;
+	//				command.CommandType = CommandType.Text;
+	//				connection.Open();
+	//				var reader = command.ExecuteReader();
+	//				while (reader.Read())
+	//				{
+	//					Inmueble i = new Inmueble
+	//					{
+	//						Id = reader.GetInt32(0),
+	//						Direccion = reader.GetString(1),
+	//						Ambientes = reader.GetInt32(2),
+	//						Tipo = reader.GetInt32(3),
+	//						Costo = reader.GetDecimal(4),
+	//						Superficie = reader.GetDecimal(5),
+	//						Latitud = reader.GetDecimal(6),
+	//						Longitud = reader.GetDecimal(7),
+	//						PropietarioId = reader.GetInt32(8),
+	//						Propietario = new Propietario
+	//						{
+	//							Nombre = reader.GetString(9),
+	//							Apellido = reader.GetString(10),
+	//						},
+
+	//					};
+	//					res.Add(i);
+	//				}
+	//				connection.Close();
+	//			}
+	//		}
+	//		return res;
+	//	}
+
+	}
 
 }

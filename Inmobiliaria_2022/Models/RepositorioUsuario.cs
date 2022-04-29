@@ -138,7 +138,7 @@ namespace Inmobiliaria_2022.Models
             }
             return u;
         }
-        //Modificando
+        
         public IList<Usuario> ObtenerTodos()
         {
             IList<Usuario> res = new List<Usuario>();

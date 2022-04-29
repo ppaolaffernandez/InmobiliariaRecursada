@@ -10,13 +10,11 @@
         <a class="btn btn-success text-white mr-2" asp-action="Create">Nuevo Inmueble</a>
     </div>
     <div class="card-body">
-        <h5 class="card-title text-primary">Listado de Inmuebles</h5>
 
-       @* 1-Listar los inmuebles que esteen disponibles y su dueño*@
-       
+        <h5 class="card-title text-primary">Listado de Inmuebles</h5>       
         <div class="container-fluid">
             <div class="row">
-                <div class="col-lg-8">
+                <div class="col-lg-4">
                     
                         <div class="input-group-prepend mb-2">
                             <a class="btn btn-info" asp-action="Index" asp-route-id="1">Todos</a>
@@ -25,6 +23,8 @@
                         </div>
                     
                 </div>
+
+
                 <div class="col-lg-4 border border-primary bg-light">
                     
                     <div class="card-body">
@@ -48,6 +48,30 @@
                         </form>
                     </div>
                 </div>
+
+
+                <div class="col-lg-4 border border-primary bg-light">
+
+                    <div class="card-body">
+                        <h5 class="card-title text-primary">Listar Inmuebles De un Propietarios</h5>
+
+                        <form asp-controller="Inmuebles" asp-action="Index" asp-route-id="5">    
+                    
+                            <div class="form-group">
+                                <label class="control-label">Ingrese Dni Del Propietario</label>
+                                <input class="form-control" type="search" name="dato" required/>
+                            </div>                    
+                    
+                            <div class="form-group">
+                                <button class="btn btn-outline-primary w-50" type="submit">Buscar</button>
+                            </div>
+                
+                        </form>
+                    </div>
+
+                </div>
+
+
             </div> 
         </div> 
         <table class="table table-hover table-bordered w-100" >      

@@ -21,7 +21,7 @@ namespace Inmobiliaria_2022.Controllers
             repositorioContrato = new RepositorioContrato(configuration);
         }
         // GET: InmueblesController
-        public ActionResult Index(int id, DateTime? fechaIni, DateTime? fechaFin)
+        public ActionResult Index(int id, DateTime? fechaIni, DateTime? fechaFin, string dato)
         {
             var lista = repositorioInmueble.ObtenerTodos();
             if (id == 1)
@@ -43,14 +43,14 @@ namespace Inmobiliaria_2022.Controllers
                 lista = repositorioInmueble.ObtenerInmueblesDisponibles(fechaIni, fechaFin);
             }
 
+            else if (id == 5)
+            {
+                lista = repositorioInmueble.ObtenerInmueblePorDni(dato);
+            }
+
             return View(lista);
         }
-        //public ActionResult Activar(int id)
-        //{
-        //    var i = repositorioInmueble.ObtenerPorId(id);
-
-        //    return View(i);
-        //}
+        
 
         // POST: Inmuebles/Delete/5
 

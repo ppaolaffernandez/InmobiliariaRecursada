@@ -87,7 +87,7 @@ namespace Inmobiliaria_2022.Models
 			}
 			return res;
 		}
-		//arreglar INNER JOIN
+		
 		public IList<Contrato> ObtenerTodos()
 		{
 			IList<Contrato> res = new List<Contrato>();
@@ -309,7 +309,7 @@ namespace Inmobiliaria_2022.Models
 					     $" FROM Contratos c join Inmuebles i ON c.InmuebleId = i.Id " +
 					     $"				     join Inquilinos iq ON c.InquilinoId = iq.Id " +
 					     $"				     join Propietarios p ON p.Id = i.PropietarioId " +
-					     $" WHERE i.Direccion = @direccion";
+					     $" WHERE i.Direccion like @direccion";
 
 				using (SqlCommand command = new SqlCommand(sql, connection))
 			{
